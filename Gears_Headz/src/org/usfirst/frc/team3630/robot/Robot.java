@@ -3,7 +3,7 @@ package org.usfirst.frc.team3630.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SerialPort;
 import com.kauailabs.navx.frc.AHRS;
 
 
@@ -30,7 +30,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
 
-= new AHRS(SerialPort.Port.kmxp);
+		 ahrs = new AHRS(SerialPort.Port.kMXP); 
 
 	}
 
