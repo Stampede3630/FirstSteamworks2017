@@ -3,9 +3,6 @@ package org.usfirst.frc.team3630.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.SerialPort;
-import com.kauailabs.navx.frc.AHRS;
-
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,7 +16,7 @@ public class Robot extends IterativeRobot {
 	final String customAuto = "My Auto";
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
-	AHRS ahrs;
+	Drive_Train driveTrain;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -29,9 +26,7 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("Default Auto", defaultAuto);
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
-
-		 ahrs = new AHRS(SerialPort.Port.kMXP); 
-
+		driveTrain = new Drive_Train();
 	}
 
 	/**
@@ -74,7 +69,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		
+	driveTrain.telopPeriodic();
 	}
 
 	/**
