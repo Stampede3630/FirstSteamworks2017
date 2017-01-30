@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -17,6 +18,7 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	Drive_Train driveTrain;
+	NavX navxmxp;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -27,6 +29,8 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
 		driveTrain = new Drive_Train();
+		navxmxp = new NavX();
+		navxmxp.NavXInit();
 	}
 
 	/**
@@ -70,6 +74,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 	driveTrain.telopPeriodic();
+	navxmxp.teleopPeriodic();
 	}
 
 	/**
