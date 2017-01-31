@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="Gears_Headz/src"/>
+	<classpathentry kind="lib" path="Gears_Headz/build/jars/cscore.jar"/>
+	<classpathentry kind="lib" path="Gears_Headz/build/jars/navx_frc.jar"/>
+	<classpathentry kind="lib" path="Gears_Headz/build/jars/NetworkTables.jar"/>
+	<classpathentry kind="lib" path="Gears_Headz/build/jars/opencv.jar"/>
+	<classpathentry kind="lib" path="Gears_Headz/build/jars/WPILib.jar"/>
+	<classpathentry kind="lib" path="Gears_Headz/dist/FRCUserProgram.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="Gears_Headz/bin"/>
+</classpath>

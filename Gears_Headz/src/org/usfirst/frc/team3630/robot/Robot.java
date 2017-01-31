@@ -3,6 +3,7 @@ package org.usfirst.frc.team3630.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Encoder;
 
 
 /**
@@ -19,6 +20,7 @@ public class Robot extends IterativeRobot {
 	SendableChooser<String> chooser = new SendableChooser<>();
 	Drive_Train driveTrain;
 	NavX navxmxp;
+	Encoder firstEncoder;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -31,6 +33,12 @@ public class Robot extends IterativeRobot {
 		driveTrain = new Drive_Train();
 		navxmxp = new NavX();
 		navxmxp.NavXInit();
+		firstEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+		firstEncoder.setMaxPeriod(.1);
+		firstEncoder.setMinRate(10);
+		firstEncoder.setDistancePerPulse(5);
+		firstEncoder.setReverseDirection(true);
+		firstEncoder.setSamplesToAverage(7);
 	}
 
 	/**
@@ -75,6 +83,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 	driveTrain.telopPeriodic();
 	navxmxp.teleopPeriodic();
+	SmartDashboard.putNumber("cat", firstEncoder.get());
 	}
 
 	/**
