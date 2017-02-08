@@ -3,7 +3,7 @@ package org.usfirst.frc.team3630.robot;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Encoder;
+
 
 
 /**
@@ -19,8 +19,9 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	Drive_Train driveTrain;
+	Ultrasonics ultraDistance;
 	NavX navxmxp;
-	Encoder firstEncoder;
+	WheelEncoder rightFrontEnc;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -33,12 +34,10 @@ public class Robot extends IterativeRobot {
 		driveTrain = new Drive_Train();
 		navxmxp = new NavX();
 		navxmxp.NavXInit();
-		firstEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-		firstEncoder.setMaxPeriod(.1);
-		firstEncoder.setMinRate(10);
-		firstEncoder.setDistancePerPulse(5);
-		firstEncoder.setReverseDirection(true);
-		firstEncoder.setSamplesToAverage(7);
+		WheelEncoder rightFrontEnc = new WheelEncoder(); rightFrontEnc.encoderInit(0, 1);
+		 ultraDistance = new Ultrasonics();
+		 ultraDistance.ultraInit(1);
+		
 	}
 
 	/**
@@ -81,9 +80,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-	driveTrain.telopPeriodic();
-	navxmxp.teleopPeriodic();
-	SmartDashboard.putNumber("cat", firstEncoder.get());
+		driveTrain.telopPeriodic();
+		navxmxp.teleopPeriodic();
+		rightFrontEnc.get();
+		ultraDistance.sensorPeriodic();
 	}
 
 	/**
