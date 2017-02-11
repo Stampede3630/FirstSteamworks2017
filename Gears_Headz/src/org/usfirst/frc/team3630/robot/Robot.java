@@ -34,7 +34,6 @@ public class Robot extends IterativeRobot {
 		driveTrain = new Drive_Train();
 		navxmxp = new NavX();
 		navxmxp.NavXInit();
-		driveTrain.Drive_TrainInit();
 		WheelEncoder rightFrontEnc = new WheelEncoder(); rightFrontEnc.encoderInit(0, 1);
 		 ultraDistance = new Ultrasonics();
 		 ultraDistance.ultraInit(1);
