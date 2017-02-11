@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 
-public class Drive_Train extends Robot  {
+public class Drive_Train extends Robot {
 	Joystick m_Joystick;// 2 for shooting and driving 
  
  //  AnalogInput ai0;
@@ -28,28 +28,32 @@ public class Drive_Train extends Robot  {
     Talon robotFrontLeft;
     Talon robotFrontRight;
     Talon robotRearRight;
-    Talon   robotRearLeft;
-    public Drive_Train(){
-    robotFrontLeft= new Talon(0);
-     robotFrontRight= new Talon(3);
-     robotRearRight = new Talon(2);
-     robotRearLeft = new Talon(1);
+   	Talon robotRearLeft;
+    
+   	public Drive_Train() {
+   		robotFrontLeft= new Talon(0);
+   		robotFrontRight= new Talon(3);
+   		robotRearRight = new Talon(2);
+   		robotRearLeft = new Talon(1);
      
     	m_Joystick= new Joystick(0);
     	robotFrontLeft.setInverted(true);
     	robotRearLeft.setInverted(true);
     	m_robotDrive= new RobotDrive(robotFrontLeft,robotRearLeft,robotFrontRight,robotRearRight);
     }
-public  void telopPeriodic() {
-	double slowDown = 3.0;
-	double xLeft = m_Joystick.getX();
-	double rightSticktwist = m_Joystick.getTwist();
-	double yRight =  m_Joystick.getY();
+   	
+   	public void telopPeriodic() {
+   		double slowDown = 3.0;
+   		double xLeft = m_Joystick.getX();
+   		double yRight =  m_Joystick.getY();
+   		double rightSticktwist = m_Joystick.getTwist();
 			
-	double gyroAngle = 0;
-	m_robotDrive.mecanumDrive_Cartesian(xLeft, -yRight, - rightSticktwist, gyroAngle);
-	SmartDashboard.putNumber("xLeft", xLeft);
-	SmartDashboard.putNumber("yRight", yRight);
-	SmartDashboard.putNumber("yLeft", rightSticktwist);
+   		double gyroAngle = 0;
+   		
+		m_robotDrive.mecanumDrive_Cartesian(xLeft, -yRight, - rightSticktwist, gyroAngle);
+		
+		SmartDashboard.putNumber("xLeft", xLeft);
+		SmartDashboard.putNumber("yRight", yRight);
+		SmartDashboard.putNumber("yLeft", rightSticktwist);
 	}
 }
