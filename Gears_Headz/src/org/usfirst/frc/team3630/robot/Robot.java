@@ -22,6 +22,7 @@ public class Robot extends IterativeRobot {
 	Ultrasonics ultraDistance;
 	NavX navxmxp;
 	WheelEncoder rightFrontEnc;
+	Drive_Train mecCalc;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -35,9 +36,9 @@ public class Robot extends IterativeRobot {
 		navxmxp = new NavX();
 		navxmxp.NavXInit();
 		WheelEncoder rightFrontEnc = new WheelEncoder(); rightFrontEnc.encoderInit(0, 1);
-		 ultraDistance = new Ultrasonics();
-		 ultraDistance.ultraInit(1);
-		
+		ultraDistance = new Ultrasonics();
+		ultraDistance.ultraInit(1);
+		mecCalc = new Drive_Train();
 	}
 
 	/**
