@@ -82,8 +82,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		driveTrain.telopPeriodic();
 		navxmxp.teleopPeriodic();
-		rightFrontEnc.get();
-		ultraDistance.sensorPeriodic();
+		//rightFrontEnc.get();
+		//ultraDistance.sensorPeriodic();
 	}
 
 	/**

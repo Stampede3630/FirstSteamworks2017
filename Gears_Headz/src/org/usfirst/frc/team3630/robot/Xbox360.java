@@ -1,11 +1,11 @@
 package org.usfirst.frc.team3630.robot;
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class Xbox360 extends Robot{
 	
-	Joystick mecXbox = new Joystick(1);
+	XboxController mecXbox = new XboxController(1);
 	Button buttonA = new JoystickButton(mecXbox, 1);
 	Button buttonB = new JoystickButton(mecXbox, 2);
 	Button buttonX = new JoystickButton(mecXbox, 3);
