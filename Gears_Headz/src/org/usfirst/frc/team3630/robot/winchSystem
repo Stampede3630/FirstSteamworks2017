@@ -1,6 +1,6 @@
 package org.usfirst.frc.team3630.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.JoystickButton;
 import edu.wpi.first.wpilibj.RobotDrive;
 
 public class winchSystem extend robot{
@@ -8,11 +8,31 @@ public class winchSystem extend robot{
 
 	Talon winch =  new Talon(ContsClass.gearTaLonpwmNumber());
 
-	public void upWinch(Press){
+	public void upWinch(){
 		winch.set(0.5);
 	}
 	
 	public void stopWinch() {
 		winch.set(0.0);
+	}
+	
+	public int onOff() {
+		if (mecXbox.getRawButton(5)){
+			return(int) 1;
+		}
+		else{
+			return 0;
+		}
+	}
+	
+	public void activate{
+		switch(onOff()) {
+			case 1:
+				upWinch();
+				break;
+			default:
+				stopWinch();
+				break;
+		}
 	}
 }
