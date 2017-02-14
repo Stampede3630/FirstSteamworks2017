@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -83,7 +84,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		driveTrain.telopPeriodic();
-		navxmxp.teleopPeriodic();
+		//navxmxp.teleo6pPeriodic();
 		//rightFrontEnc.get();
 		ultraDistance.sensorPeriodic();
 		winch.telopMPeriodic();

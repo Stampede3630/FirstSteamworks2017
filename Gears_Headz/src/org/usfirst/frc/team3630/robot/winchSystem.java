@@ -6,12 +6,17 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 
 public class winchSystem {
+	Talon winch;
+	Joystick mecXbox;
+public winchSystem(){
+	 winch =  new Talon(4);
+	 mecXbox = new Joystick(0);
+}
 
+	
 
-	Talon winch =  new Talon(4);
-Joystick mecXbox = new Joystick(0);
 	public void upWinch(){
-		winch.set(0.5);
+		winch.set(1);
 	}
 	
 	public void stopWinch() {
