@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -22,6 +23,7 @@ public class Robot extends IterativeRobot {
 	Ultrasonics ultraDistance;
 	NavX navxmxp;
 	WheelEncoder rightFrontEnc;
+	winchSystem winch;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -33,10 +35,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto choices", chooser);
 		driveTrain = new Drive_Train();
 		navxmxp = new NavX();
-		navxmxp.NavXInit();
+		
 		WheelEncoder rightFrontEnc = new WheelEncoder(); rightFrontEnc.encoderInit(0, 1);
 		 ultraDistance = new Ultrasonics();
 		 ultraDistance.ultraInit(1);
+		 winch = new winchSystem();
 		
 	}
 
@@ -84,6 +87,8 @@ public class Robot extends IterativeRobot {
 		navxmxp.teleopPeriodic();
 		//rightFrontEnc.get();
 		//ultraDistance.sensorPeriodic();
+		winch.telopMPeriodic();
+
 	}
 
 	/**
