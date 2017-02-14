@@ -17,7 +17,10 @@ public class HomebrewMecanum extends Drive_Train {
 		wheelspeedResult[2] = velocityX - velocityY + ContsClass.mecanumPositionConstant * angularVelocityRad;
 		wheelspeedResult[3] = velocityX + velocityY + ContsClass.mecanumPositionConstant * angularVelocityRad;
 		
-		return wheelspeedResult;
+		/*for (int i = 0; i<3; i++){
+			wheelspeedResult[i] /= 0.0762;
+		}*/
+		return wheelspeedResult; //in rad/sec
 	}
 	//public void driveImplementation (float v1, float v2, float v3, float v4){}
 	public void motorDrive (Talon talon, double motorSpeed){
