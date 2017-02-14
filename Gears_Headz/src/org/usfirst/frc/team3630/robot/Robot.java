@@ -84,7 +84,6 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		driveTrain.telopPeriodic();
-		//navxmxp.teleo6pPeriodic();
 		//rightFrontEnc.get();
 		ultraDistance.sensorPeriodic();
 		winch.telopMPeriodic();
