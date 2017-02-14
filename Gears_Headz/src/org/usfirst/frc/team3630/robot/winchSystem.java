@@ -1,13 +1,15 @@
 package org.usfirst.frc.team3630.robot;
 
-import edu.wpi.first.wpilibj.JoystickButton;
+import edu.wpi.first.wpilibj.Joystick;
+
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Talon;
 
-public class winchSystem extend robot{
+public class winchSystem {
 
 
-	Talon winch =  new Talon(ContsClass.gearTaLonpwmNumber());
-
+	Talon winch =  new Talon(4);
+Joystick mecXbox = new Joystick(0);
 	public void upWinch(){
 		winch.set(0.5);
 	}
@@ -25,7 +27,7 @@ public class winchSystem extend robot{
 		}
 	}
 	
-	public void activate{
+	public void telopMPeriodic(){
 		switch(onOff()) {
 			case 1:
 				upWinch();

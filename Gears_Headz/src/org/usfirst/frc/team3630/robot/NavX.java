@@ -8,7 +8,7 @@ public class NavX extends Robot{
 	
 	AHRS ahrs;
 	
-	public void NavXInit() {
+	public NavX() {
 		ahrs = new AHRS(SPI.Port.kMXP);
 	}
 	

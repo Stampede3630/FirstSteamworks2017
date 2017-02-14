@@ -22,6 +22,7 @@ public class Robot extends IterativeRobot {
 	Ultrasonics ultraDistance;
 	NavX navxmxp;
 	WheelEncoder rightFrontEnc;
+	winchSystem winch;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -33,10 +34,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putData("Auto choices", chooser);
 		driveTrain = new Drive_Train();
 		navxmxp = new NavX();
-		navxmxp.NavXInit();
+		
 		WheelEncoder rightFrontEnc = new WheelEncoder(); rightFrontEnc.encoderInit(0, 1);
 		 ultraDistance = new Ultrasonics();
 		 ultraDistance.ultraInit(1);
+		 winch = new winchSystem();
 		
 	}
 
@@ -82,8 +84,9 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		driveTrain.telopPeriodic();
 		navxmxp.teleopPeriodic();
-		rightFrontEnc.get();
+		//rightFrontEnc.get();
 		ultraDistance.sensorPeriodic();
+		winch.telopMPeriodic();
 	}
 
 	/**
