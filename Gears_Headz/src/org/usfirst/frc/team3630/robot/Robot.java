@@ -20,9 +20,8 @@ public class Robot extends IterativeRobot {
 	SendableChooser<String> chooser = new SendableChooser<>();
 	Drive_Train driveTrain;
 	Ultrasonics ultraDistance;
-	NavX navxmxp;
+//	NavX navxmxp;
 	WheelEncoder rightFrontEnc;
-	Drive_Train mecCalc;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -33,12 +32,12 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
 		driveTrain = new Drive_Train();
-		navxmxp = new NavX();
-		navxmxp.NavXInit();
+	//	navxmxp = new NavX();
+		//navxmxp.NavXInit();
 		WheelEncoder rightFrontEnc = new WheelEncoder(); rightFrontEnc.encoderInit(0, 1);
 		ultraDistance = new Ultrasonics();
 		ultraDistance.ultraInit(1);
-		mecCalc = new Drive_Train();
+		//mecCalc = new Drive_Train();
 	}
 
 	/**
@@ -82,8 +81,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		driveTrain.telopPeriodic();
-		navxmxp.teleopPeriodic();
-		rightFrontEnc.get();
+	//	navxmxp.teleopPeriodic();
+		//rightFrontEnc.get();
 		ultraDistance.sensorPeriodic();
 	}
 

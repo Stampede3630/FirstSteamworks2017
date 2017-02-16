@@ -1,11 +1,11 @@
 package org.usfirst.frc.team3630.robot;
 
 
-import java.lang.reflect.Array;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Drive_Train extends Robot  {
 	Joystick m_Joystick;// 2 for shooting and driving 
  
@@ -33,13 +33,16 @@ public class Drive_Train extends Robot  {
     public Drive_Train(){
     
     	m_Joystick= new Joystick(0);
-    	m_robotDrive= new RobotDrive(2,0,1,3);
-    	mecCalc = new HomebrewMecanum();
+    	
+    	//mecCalc = new HomebrewMecanum();
     	frontLeft = new Talon(ContsClass.driveMotorFrontLeft);
     	frontRight = new Talon(ContsClass.driveMotorFrontRight);
     	bottomLeft = new Talon(ContsClass.driveMotorBottomLeft);
     	bottomRight = new Talon(ContsClass.driveMotorBottomRight);
+    	bottomLeft.setInverted(true);
+    	frontLeft.setInverted(true);
     	
+    //	m_robotDrive= new RobotDrive(frontLeft,frontRight,bottomLeft,bottomRight);
     }
 
 public  void telopPeriodic(){
@@ -50,12 +53,19 @@ public  void telopPeriodic(){
 	//Homebrew Version
 	 double[] wheelSpeeds;
 	 wheelSpeeds = new double[4];
-	 wheelSpeeds = mecCalc.mecanumCalc(m_Joystick.getX(), m_Joystick.getTwist(), m_Joystick.getY());
+	 wheelSpeeds = HomebrewMecanum.mecanumCalc(m_Joystick.getY(), -m_Joystick.getX(), -m_Joystick.getTwist());
+	 SmartDashboard.putNumber("Wheel0", wheelSpeeds[0]);
+	 SmartDashboard.putNumber("Wheel1", wheelSpeeds[1]);
+	 SmartDashboard.putNumber("Wheel2", wheelSpeeds[2]);
+	 SmartDashboard.putNumber("Wheel3", wheelSpeeds[3]);
+
 	 
-	 mecCalc.motorDrive(frontLeft, wheelSpeeds[0]);
-	 mecCalc.motorDrive(bottomLeft, wheelSpeeds[1]);
-	 mecCalc.motorDrive(bottomRight, wheelSpeeds[2]);
-	 mecCalc.motorDrive(frontRight, wheelSpeeds[3]);
+	
+	 HomebrewMecanum.motorDrive(frontLeft, wheelSpeeds[0]);
+	 HomebrewMecanum.motorDrive(bottomLeft, wheelSpeeds[1]);
+	 HomebrewMecanum.motorDrive(bottomRight, wheelSpeeds[2]);
+	 HomebrewMecanum.motorDrive(frontRight, wheelSpeeds[3]);
+	 
 	 	
 }
 }
