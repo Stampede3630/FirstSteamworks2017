@@ -30,26 +30,21 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
-		SmartDashboard.putData("Auto choices", chooser);
+		//chooser.addDefault("Default Auto", defaultAuto);
+		//hooser.addObject("My Auto", customAuto);
+		//SmartDashboard.putData("Auto choices", chooser);
 		driveTrain = new Drive_Train();
-<<<<<<< HEAD
-		navxmxp = new NavX();
-		
-		WheelEncoder rightFrontEnc = new WheelEncoder(); rightFrontEnc.encoderInit(0, 1);
-		 ultraDistance = new Ultrasonics();
-		 ultraDistance.ultraInit(1);
+		//navxmxp = new NavX();
+		//navxmxp.NavXInit();
+
+		//WheelEncoder rightFrontEnc = new WheelEncoder(); rightFrontEnc.encoderInit(0, 1);
+		// ultraDistance = new Ultrasonics();
+		// ultraDistance.ultraInit(1);
 		 winch = new winchSystem();
 		
-=======
 	//	navxmxp = new NavX();
-		//navxmxp.NavXInit();
-		WheelEncoder rightFrontEnc = new WheelEncoder(); rightFrontEnc.encoderInit(0, 1);
-		ultraDistance = new Ultrasonics();
-		ultraDistance.ultraInit(1);
-		//mecCalc = new Drive_Train();
->>>>>>> origin/newmecanumdrive
+		//WheelEncoder rightFrontEnc = new WheelEncoder(); rightFrontEnc.encoderInit(0, 1);
+
 	}
 
 	/**
@@ -93,17 +88,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		driveTrain.telopPeriodic();
-<<<<<<< HEAD
 		navxmxp.teleopPeriodic();
 		//rightFrontEnc.get();
 		//ultraDistance.sensorPeriodic();
 		winch.telopMPeriodic();
 
-=======
-	//	navxmxp.teleopPeriodic();
-		//rightFrontEnc.get();
-		ultraDistance.sensorPeriodic();
->>>>>>> origin/newmecanumdrive
 	}
 
 	/**
