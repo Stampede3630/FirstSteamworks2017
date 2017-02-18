@@ -12,8 +12,8 @@ public static final int joytsick_Gear_ButonOne = 1;
 
 public static final int driveMotorBottomLeft = 1;
 public static final int driveMotorBottomRight = 2;
-public static final int gearLimmitswitchIsOPEN = 1;
-public static final int gearLimmitswitchIsClosed = 2;
+public static final int gearLimmitswitchIsOPEN = 9;
+public static final int gearLimmitswitchIsClosed = 8;
 public static final double mecanumPositionConstant = 90;
 public static final int gearTalonPWM = 4;
 public static final double gearSpeed = .5;

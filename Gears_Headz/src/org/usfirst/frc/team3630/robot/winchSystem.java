@@ -9,7 +9,7 @@ public class winchSystem {
 	Talon winch;
 	Joystick mecXbox;
 public winchSystem(){
-	 winch =  new Talon(4);
+	 winch =  new Talon(5);
 	 mecXbox = new Joystick(0);
 }
 
