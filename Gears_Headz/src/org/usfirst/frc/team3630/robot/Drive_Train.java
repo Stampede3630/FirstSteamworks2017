@@ -53,7 +53,7 @@ public  void telopPeriodic(){
 	//Homebrew Version
 	 double[] wheelSpeeds;
 	 wheelSpeeds = new double[4];
-	 wheelSpeeds = HomebrewMecanum.mecanumCalc(m_Joystick.getY(), m_Joystick.getX(), -m_Joystick.getZ());
+	 wheelSpeeds = m_Joystick.getRawButton(10)? HomebrewMecanum.mecanumCalc(m_Joystick.getY()*2,m_Joystick.getX()*2, m_Joystick.getZ()):HomebrewMecanum.mecanumCalc(m_Joystick.getY(),m_Joystick.getX(), m_Joystick.getZ()) ;
 	 SmartDashboard.putNumber("Wheel0", wheelSpeeds[0]);
 	 SmartDashboard.putNumber("Wheel1", wheelSpeeds[1]);
 	 SmartDashboard.putNumber("Wheel2", wheelSpeeds[2]);
