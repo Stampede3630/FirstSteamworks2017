@@ -21,6 +21,7 @@ public class Robot extends IterativeRobot {
 	SendableChooser<String> chooser = new SendableChooser<>();
 	Drive_Train driveTrain;
 	Ultrasonics ultraDistance;
+	GearsManip gears;
 //	NavX navxmxp;
 	WheelEncoder rightFrontEnc;
 	winchSystem winch;
@@ -41,7 +42,7 @@ public class Robot extends IterativeRobot {
 		// ultraDistance = new Ultrasonics();
 		// ultraDistance.ultraInit(1);
 		 winch = new winchSystem();
-		
+		gears= new GearsManip();
 	//	navxmxp = new NavX();
 		//WheelEncoder rightFrontEnc = new WheelEncoder(); rightFrontEnc.encoderInit(0, 1);
 
@@ -88,11 +89,11 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		driveTrain.telopPeriodic();
-		navxmxp.teleopPeriodic();
+		//navxmxp.teleopPeriodic();
 		//rightFrontEnc.get();
 		//ultraDistance.sensorPeriodic();
 		winch.telopMPeriodic();
-
+		gears.telopPeridic();
 	}
 
 	/**
