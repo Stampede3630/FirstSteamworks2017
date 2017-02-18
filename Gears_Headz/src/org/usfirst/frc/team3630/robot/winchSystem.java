@@ -16,8 +16,9 @@ public winchSystem(){
 	
 
 	public void upWinch(){
-		winch.set(1);
+		winch.set(-1);
 	}
+	
 	
 	public void stopWinch() {
 		winch.set(0.0);
