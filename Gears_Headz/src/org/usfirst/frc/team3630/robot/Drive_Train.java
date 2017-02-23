@@ -26,22 +26,11 @@ public class Drive_Train  {
 
     // initialize drives 
     RobotDrive m_robotDrive;
-    HomebrewMecanum mecCalc; 
-    Talon frontLeft;
-    Talon frontRight;
-    Talon bottomLeft;
-    Talon bottomRight;
+    HomebrewMecanum mecanumDrive; 
 
    public Drive_Train() {
-    	frontLeft = new Talon(Consts.driveMotorFrontLeft);
-    	frontRight = new Talon(Consts.driveMotorFrontRight);
-    	bottomLeft = new Talon(Consts.driveMotorBottomLeft);
-    	bottomRight = new Talon(Consts.driveMotorBottomRight);	
-     
-    	m_Joystick= new Joystick(Consts.joystickComPort);
-    
-    	bottomLeft.setInverted(true);
-    	frontLeft.setInverted(true);
+	   mecanumDrive = new HomebrewMecanum(Consts.driveMotorFrontLeft,Consts.driveMotorBottomLeft, Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
+	   m_Joystick= new Joystick(Consts.joystickComPort);
     	
     }
 
@@ -51,21 +40,7 @@ public  void telopPeriodic(){
 	 * m_robotDrive.mecanumDrive_Cartesian(m_Joystick.getX()/5, m_Joystick.getTwist(), m_Joystick.getY(),0);
 	 */
 	//Homebrew Version
-	 double[] wheelSpeeds;
-	 wheelSpeeds = new double[4];
-	 wheelSpeeds = m_Joystick.getRawButton(10)? HomebrewMecanum.mecanumCalc(m_Joystick.getY()*2,m_Joystick.getX()*2, m_Joystick.getZ()):HomebrewMecanum.mecanumCalc(m_Joystick.getY(),m_Joystick.getX(), m_Joystick.getZ()) ;
-	 SmartDashboard.putNumber("Wheel0", wheelSpeeds[0]);
-	 SmartDashboard.putNumber("Wheel1", wheelSpeeds[1]);
-	 SmartDashboard.putNumber("Wheel2", wheelSpeeds[2]);
-	 SmartDashboard.putNumber("Wheel3", wheelSpeeds[3]);
 
-	 
-	
-	 HomebrewMecanum.motorDrive(frontLeft, wheelSpeeds[0]);
-	 HomebrewMecanum.motorDrive(bottomLeft, wheelSpeeds[1]);
-	 HomebrewMecanum.motorDrive(bottomRight, wheelSpeeds[2]);
-	 HomebrewMecanum.motorDrive(frontRight, wheelSpeeds[3]);
-	 
 	 	
 }
 }
