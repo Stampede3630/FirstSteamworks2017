@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3630.robot;
+/*package org.usfirst.frc.team3630.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.kauailabs.navx.frc.AHRS;
@@ -13,7 +13,7 @@ public class NavX extends Robot{
 	}
 	
 	public void teleopPeriodic() {
-		SmartDashboard.putNumber("Yaw", ahrs.getYaw());
+		/*SmartDashboard.putNumber("Yaw", ahrs.getYaw());
 		SmartDashboard.putNumber("Pitch", ahrs.getPitch());
 		SmartDashboard.putBoolean("Connected", ahrs.isConnected());
 		SmartDashboard.putBoolean("Calibrating", ahrs.isCalibrating());
@@ -30,8 +30,11 @@ public class NavX extends Robot{
 		SmartDashboard.putNumber("Y Velocity", ahrs.getVelocityY());
 		SmartDashboard.putNumber("X Displacement", ahrs.getDisplacementX());
 		SmartDashboard.putNumber("Y Displacement", ahrs.getDisplacementY());
-
+	* /
+		ahrs.startLiveWindowMode();
+	
 	}
 
 
 }
+*/

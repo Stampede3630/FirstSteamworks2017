@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.JoystickBase;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Drive_Train extends Robot  {
+public class Drive_Train  {
 
 	Joystick m_Joystick;// 2 for shooting and driving 
  
@@ -33,12 +33,12 @@ public class Drive_Train extends Robot  {
     Talon bottomRight;
 
    public Drive_Train() {
-    	frontLeft = new Talon(ContsClass.driveMotorFrontLeft);
-    	frontRight = new Talon(ContsClass.driveMotorFrontRight);
-    	bottomLeft = new Talon(ContsClass.driveMotorBottomLeft);
-    	bottomRight = new Talon(ContsClass.driveMotorBottomRight);	
+    	frontLeft = new Talon(Consts.driveMotorFrontLeft);
+    	frontRight = new Talon(Consts.driveMotorFrontRight);
+    	bottomLeft = new Talon(Consts.driveMotorBottomLeft);
+    	bottomRight = new Talon(Consts.driveMotorBottomRight);	
      
-    	m_Joystick= new Joystick(0);
+    	m_Joystick= new Joystick(Consts.joystickComPort);
     
     	bottomLeft.setInverted(true);
     	frontLeft.setInverted(true);

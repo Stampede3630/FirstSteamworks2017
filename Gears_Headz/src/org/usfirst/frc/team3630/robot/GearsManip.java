@@ -4,26 +4,26 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Talon;
 
 public class GearsManip {
-	Talon gearMotor = new Talon(ContsClass.gearTalonPWM );
-	Joystick mecxBox= new Joystick(ContsClass.joytsickChanel);
+	Talon gearMotor = new Talon(Consts.gearTalonPWM );
+	Joystick m_joystick= new Joystick(Consts.joytsickChanel);
 	
 	DigitalInput limitOpen; 
 	DigitalInput limitClose; 
 
-	public void GearManip(){
-		limitOpen= new DigitalInput(ContsClass.gearLimmitswitchIsOPEN);
-		limitClose= new DigitalInput(ContsClass.gearLimmitswitchIsClosed);
+	public GearsManip(){
+		limitOpen= new DigitalInput(Consts.gearLimitSwitchOpen);
+		limitClose= new DigitalInput(Consts.gearLimitSwitchClosed);
 	}
 	
 	public void open(){
-		if(limitOpen.get()== false ){
-			gearMotor.set(-ContsClass.gearSpeed);
+		if(true){
+			gearMotor.set(-Consts.gearSpeed);
 		}
 	}
 	
 	public void close(){
-		if(limitClose.get()== false ){	
-			gearMotor.set(ContsClass.gearSpeed);
+		if(true){	
+			gearMotor.set(Consts.gearSpeed);
 		}
 	}
 	
@@ -31,10 +31,10 @@ public class GearsManip {
 		gearMotor.set(0);
 	}
 	public  int getValue(){
-		if (mecxBox.getRawButton(ContsClass.joytsick_Gear_ButonZero)){
+		if (m_joystick.getRawButton(Consts.joytsick_Gear_ButonZero)){
 			return (int)1;
 		}
-		else if(mecxBox.getRawButton(ContsClass.joytsick_Gear_ButonOne)){
+		else if(m_joystick.getRawButton(Consts.joytsick_Gear_ButonOne)){
 			return (int)2;
 		}
 		else{
