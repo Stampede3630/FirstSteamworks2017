@@ -1,25 +1,31 @@
 package org.usfirst.frc.team3630.robot;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-public class Xbox360 extends Robot{
+public class Xbox360 extends XboxController{
 	
-	XboxController mecXbox = new XboxController(1);
-	Button buttonA = new JoystickButton(mecXbox, 1);
-	Button buttonB = new JoystickButton(mecXbox, 2);
-	Button buttonX = new JoystickButton(mecXbox, 3);
-	Button buttonY = new JoystickButton(mecXbox, 4);
-	Button leftStick = new JoystickButton(mecXbox, 5);
-	Button rightStick = new JoystickButton(mecXbox, 6);
-	Button dPadUp = new JoystickButton(mecXbox, 7);
-	Button dPadDown = new JoystickButton(mecXbox, 8);
-	Button dPadLeft = new JoystickButton(mecXbox, 9);
-	Button dPadRight = new JoystickButton(mecXbox, 10);
-	Button buttonRightFront = new JoystickButton(mecXbox, 11);
-	Button buttonLeftFront = new JoystickButton(mecXbox, 12);
-	Button rightTrigger = new JoystickButton(mecXbox, 13);
-	Button leftTrigger = new JoystickButton(mecXbox, 14);
+
+
+	public static Button buttonA, buttonB, buttonX, buttonY, leftStick, rightStick, dPadUp, dPadDown, dPadLeft, dPadRight, rightFront, leftFront, rightTrigger, leftTrigger;
 	
 	
+	public Xbox360 (int comPort){
+	super (comPort);
+	buttonA = new JoystickButton(this, 1);
+	buttonB = new JoystickButton(this, 2);
+	buttonX = new JoystickButton(this, 3);
+	buttonY = new JoystickButton(this, 4);
+	leftStick = new JoystickButton(this, 5);
+	rightStick = new JoystickButton(this, 6);
+	dPadUp = new JoystickButton(this, 7);
+	dPadDown = new JoystickButton(this, 8);
+	dPadLeft = new JoystickButton(this, 9);
+	dPadRight = new JoystickButton(this, 10);
+	rightFront = new JoystickButton(this, 11);
+	leftFront = new JoystickButton(this, 12);
+	rightTrigger = new JoystickButton(this, 13);
+	leftTrigger = new JoystickButton(this, 14);
+	}
 }
