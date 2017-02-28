@@ -23,10 +23,6 @@ public class Robot extends IterativeRobot {
 	Ultrasonics ultraDistance;
 	GearsManip gears;
 //	NavX navxmxp;
-	WheelEncoder frontRightWheelEncoder;
-	WheelEncoder frontLeftWheelEncoder;
-	WheelEncoder rearRightWheelEncoder;
-	WheelEncoder rearLeftWheelEncoder;
 	WinchSystem winch;
 	/**
 	 * This function is run when the robot is first started up and should be

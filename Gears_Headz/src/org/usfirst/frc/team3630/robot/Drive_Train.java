@@ -39,7 +39,7 @@ public  void telopPeriodic(){
 	 * m_robotDrive.mecanumDrive_Cartesian(m_Joystick.getX()/5, m_Joystick.getTwist(), m_Joystick.getY(),0);
 	 */
 	//Homebrew Version
-	mecanumDrive.driveImplementation(m_Joystick.getY(), m_Joystick.getX(), m_Joystick.getTwist(), true);
+	mecanumDrive.driveImplementation(-m_Joystick.getY(),-m_Joystick.getX(),-m_Joystick.getTwist(), true);
 	 	
 }
 }
