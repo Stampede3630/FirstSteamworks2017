@@ -25,32 +25,31 @@ public static final int driveEncoderRearRightA = 6;
 public static final int driveEncoderRearRightB = 7;
 
 //Gear PWM Assignment
-public static final int gearTalonPWM = 4;
+public static final int gearTalonPWM = 5;
 
 //Joystick Assignments
 public static final int joytsickChanel = 0;
-public static final int joytsick_Gear_ButonZero = 0;
-public static final int joytsick_Gear_ButonOne = 1;
-
+public static final int openButton = 2;
+public static final int closeButton = 1;
+public static final int joystickWinchButton = 5;
 //Gear limit switch DIO Assignments
-public static final int gearLimitSwitchOpen = 9;
-public static final int gearLimitSwitchClosed = 8;
+public static final int gearLimitSwitchOpen = 8;
+public static final int gearLimitSwitchClosed = 9;
 
 //Gear PWN and speed constant
-public static final int gearsPWM = 5;
 public static final double gearSpeed = 1;
 
 //Assigned joystick com port
 public static final int joystickComPort = 0;
 
 //Winch talon PWM assignment
-public static final int winchTalonPWM = 5;
+public static final int winchTalonPWM = 4;
 
 //winch engaged DIO pin assignment
-public static final int winchStopPin = 12;
+public static final int winchStopPin = 10;
 
 //winch encoder assignment
-public static final int winchEncoderPinA = 10;
-public static final int winchEncoderPinB = 11;
+public static final int winchEncoderPinA = 11;
+public static final int winchEncoderPinB = 12;
 
 }

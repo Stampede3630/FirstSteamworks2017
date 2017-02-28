@@ -41,13 +41,9 @@ public class Robot extends IterativeRobot {
 		//navxmxp = new NavX();
 		//navxmxp.NavXInit();
 
-		 frontLeftWheelEncoder = new WheelEncoder(0, 1, false);;
-		 rearLeftWheelEncoder = new WheelEncoder(2, 3, false);;
-		 frontRightWheelEncoder = new WheelEncoder(4, 5, true);
-		 rearRightWheelEncoder = new WheelEncoder(6, 7, true);;
 		// ultraDistance = new Ultrasonics();
 		// ultraDistance.ultraInit(1);
-		 winch = new WinchSystem();
+		winch = new WinchSystem();
 		gears= new GearsManip();
 	//	navxmxp = new NavX();
 		//WheelEncoder rightFrontEnc = new WheelEncoder(); rightFrontEnc.encoderInit(0, 1);
@@ -98,27 +94,9 @@ public class Robot extends IterativeRobot {
 		//navxmxp.teleopPeriodic();
 		//rightFrontEnc.get();
 		//ultraDistance.sensorPeriodic();
-		winch.teleopPeriodic();
+		winch.telopPeriodic();
 		gears.telopPeridic();
-		SmartDashboard.putNumber("FL Wheel Raw Value", frontLeftWheelEncoder.getRaw());
-		SmartDashboard.putNumber("FL Wheel Radians", frontLeftWheelEncoder.getDistRadians());
-		SmartDashboard.putNumber("FL Wheel Degrees", frontLeftWheelEncoder.getDistDegrees());
-		SmartDashboard.putNumber("FL Wheel Inches", frontLeftWheelEncoder.getDistInches());
 		
-		SmartDashboard.putNumber("RL Wheel Raw Value", rearLeftWheelEncoder.getRaw());
-		SmartDashboard.putNumber("RL Wheel Radians", rearLeftWheelEncoder.getDistRadians());
-		SmartDashboard.putNumber("RL Wheel Degrees", rearLeftWheelEncoder.getDistDegrees());
-		SmartDashboard.putNumber("RL Wheel Inches", rearLeftWheelEncoder.getDistInches());
-		
-		SmartDashboard.putNumber("FR Wheel Raw Value", frontRightWheelEncoder.getRaw());
-		SmartDashboard.putNumber("FR Wheel Radians", frontRightWheelEncoder.getDistRadians());
-		SmartDashboard.putNumber("FR Wheel Degrees", frontRightWheelEncoder.getDistDegrees());
-		SmartDashboard.putNumber("FR Wheel Inches", frontRightWheelEncoder.getDistInches());
-
-		SmartDashboard.putNumber("RR Wheel Raw Value", rearRightWheelEncoder.getRaw());
-		SmartDashboard.putNumber("RR Wheel Radians", rearRightWheelEncoder.getDistRadians());
-		SmartDashboard.putNumber("RR Wheel Degrees", rearRightWheelEncoder.getDistDegrees());
-		SmartDashboard.putNumber("RR Wheel Inches", rearRightWheelEncoder.getDistInches());
 	}
 
 	/**

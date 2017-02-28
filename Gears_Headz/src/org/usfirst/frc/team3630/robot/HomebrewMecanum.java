@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.PIDOutput;
 public class HomebrewMecanum {
 	private static Talon fL, rL, fR, rR;
 	private WheelEncoder fLe, rLe, fRe, rRe;
-	private PIDController fLPID, rLPID, frPID, rRPID;
-	private PIDOutput fLOut, rLOut, fROut, rROut;
+//	private PIDController fLPID, rLPID, frPID, rRPID;
+//	private PIDOutput fLOut, rLOut, fROut, rROut;
 	private double kP, kI, kD;
 	/**
 	 * @param frontLeft talon for front left motor
@@ -28,6 +28,8 @@ public class HomebrewMecanum {
 		fRe = new WheelEncoder(Consts.driveEncoderFrontRightA, Consts.driveEncoderFrontRightB, true);
 		rRe = new WheelEncoder(Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, true);
 
+		fR.setInverted(true);
+		rR.setInverted(true);
 	}
 	/**
 	 * @param frontLeft pin for front left motor
@@ -45,6 +47,9 @@ public class HomebrewMecanum {
 		rLe = new WheelEncoder(Consts.driveEncoderRearLeftA, Consts.driveEncoderRearLeftB, false);
 		fRe = new WheelEncoder(Consts.driveEncoderFrontRightA, Consts.driveEncoderFrontRightB, true);
 		rRe = new WheelEncoder(Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, true);
+
+		fR.setInverted(true);
+		rR.setInverted(true);
 	}
 	/**
 	 * @param velocityX desired velocity in x
@@ -54,7 +59,7 @@ public class HomebrewMecanum {
 	 * @return 4 wheel speeds, from the top left counterclockwise.
 	 */
 
-	public static double[] mecanumCalc (double velocityX, double velocityY, double angularVelocityDeg, boolean postDiagnostics){
+	public double[] mecanumCalc (double velocityX, double velocityY, double angularVelocityDeg, boolean postDiagnostics){
 		//This function takes the velocity in x and y and theta and converts them to
 
 
@@ -86,12 +91,13 @@ public class HomebrewMecanum {
 		//TODO: THIS
 		return 0;
 	}
-	public static void motorDrive (Talon talon, double motorSpeed, boolean postDiagnostics){
+	public void motorDrive (Talon talon, double motorSpeed, boolean postDiagnostics){
 		//This function maps the motor drive to the talon speed. More tuning from the constant is needed.
 		double adjustedMotorSpeed = motorSpeed * Consts.motorDriveAdjustment;
 		talon.set(adjustedMotorSpeed);
 		System.out.println(adjustedMotorSpeed);
 		SmartDashboard.putNumber("adjusted"+String.valueOf(talon.getChannel()), talon.getSpeed());
+		SmartDashboard.putNumber("Encoder"+String.valueOf(talon.getChannel()), talon.getSpeed());
 	}
 
 	/**
@@ -101,14 +107,14 @@ public class HomebrewMecanum {
 	 * @param angularVelocityDeg desired angular velocity in degrees
 	 * @param postDiagnostics whether you want smart dashboard to put wheel and input velocities. default should be false
 	 */
-	public static void driveImplementation (double velocityX, double velocityY, double angularVelocityDeg, boolean postDiagnostics){
+	public void driveImplementation (double velocityX, double velocityY, double angularVelocityDeg, boolean postDiagnostics){
 
 		double [] wheelSpeeds = mecanumCalc(velocityX, velocityY, angularVelocityDeg, postDiagnostics);
 
-		HomebrewMecanum.motorDrive(fL, wheelSpeeds[0], postDiagnostics);
-		HomebrewMecanum.motorDrive(rL, wheelSpeeds[1], postDiagnostics);
-		HomebrewMecanum.motorDrive(rR, wheelSpeeds[2], postDiagnostics);
-		HomebrewMecanum.motorDrive(fR, wheelSpeeds[3], postDiagnostics);
+		motorDrive(fL, wheelSpeeds[0], postDiagnostics);
+		motorDrive(rL, wheelSpeeds[1], postDiagnostics);
+		motorDrive(rR, wheelSpeeds[2], postDiagnostics);
+		motorDrive(fR, wheelSpeeds[3], postDiagnostics);
 
 
 

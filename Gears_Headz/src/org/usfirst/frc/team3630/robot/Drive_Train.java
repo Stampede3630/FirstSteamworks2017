@@ -25,8 +25,7 @@ public class Drive_Train  {
     
 
     // initialize drives 
-    RobotDrive m_robotDrive;
-    HomebrewMecanum mecanumDrive; 
+	HomebrewMecanum mecanumDrive; 
 
    public Drive_Train() {
 	   mecanumDrive = new HomebrewMecanum(Consts.driveMotorFrontLeft,Consts.driveMotorBottomLeft, Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
@@ -40,7 +39,7 @@ public  void telopPeriodic(){
 	 * m_robotDrive.mecanumDrive_Cartesian(m_Joystick.getX()/5, m_Joystick.getTwist(), m_Joystick.getY(),0);
 	 */
 	//Homebrew Version
-
+	mecanumDrive.driveImplementation(m_Joystick.getY(), m_Joystick.getX(), m_Joystick.getTwist(), true);
 	 	
 }
 }
