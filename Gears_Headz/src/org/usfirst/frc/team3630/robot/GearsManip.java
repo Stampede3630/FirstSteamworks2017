@@ -2,6 +2,7 @@ package org.usfirst.frc.team3630.robot;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GearsManip {
 	Talon gearMotor = new Talon(Consts.gearTalonPWM );
@@ -16,25 +17,28 @@ public class GearsManip {
 	}
 	
 	public void open(){
-		if(true){
-			gearMotor.set(-Consts.gearSpeed);
+		if(limitOpen.get()){
+			gearMotor.set(-Consts.gearSpeed/2);
 		}
+		else stop();
 	}
 	
 	public void close(){
-		if(true){	
-			gearMotor.set(Consts.gearSpeed);
+		if(limitClose.get()){	
+		
+			gearMotor.set(Consts.gearSpeed/2);
 		}
+		else stop();
 	}
 	
 	public void stop(){
 		gearMotor.set(0);
 	}
 	public  int getValue(){
-		if (m_joystick.getRawButton(Consts.joytsick_Gear_ButonZero)){
+		if (m_joystick.getRawButton(Consts.openButton)){
 			return (int)1;
 		}
-		else if(m_joystick.getRawButton(Consts.joytsick_Gear_ButonOne)){
+		else if(m_joystick.getRawButton(Consts.closeButton)){
 			return (int)2;
 		}
 		else{
@@ -43,6 +47,10 @@ public class GearsManip {
 	}
 		
 		public void telopPeridic(){
+			SmartDashboard.putBoolean("LimitOpen", limitOpen.get());
+			SmartDashboard.putBoolean("LimitClose", limitClose.get());
+			SmartDashboard.putBoolean("OpenButton", m_joystick.getRawButton(Consts.openButton));
+			SmartDashboard.putBoolean("CloseButton", m_joystick.getRawButton(Consts.closeButton));
 			switch (getValue()) {
 				case 1:
 					open();
