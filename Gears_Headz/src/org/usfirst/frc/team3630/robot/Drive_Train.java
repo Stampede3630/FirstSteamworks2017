@@ -34,7 +34,7 @@ public class Drive_Train  {
     }
 
    public double getRoundX() {
-	   double result = m_Joystick.getX(GenericHID.Hand.kRight);
+	   double result = m_Joystick.getX(GenericHID.Hand.kLeft);
 	   result *= 50;
 	   result = Math.round(result);
 	   result /= 50;
@@ -43,7 +43,7 @@ public class Drive_Train  {
    }
    
    public double getRoundY() {
-	   double result = m_Joystick.getY(GenericHID.Hand.kRight);
+	   double result = m_Joystick.getY(GenericHID.Hand.kLeft);
 	   result *= 50;
 	   result = Math.round(result);
 	   result /= 50;
@@ -53,10 +53,10 @@ public class Drive_Train  {
    }
    
    public double getRoundTwist() {
-	   double result = m_Joystick.getX(GenericHID.Hand.kLeft);
-	   result *= 50;
+	   double result = m_Joystick.getX(GenericHID.Hand.kRight);
+	   result *= 100;
 	   result = Math.round(result);
-	   result /= 50;
+	   result /= 100;
 	   SmartDashboard.putNumber("Joystick 2", result);
 
 	   return result;

@@ -2,7 +2,7 @@ package org.usfirst.frc.team3630.robot;
 
 
 public class ContsClass {
-public static final double motorDriveAdjustment = .3;
+public static final double motorDriveAdjustment = .45;
 
 public static final int driveMotorFrontLeft = 0;
 public static final int driveMotorFrontRight = 3;
