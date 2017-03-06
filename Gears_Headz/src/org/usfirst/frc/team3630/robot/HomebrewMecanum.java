@@ -1,17 +1,36 @@
 package org.usfirst.frc.team3630.robot;
 
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class HomebrewMecanum {
-	private Wheel fL, rL, fR, rR;
-
+	private static Talon fL, rL, fR, rR;
+	private WheelEncoder fLe, rLe, fRe, rRe;
 //	private PIDController fLPID, rLPID, frPID, rRPID;
 //	private PIDOutput fLOut, rLOut, fROut, rROut;
 	private double kP, kI, kD;
+	/**
+	 * @param frontLeft talon for front left motor
+	 * @param rearLeft talon for rear left motor
+	 * @param frontRight talon for front right motor
+	 * @param rearRight talon for rear right motor
+	 */
+	public HomebrewMecanum (Talon frontLeft, Talon rearLeft, Talon frontRight, Talon rearRight){
+		fL = frontLeft;
+		rL = rearLeft;
+		fR = frontRight;
+		rR = rearRight;
 
+		fLe = new WheelEncoder(Consts.driveEncoderFrontLeftA, Consts.driveEncoderFrontLeftB, false);
+		rLe = new WheelEncoder(Consts.driveEncoderRearLeftA, Consts.driveEncoderRearLeftB, false);
+		fRe = new WheelEncoder(Consts.driveEncoderFrontRightA, Consts.driveEncoderFrontRightB, true);
+		rRe = new WheelEncoder(Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, true);
+
+		fR.setInverted(true);
+		rR.setInverted(true);
+	}
 	/**
 	 * @param frontLeft pin for front left motor
 	 * @param rearLeft pin for rear left motor
@@ -19,10 +38,18 @@ public class HomebrewMecanum {
 	 * @param rearRight pin for rear right motor
 	 */
 	public HomebrewMecanum (int frontLeft, int rearLeft, int frontRight, int rearRight){
-		fL = new Wheel(Consts.driveEncoderFrontLeftA, Consts.driveEncoderFrontLeftB, frontLeft, false);
-		rL = new Wheel(Consts.driveEncoderRearLeftA, Consts.driveEncoderRearLeftB, rearLeft, false);
-		fR = new Wheel(Consts.driveEncoderFrontRightA, Consts.driveEncoderFrontRightB, frontRight, true);
-		rR = new Wheel(Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, rearRight, true);
+		fL = new Talon(frontLeft);
+		rL = new Talon(rearLeft);
+		fR = new Talon(frontRight);
+		rR = new Talon(rearRight);
+
+		fLe = new WheelEncoder(Consts.driveEncoderFrontLeftA, Consts.driveEncoderFrontLeftB, false);
+		rLe = new WheelEncoder(Consts.driveEncoderRearLeftA, Consts.driveEncoderRearLeftB, false);
+		fRe = new WheelEncoder(Consts.driveEncoderFrontRightA, Consts.driveEncoderFrontRightB, true);
+		rRe = new WheelEncoder(Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, true);
+
+		fR.setInverted(true);
+		rR.setInverted(true);
 	}
 	/**
 	 * @param velocityX desired velocity in x
@@ -60,14 +87,17 @@ public class HomebrewMecanum {
 	}
 
 	
-
-	public void motorDrive (Wheel myWheel, double motorSpeed, boolean postDiagnostics){
+	private static double wheelPID () {
+		//TODO: THIS
+		return 0;
+	}
+	public void motorDrive (Talon talon, double motorSpeed, boolean postDiagnostics){
 		//This function maps the motor drive to the talon speed. More tuning from the constant is needed.
 		double adjustedMotorSpeed = motorSpeed * Consts.motorDriveAdjustment;
-		myWheel.setWheelSpeed(adjustedMotorSpeed);
+		talon.set(adjustedMotorSpeed);
 		System.out.println(adjustedMotorSpeed);
-		SmartDashboard.putNumber("adjusted"+String.valueOf(myWheel.talon.getChannel()), myWheel.talon.getSpeed());
-		SmartDashboard.putNumber("Encoder"+String.valueOf(myWheel.talon.getChannel()), myWheel.talon.getSpeed());
+		SmartDashboard.putNumber("adjusted"+String.valueOf(talon.getChannel()), talon.getSpeed());
+		SmartDashboard.putNumber("Encoder"+String.valueOf(talon.getChannel()), talon.getSpeed());
 	}
 
 	/**
@@ -87,19 +117,6 @@ public class HomebrewMecanum {
 		motorDrive(fR, wheelSpeeds[3], postDiagnostics);
 
 
-	}
 
-	public void setAllPID (){
-		double kP = SmartDashboard.getNumber("drivetrain kP", 1);
-		double kI = SmartDashboard.getNumber("drivetrain kI", 0);
-		double kD = SmartDashboard.getNumber("drivetrain kD", 0);
-		double kF = SmartDashboard.getNumber("drivetrain kF", 1);
-		
-		fL.pid.setPID(kP, kI, kD, kF);
-		fR.pid.setPID(kP, kI, kD, kF);
-		rL.pid.setPID(kP, kI, kD, kF);
-		rR.pid.setPID(kP, kI, kD, kF);
-		
 	}
-
 }
