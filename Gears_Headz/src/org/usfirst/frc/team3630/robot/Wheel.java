@@ -28,10 +28,12 @@ public class Wheel {
 		encoder.setPIDSourceType(PIDSourceType.kRate);
 		
 		pid = new PIDController(kP, kI, kD, kF, encoder, pidToTalon);
+		pid.setContinuous(true);
 	}
 	
 	public void setWheelSpeed (double speed){
-		pid.setSetpoint(speed*2000);
+		speed *= 2000;
+		pid.setSetpoint(speed);
 	}
 
 	double getDistDegrees()
