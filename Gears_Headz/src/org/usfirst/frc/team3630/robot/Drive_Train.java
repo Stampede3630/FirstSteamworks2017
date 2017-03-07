@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive_Train  {
 
-	XboxController m_Joystick;// 2 for shooting and driving 
+	Joystick m_Joystick;// 2 for shooting and driving 
  
  //  AnalogInput ai0;
 
@@ -29,7 +29,7 @@ public class Drive_Train  {
 	boolean directionForward = true;
    public Drive_Train() {
 	   mecanumDrive = new HomebrewMecanum(Consts.driveMotorFrontLeft,Consts.driveMotorBottomLeft, Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
-	   m_Joystick= new XboxController(Consts.joystickComPort);
+	   m_Joystick= new Xbox360(Consts.joystickComPort);
     
 	   SmartDashboard.putNumber("drivetrain kP", .3);
 	   SmartDashboard.putNumber("drivetrain kI", 0);
