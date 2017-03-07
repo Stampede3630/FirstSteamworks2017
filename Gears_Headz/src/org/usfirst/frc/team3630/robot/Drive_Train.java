@@ -9,8 +9,12 @@ import edu.wpi.first.wpilibj.JoystickBase;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+
+
 public class Drive_Train  {
 
+	boolean wasPressed = false;
+	
 	XboxController m_Joystick;// 2 for shooting and driving 
  
  //  AnalogInput ai0;
@@ -70,10 +74,13 @@ public class Drive_Train  {
 	double speedy = 1;
 	if (m_Joystick.getRawButton(Consts.buttonSprint)||m_Joystick.getRawButton(Consts.buttonSprintAlternate)) speedy = Consts.fastK;
 	else speedy = Consts.slowK;
-	if (m_Joystick.getRawButton(Consts.buttonSwitchDirection)) directionForward = !directionForward;
+	if (m_Joystick.getRawButton(Consts.buttonSwitchDirection)&& !wasPressed){
+		wasPressed = true;
+		directionForward = !directionForward;
+	}
 	if  (directionForward) speedy *= -1;
 	
 	mecanumDrive.driveImplementation(-getRoundY()*speedy,-getRoundX()*speedy,-getRoundTwist()*speedy/2, true);
-	 	
+	wasPressed = false;
 }
 }
