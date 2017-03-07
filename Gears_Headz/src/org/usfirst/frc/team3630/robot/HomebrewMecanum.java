@@ -32,6 +32,15 @@ public class HomebrewMecanum {
 	 * @return 4 wheel speeds, from the top left counterclockwise.
 	 */
 
+	public double[] forwardMecanum (double frontLeft, double rearLeft, double frontRight, double rearRight){
+		double[] result = new double[3];
+		result[0] = (frontLeft + rearLeft + frontRight + rearRight)/4;
+		result[1] = (-frontLeft + rearLeft - rearRight + frontRight)/4;
+		result[2] = (-frontLeft - rearLeft + rearRight + frontRight)/(4*Consts.mecanumPositionConstant);
+	
+		return result;
+	}
+	
 	public double[] mecanumCalc (double velocityX, double velocityY, double angularVelocityDeg, boolean postDiagnostics){
 		//This function takes the velocity in x and y and theta and converts them to
 
@@ -65,9 +74,15 @@ public class HomebrewMecanum {
 		//This function maps the motor drive to the talon speed. More tuning from the constant is needed.
 		double adjustedMotorSpeed = motorSpeed * Consts.motorDriveAdjustment;
 		myWheel.setWheelSpeed(adjustedMotorSpeed);
+		SmartDashboard.putNumber("motorDrive commandSPeed" + String.valueOf(myWheel.talon.getChannel()), adjustedMotorSpeed);
 		System.out.println(adjustedMotorSpeed);
 		SmartDashboard.putNumber("adjusted"+String.valueOf(myWheel.talon.getChannel()), myWheel.talon.getSpeed());
 		SmartDashboard.putNumber("Encoder"+String.valueOf(myWheel.talon.getChannel()), myWheel.talon.getSpeed());
+		SmartDashboard.putNumber("kP actual" + String.valueOf(myWheel.talon.getChannel()), myWheel.pid.getP());
+		SmartDashboard.putNumber("kD actual" + String.valueOf(myWheel.talon.getChannel()), myWheel.pid.getD());
+		SmartDashboard.putNumber("kI actual" + String.valueOf(myWheel.talon.getChannel()), myWheel.pid.getI());
+		SmartDashboard.putNumber("kF actual" + String.valueOf(myWheel.talon.getChannel()), myWheel.pid.getF());
+
 	}
 
 	/**
