@@ -84,7 +84,7 @@ public class Drive_Train  {
 	if (m_Joystick.getRawButton(Consts.buttonSwitchDirection)) directionForward = !directionForward;
 	if  (directionForward) speedy *= -1;
 	
-	//mecanumDrive.driveImplementation(-getRoundY()*speedy,-getRoundX()*speedy,-getRoundTwist()*speedy/2, true);
+	mecanumDrive.driveImplementation(-getRoundY()*speedy,-getRoundX()*speedy,-getRoundTwist()*speedy/2, true);
 	mecanumDrive.setAllPID();
 }
    
@@ -101,8 +101,9 @@ public class Drive_Train  {
 		else speedy = Consts.slowK;
 		if (m_Joystick.getRawButton(Consts.buttonSwitchDirection)) directionForward = !directionForward;
 		if  (directionForward) speedy *= -1;
+		speedy *= Consts.joystickToInchesPerSecond;
 		
-		//mecanumDrive.driveImplementation(-getRoundY()*speedy,-getRoundX()*speedy,-getRoundTwist()*speedy/2, true);
+		mecanumDrive.driveImplementation(-getRoundY()*speedy,-getRoundX()*speedy,-getRoundTwist()*speedy, true);
 		mecanumDrive.setAllPID();  
 	  
   }

@@ -41,11 +41,19 @@ public class HomebrewMecanum {
 		return result;
 	}
 	
+	/**
+	 * @param velocityX desired velocity in inches/second
+	 * @param velocityY desired velocity in inches/second
+	 * @param angularVelocityDeg desired angular velocity in degrees per second
+	 * @param postDiagnostics default should be false. Post junk to smartDashboard?
+	 * @return wheelspeeds in radians
+	 */
 	public double[] mecanumCalc (double velocityX, double velocityY, double angularVelocityDeg, boolean postDiagnostics){
 		//This function takes the velocity in x and y and theta and converts them to
-
+		//input is in inches/second, deg/sec
 
 		double angularVelocityRad = angularVelocityDeg * Math.PI / 180; //Converts degrees to radians for you, liam
+		
 		double[] wheelspeedResult;
 		wheelspeedResult = new double[4];
 		//For more information about this formula, see the mecanum kinematics 
@@ -53,7 +61,9 @@ public class HomebrewMecanum {
 		wheelspeedResult[1] = velocityX + velocityY - Consts.mecanumPositionConstant * angularVelocityRad;
 		wheelspeedResult[2] = velocityX - velocityY + Consts.mecanumPositionConstant * angularVelocityRad;
 		wheelspeedResult[3] = velocityX + velocityY + Consts.mecanumPositionConstant * angularVelocityRad;
-
+		
+		for(int i = 0; i<wheelspeedResult.length; i++) wheelspeedResult[i]/= Consts.mecanumWheelRadiusInches;
+		
 		if(postDiagnostics){
 			SmartDashboard.putNumber("FrontLeft", wheelspeedResult[0]);
 			SmartDashboard.putNumber("RearLeft", wheelspeedResult[1]);
@@ -105,10 +115,10 @@ public class HomebrewMecanum {
 	}
 
 	public void setAllPID (){
-		double kP = SmartDashboard.getNumber("drivetrain kP", 1);
+		double kP = SmartDashboard.getNumber("drivetrain kP", .1);
 		double kI = SmartDashboard.getNumber("drivetrain kI", 0);
 		double kD = SmartDashboard.getNumber("drivetrain kD", 0);
-		double kF = SmartDashboard.getNumber("drivetrain kF", 1);
+		double kF = SmartDashboard.getNumber("drivetrain kF", 1/50);
 		
 		fL.pid.setPID(kP, kI, kD, kF);
 		fR.pid.setPID(kP, kI, kD, kF);

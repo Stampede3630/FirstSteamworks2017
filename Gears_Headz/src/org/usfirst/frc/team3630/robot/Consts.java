@@ -5,7 +5,7 @@ public final class Consts {
 
 //Mecanum Drive adjustments
 public static final double motorDriveAdjustment = 1;
-public static final double mecanumPositionConstant = 90;
+public static final double mecanumPositionConstant = 29.5;
 public static final double mecanumWheelRadiusInches = 3.0;
 
 //Motor PWM Pin assignments
@@ -37,6 +37,7 @@ public static final int gearLimitSwitchClosed = 9;
 public static final double gearSpeed = 1;
 public static final double slowK = .2;
 public static final double fastK = 1;
+public static final double joystickToInchesPerSecond = 90;
 
 //winch encoder assignment
 public static final int winchEncoderPinA = 11;
