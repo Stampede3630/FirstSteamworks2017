@@ -118,7 +118,7 @@ public class HomebrewMecanum {
 		double kP = SmartDashboard.getNumber("drivetrain kP", .1);
 		double kI = SmartDashboard.getNumber("drivetrain kI", 0);
 		double kD = SmartDashboard.getNumber("drivetrain kD", 0);
-		double kF = SmartDashboard.getNumber("drivetrain kF", 1/50);
+		double kF = SmartDashboard.getNumber("drivetrain kF", 1/2);
 		
 		fL.pid.setPID(kP, kI, kD, kF);
 		fR.pid.setPID(kP, kI, kD, kF);

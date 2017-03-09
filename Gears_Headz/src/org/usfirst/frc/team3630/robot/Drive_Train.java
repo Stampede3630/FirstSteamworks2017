@@ -2,6 +2,7 @@ package org.usfirst.frc.team3630.robot;
 
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
@@ -31,38 +32,29 @@ public class Drive_Train  {
 	   mecanumDrive = new HomebrewMecanum(Consts.driveMotorFrontLeft,Consts.driveMotorBottomLeft, Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
 	   m_Joystick= new Xbox360(Consts.joystickComPort);
     
-	   SmartDashboard.putNumber("drivetrain kP", .3);
+/*	   SmartDashboard.putNumber("drivetrain kP", -1/1000);
 	   SmartDashboard.putNumber("drivetrain kI", 0);
 	   SmartDashboard.putNumber("drivetrain kD", 0);
-	   SmartDashboard.putNumber("drivetrain kF", 1);
-
+	   SmartDashboard.putNumber("drivetrain kF", 1/50);
+*/
 
     }
 
    public double getRoundX() {
-	   double result = m_Joystick.getX(GenericHID.Hand.kRight);
-	   result *= 50;
-	   result = Math.round(result);
-	   result /= 50;
+	   double result = m_Joystick.getX(GenericHID.Hand.kLeft);
 	   SmartDashboard.putNumber("Joystick 0", result);
 	   return result;
    }
    
    public double getRoundY() {
-	   double result = m_Joystick.getY(GenericHID.Hand.kRight);
-	   result *= 50;
-	   result = Math.round(result);
-	   result /= 50;
+	   double result = m_Joystick.getY(GenericHID.Hand.kLeft);
 	   SmartDashboard.putNumber("Joystick 1", result);
 
 	   return result;
    }
    
    public double getRoundTwist() {
-	   double result = m_Joystick.getX(GenericHID.Hand.kLeft);
-	   result *= 50;
-	   result = Math.round(result);
-	   result /= 50;
+	   double result = m_Joystick.getX(GenericHID.Hand.kRight);
 	   SmartDashboard.putNumber("Joystick 2", result);
 
 	   return result;
@@ -84,7 +76,7 @@ public class Drive_Train  {
 	if (m_Joystick.getRawButton(Consts.buttonSwitchDirection)) directionForward = !directionForward;
 	if  (directionForward) speedy *= -1;
 	
-	mecanumDrive.driveImplementation(-getRoundY()*speedy,-getRoundX()*speedy,-getRoundTwist()*speedy/2, true);
+	mecanumDrive.driveImplementation(-getRoundY()*speedy,-getRoundX()*speedy,-getRoundTwist()*speedy, true);
 	mecanumDrive.setAllPID();
 }
    
@@ -105,6 +97,7 @@ public class Drive_Train  {
 		
 		mecanumDrive.driveImplementation(-getRoundY()*speedy,-getRoundX()*speedy,-getRoundTwist()*speedy, true);
 		mecanumDrive.setAllPID();  
+		LiveWindow.run();
 	  
   }
 }

@@ -12,7 +12,7 @@ public class Wheel {
 	public Encoder encoder;
 	public Talon talon;
 	private talonConverter pidToTalon;
-	private double kP = .3, kI = 0, kD = 0, kF = 1/50;
+	private double kP = -.0001, kI = 0, kD = 0, kF = 1/50;
 	
 	public Wheel (int encoderChannel1, int encoderChannel2, int talonChannel, boolean reversed){
 		encoder = new Encoder(encoderChannel1, encoderChannel2, reversed);
@@ -27,7 +27,7 @@ public class Wheel {
 		//encoder.setReverseDirection(reversed);
 		encoder.setSamplesToAverage(7);
 		encoder.setPIDSourceType(PIDSourceType.kRate);
-		pid = new PIDController(kP, kI, kD, kF, encoder, talon);
+		pid = new PIDController(kP, kI, kD, encoder, talon);
 		pid.setInputRange(-50, 50);
 		pid.setOutputRange(-1, 1);
 		pid.enable();
