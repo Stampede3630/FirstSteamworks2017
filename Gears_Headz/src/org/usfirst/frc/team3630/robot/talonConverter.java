@@ -12,10 +12,11 @@ public class talonConverter implements PIDOutput {
 	}
 	
 	public void pidWrite(double output) {
-		// TODO Auto-generated method stub
-		output /= 2000;
-		talon.set(output);
-		SmartDashboard.putNumber("Talon Output" + String.valueOf(talon.getChannel()), output);
+		output /= 50;//ToDo: Redo this coefficient. Cannot currently do top speed.
+		if (Math.abs(output)<= 1) {
+			talon.set(output);
+			SmartDashboard.putNumber("Talon Output" + String.valueOf(talon.getChannel()), output);
+		}
 	}
 
 }

@@ -5,7 +5,7 @@
 	<classpathentry kind="lib" path="Gears_Headz/build/jars/navx_frc.jar"/>
 	<classpathentry kind="lib" path="Gears_Headz/build/jars/NetworkTables.jar"/>
 	<classpathentry kind="lib" path="Gears_Headz/build/jars/opencv.jar"/>
-	<classpathentry exported="true" kind="lib" path="Gears_Headz/build/jars/WPILib.jar"/>
+	<classpathentry exported="true" kind="lib" path="Gears_Headz/build/jars/WPILib.jar" sourcepath="/Users/aronsa/wpilib/java/current/lib/WPILib/edu/wpi/first/wpilibj"/>
 	<classpathentry kind="lib" path="Gears_Headz/dist/FRCUserProgram.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="var" path="wpilib" sourcepath="wpilib.sources"/>
