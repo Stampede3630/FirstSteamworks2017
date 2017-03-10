@@ -78,11 +78,10 @@ public class Drive_Train  {
 		wasPressed = true;
 		directionForward = !directionForward;
 	}
+	else wasPressed = false;
 	if  (directionForward) speedy *= -1;
 	
-	//mecanumDrive.driveImplementation(-getRoundY()*speedy,-getRoundX()*speedy,-getRoundTwist()*speedy/2, true);
-	if(m_Joystick.getRawButton(Consts.buttonSprint)) mecanumDrive.driveImplementation(-1, 0, 0, true);
-	wasPressed = false;
+	mecanumDrive.driveImplementation(-getRoundY()*speedy,-getRoundX()*speedy,-getRoundTwist()*speedy/2, true);
 	
 }
 }
