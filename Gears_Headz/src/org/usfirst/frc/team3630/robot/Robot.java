@@ -20,7 +20,7 @@ public class Robot extends IterativeRobot {
 	final String customAuto = "My Auto";
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
-	Drive_Train driveTrain;
+	DriveTrain driveTrain;
 	Ultrasonics ultraDistance;
 	GearsManip gears;
 //	NavX navxmxp;
@@ -31,19 +31,13 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		//chooser.addDefault("Default Auto", defaultAuto);
-		//hooser.addObject("My Auto", customAuto);
-		//SmartDashboard.putData("Auto choices", chooser);
-		driveTrain = new Drive_Train();
+
+		driveTrain = new DriveTrain();
 		//navxmxp = new NavX();
 		//navxmxp.NavXInit();
 
-		// ultraDistance = new Ultrasonics();
-		// ultraDistance.ultraInit(1);
 		winch = new WinchSystem();
 		gears= new GearsManip();
-	//	navxmxp = new NavX();
-		//WheelEncoder rightFrontEnc = new WheelEncoder(); rightFrontEnc.encoderInit(0, 1);
 
 	}
 
@@ -85,6 +79,8 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during operator control
 	 */
+	
+
 	@Override
 	public void teleopPeriodic() {
 		driveTrain.telopPeriodic();
@@ -101,8 +97,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		LiveWindow.run();
-		driveTrain.teleopTest();
 	}
 }
 

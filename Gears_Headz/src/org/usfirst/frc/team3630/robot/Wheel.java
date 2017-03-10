@@ -3,7 +3,6 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
 public class Wheel {
@@ -11,22 +10,24 @@ public class Wheel {
 	
 	public Encoder encoder;
 	public Talon talon;
+
 	private talonConverter pidToTalon;
 	
 	public PIDController pid;
-	private double kP = 1, kI = 0, kD = 0, kF = 1;
+	private double kP = 1, kI = 0, kD = 0;
+
 	
 	public Wheel (int encoderChannel1, int encoderChannel2, int talonChannel, boolean reversed){
 		encoder = new Encoder(encoderChannel1, encoderChannel2, reversed);
-		talon = new Talon(talonChannel);
-		pidToTalon = new talonConverter(talon);
+		
+		talon = new Talon(talonChannel);		
 		talon.setInverted(reversed);
 		
 		encoder.setMaxPeriod(1);
 		// Define distance in terms of INCHES
 		encoder.setDistancePerPulse(Consts.mecanumWheelRadiusInches * 2*Math.PI / pulsesPerRevolution);
 		encoder.setMinRate(10);
-		encoder.setReverseDirection(reversed);
+		//encoder.setReverseDirection(reversed);
 		encoder.setSamplesToAverage(7);
 		encoder.setPIDSourceType(PIDSourceType.kRate);
 		
@@ -39,26 +40,27 @@ public class Wheel {
 	
 	public void setWheelSpeed (double speed){
 		speed *= 50; //Need to make this constant better.
+
 		pid.setSetpoint(speed);
 		
-		SmartDashboard.putNumber("PID setpoint drivetrain" + String.valueOf(talon.getChannel()) , pid.getSetpoint());
-
-		SmartDashboard.putNumber("PID get drivetrain" + String.valueOf(talon.getChannel()) , pid.get());
+		
+		SmartDashboard.putNumber("PID get " + String.valueOf(talon.getChannel()) , pid.get());
+		SmartDashboard.putNumber("PID get setPoint" + String.valueOf(talon.getChannel()) , pid.getSetpoint());
+		
+		SmartDashboard.putNumber("Encoder PID Get" + String.valueOf(talon.getChannel()) , encoder.pidGet());
 		SmartDashboard.putNumber("Talon Speed" + String.valueOf(talon.getChannel()), talon.getSpeed());
-		SmartDashboard.putBoolean("Is PID enabled"+ String.valueOf(talon.getChannel()), pid.isEnabled() );
 	}
 
 	
 	
 	
-	
-	
-	double getDistDegrees()
+
+	public double getDistDegrees()
 	{
 		return encoder.getDistance() * 180.0 / Math.PI; 
 	}
 
-	double getDistRadians()
+	public double getDistRadians()
 	{
 		return encoder.getDistance(); 
 	}
@@ -66,7 +68,7 @@ public class Wheel {
 	/**
 	 * @return encoder distance in inches
 	 */
-	double getDistInches()
+	public double getDistInches()
 	{
 		return getDistRadians() * Consts.mecanumWheelRadiusInches;
 	}
