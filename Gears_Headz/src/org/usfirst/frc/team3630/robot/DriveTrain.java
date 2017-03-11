@@ -30,14 +30,20 @@ public class DriveTrain  {
     
 
     // initialize drives 
-	HomebrewMecanum mecanumDrive; 
+	//HomebrewMecanum mecanumDrive; 
+	Wheel fL, rL, fR, rR;
 	boolean directionForward = true;
    
 	public DriveTrain() {
-	   mecanumDrive = new HomebrewMecanum(Consts.driveMotorFrontLeft,Consts.driveMotorBottomLeft, Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
+	   //mecanumDrive = new HomebrewMecanum(Consts.driveMotorFrontLeft,Consts.driveMotorBottomLeft, Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
 	   m_Joystick= new XboxController(Consts.joystickComPort);
-    
-    }
+		
+	    fL = new Wheel(Consts.driveEncoderFrontLeftA, Consts.driveEncoderFrontLeftB, Consts.driveMotorFrontLeft, false);
+		rL = new Wheel(Consts.driveEncoderRearLeftA, Consts.driveEncoderRearLeftB, Consts.driveMotorBottomLeft, false);
+		fR = new Wheel(Consts.driveEncoderFrontRightA, Consts.driveEncoderFrontRightB, Consts.driveMotorFrontRight, true);
+		rR = new Wheel(Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, Consts.driveMotorBottomRight, true);
+		
+	}
 
    public double getRoundX() {
 	   double result = m_Joystick.getX(GenericHID.Hand.kLeft);
@@ -69,7 +75,7 @@ public class DriveTrain  {
 	//Homebrew Version
 	   
 
-	double speedy = 1;
+	/*double speedy = 1;
 	if (m_Joystick.getRawButton(Consts.buttonSprint)||m_Joystick.getRawButton(Consts.buttonSprintAlternate)) speedy = Consts.fastK;
 	else speedy = Consts.slowK;
 	
@@ -79,6 +85,13 @@ public class DriveTrain  {
 	mecanumDrive.driveImplementation(getRoundY()*speedy,getRoundX()*speedy,getRoundTwist()*speedy*360, false);
 	//Expecting numbers between -1 and 1.
 	mecanumDrive.setAllPID();
+	*/
+	 double speed = SmartDashboard.getNumber("Desired Speed", 0) * Math.PI*2;
+	 
+	 fL.setWheelSpeed(speed);
+	 rL.setWheelSpeed(speed);
+	 fR.setWheelSpeed(speed);
+	 rR.setWheelSpeed(speed);
 }
 
 }

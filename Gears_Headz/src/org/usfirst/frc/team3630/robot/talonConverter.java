@@ -8,11 +8,12 @@ public class talonConverter implements PIDOutput {
 	private Talon talon;
 	
 	public talonConverter (Talon t){
-		t = talon;
+		talon = t;
 	}
 	
 	public void pidWrite(double output) {
-		output /= 50;//ToDo: Redo this coefficient. Cannot currently do top speed.
+		output /= Consts.talonConversion; //This is maybe radians 
+
 		if (Math.abs(output)<= 1) {
 			talon.set(output);
 			SmartDashboard.putNumber("Talon Output" + String.valueOf(talon.getChannel()), output);

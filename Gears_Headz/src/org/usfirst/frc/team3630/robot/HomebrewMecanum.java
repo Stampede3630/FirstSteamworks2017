@@ -26,8 +26,6 @@ public class HomebrewMecanum {
 		rL = new Wheel(Consts.driveEncoderRearLeftA, Consts.driveEncoderRearLeftB, rearLeft, false);
 		fR = new Wheel(Consts.driveEncoderFrontRightA, Consts.driveEncoderFrontRightB, frontRight, true);
 		rR = new Wheel(Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, rearRight, true);
-
-		wpiDrive = new RobotDrive(fL.talon, rL.talon, fR.talon, rR.talon);
 	}
 
 	/**
@@ -135,7 +133,7 @@ public class HomebrewMecanum {
 	}
 
 
-	
+
 
 	public void setAllPID() {
 		double kP = SmartDashboard.getNumber("drivetrain kP", 10);
