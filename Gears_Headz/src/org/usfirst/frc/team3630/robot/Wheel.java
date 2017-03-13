@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.SpeedController;
 
 public class Wheel {
 	private static final int pulsesPerRevolution = 250;
@@ -24,6 +25,8 @@ public class Wheel {
 		talon = new Talon(talonChannel);		
 		talon.setInverted(reversed);
 		
+		pidToTalon = new talonConverter(talon);
+		
 		encoder.setMaxPeriod(1);
 		// Define distance in terms of INCHES
 		encoder.setDistancePerPulse(Consts.mecanumWheelRadiusInches * 2*Math.PI / pulsesPerRevolution);
@@ -33,24 +36,22 @@ public class Wheel {
 		encoder.setPIDSourceType(PIDSourceType.kRate);
 		
 		//PID WILL ONLY DEAL WITH INCHES/SECOND
-		pid = new PIDController(kP, kI, kD, kF, encoder, pidToTalon);
-		pid.setInputRange(-2000, 2000);
-		pid.setOutputRange(-2000, 2000);
+		pid = new PIDController(kP, kI, kD, encoder, pidToTalon);
+		pid.setInputRange(-50, 50);
+		pid.setOutputRange(-50, 50);
 		pid.enable();
 	}
 	
 	public void setWheelSpeed (double speed){
-		speed *= 50; //Need to make this constant better.
+		//Need to make this constant better.
 
 		pid.setSetpoint(speed);
 		
+		SmartDashboard.putNumber("PID Setpoint "+String.valueOf(talon.getChannel()), pid.getSetpoint());
+		SmartDashboard.putNumber("PID P"+String.valueOf(talon.getChannel()), pid.getP());
+		SmartDashboard.putNumber("PID result"+String.valueOf(talon.getChannel()), pid.get());
 		
-		SmartDashboard.putNumber("PID get " + String.valueOf(talon.getChannel()) , pid.get());
-		SmartDashboard.putNumber("PID get setPoint" + String.valueOf(talon.getChannel()) , pid.getSetpoint());
-		
-		SmartDashboard.putNumber("Encoder PID Get" + String.valueOf(talon.getChannel()) , encoder.pidGet());
-		SmartDashboard.putNumber("Talon Speed" + String.valueOf(talon.getChannel()), talon.getSpeed());
-	}
+		}
 
 	
 	

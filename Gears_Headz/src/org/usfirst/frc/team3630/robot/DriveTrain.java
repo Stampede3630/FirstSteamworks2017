@@ -10,6 +10,10 @@ import edu.wpi.first.wpilibj.JoystickBase;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * @author StampedeRobotics
+ *
+ */
 public class DriveTrain  {
 
 	XboxController m_Joystick;// 2 for shooting and driving 
@@ -72,7 +76,8 @@ public class DriveTrain  {
 	if (m_Joystick.getRawButton(Consts.buttonSwitchDirection)) directionForward = !directionForward;
 	if  (!directionForward) speedy *= -1;
 	
-	mecanumDrive.driveImplementation(getRoundY()*speedy,getRoundX()*speedy,getRoundTwist()*speedy*360, true);
+	mecanumDrive.driveImplementation(getRoundY()*speedy,getRoundX()*speedy,getRoundTwist()*speedy*360, false);
+	//Expecting numbers between -1 and 1.
 	mecanumDrive.setAllPID();
 }
 

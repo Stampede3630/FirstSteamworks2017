@@ -8,9 +8,6 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class HomebrewMecanum {
 	private Wheel fL, rL, fR, rR;
-
-	// private PIDController fLPID, rLPID, frPID, rRPID;
-	// private PIDOutput fLOut, rLOut, fROut, rROut;
 	private double kP, kI, kD;
 	private RobotDrive wpiDrive;
 
@@ -71,14 +68,10 @@ public class HomebrewMecanum {
 		// This function takes the velocity in x and y and theta and converts
 		// them to
 		// input is in inches/second, deg/sec
-
-		double angularVelocityRad = angularVelocityDeg * Math.PI / 180; // Converts
-																		// degrees
-																		// to
-																		// radians
-																		// for
-																		// you,
-																		// liam
+		velocityX *= 100;
+		velocityY *= 100;
+		double angularVelocityRad = angularVelocityDeg * Math.PI / 180; 
+	
 
 		double[] wheelspeedResult;
 		wheelspeedResult = new double[4];
@@ -110,12 +103,10 @@ public class HomebrewMecanum {
 		// from the constant is needed.
 		double adjustedMotorSpeed = motorSpeed * Consts.motorDriveAdjustment;
 		
-		myWheel.setWheelSpeed(adjustedMotorSpeed);
+		myWheel.talon.set(adjustedMotorSpeed);
 
-		SmartDashboard.putNumber("motorDrive commandSPeed" + String.valueOf(myWheel.talon.getChannel()),
-				adjustedMotorSpeed);
-		SmartDashboard.putNumber("adjusted" + String.valueOf(myWheel.talon.getChannel()), myWheel.talon.getSpeed());
-		SmartDashboard.putNumber("Encoder" + String.valueOf(myWheel.talon.getChannel()), myWheel.talon.getSpeed());
+		SmartDashboard.putNumber("motorDrive commandSpeed" + String.valueOf(myWheel.talon.getChannel()), adjustedMotorSpeed);
+		SmartDashboard.putNumber("encoder input value" + String.valueOf(myWheel.talon.getChannel()), myWheel.talon.getSpeed());
 	}
 
 	/**
@@ -134,8 +125,7 @@ public class HomebrewMecanum {
 	public void driveImplementation(double velocityX, double velocityY, double angularVelocityDeg,
 			boolean postDiagnostics) {
 
-		double[] wheelSpeeds = mecanumCalc(velocityX, velocityY, angularVelocityDeg * 360, postDiagnostics);
-		SmartDashboard.putBoolean("WPILib Drive?", false);
+		double[] wheelSpeeds = mecanumCalc(velocityX, velocityY, angularVelocityDeg, postDiagnostics);
 
 		motorDrive(fL, wheelSpeeds[0], postDiagnostics);
 		motorDrive(rL, wheelSpeeds[1], postDiagnostics);
@@ -144,30 +134,19 @@ public class HomebrewMecanum {
 
 	}
 
-	public void driveImplementation(double velocityX, double velocityY, double angularVelocityDeg,
-			boolean postDiagnostics, boolean wpiLib) {
-		if (!wpiLib) {
-			driveImplementation(velocityX, velocityY, angularVelocityDeg, postDiagnostics);
-			SmartDashboard.putBoolean("WPILib Drive?", false);
-		}
-		
-		else {
-			wpiDrive.mecanumDrive_Cartesian(velocityX, velocityY, angularVelocityDeg / 360, 0);
-			SmartDashboard.putBoolean("WPILib Drive?", true);
-		}
 
-	}
+	
 
 	public void setAllPID() {
-		double kP = SmartDashboard.getNumber("drivetrain kP", .0001);
+		double kP = SmartDashboard.getNumber("drivetrain kP", 10);
 		double kI = SmartDashboard.getNumber("drivetrain kI", 0);
 		double kD = SmartDashboard.getNumber("drivetrain kD", 0);
 		double kF = SmartDashboard.getNumber("drivetrain kF", 1);
 
-		fL.pid.setPID(kP, kI, kD, kF);
-		fR.pid.setPID(kP, kI, kD, kF);
-		rL.pid.setPID(kP, kI, kD, kF);
-		rR.pid.setPID(kP, kI, kD, kF);
+		fL.pid.setPID(kP, kI, kD);
+		fR.pid.setPID(kP, kI, kD);
+		rL.pid.setPID(kP, kI, kD);
+		rR.pid.setPID(kP, kI, kD);
 	}
 
 }
