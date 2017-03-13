@@ -7,13 +7,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class GearsManip {
 	Talon gearMotor = new Talon(Consts.gearTalonPWM );
 	Joystick m_joystick= new Joystick(Consts.joytsickChannel);
-	
 	DigitalInput limitOpen; 
 	DigitalInput limitClose; 
 
 	public GearsManip(){
 		limitOpen= new DigitalInput(Consts.gearLimitSwitchOpen);
 		limitClose= new DigitalInput(Consts.gearLimitSwitchClosed);
+		//gearMotor.setExpiration(.1);
 	}
 	
 	public void open(){
