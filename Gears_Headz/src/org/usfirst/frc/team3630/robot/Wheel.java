@@ -1,4 +1,5 @@
 package org.usfirst.frc.team3630.robot;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Talon;
@@ -18,7 +19,7 @@ public class Wheel {
 
 	
 	public Wheel (int encoderChannel1, int encoderChannel2, int talonChannel, boolean reversed){
-		encoder = new Encoder(encoderChannel1, encoderChannel2, reversed);
+		encoder = new Encoder(encoderChannel1, encoderChannel2, reversed, EncodingType.k4X);
 		
 		talon = new Talon(talonChannel);		
 		talon.setInverted(reversed);
