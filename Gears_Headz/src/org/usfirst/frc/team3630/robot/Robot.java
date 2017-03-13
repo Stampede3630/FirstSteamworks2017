@@ -80,6 +80,12 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	
+	public void teleopInit() {
+		SmartDashboard.putNumber("drivetrain kP", .05);
+		SmartDashboard.putNumber("drivetrain kI", 0.0075);
+		SmartDashboard.putNumber("drivetrain kD", 0);
+		
+	}
 
 	@Override
 	public void teleopPeriodic() {

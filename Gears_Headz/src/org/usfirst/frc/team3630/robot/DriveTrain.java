@@ -37,7 +37,7 @@ public class DriveTrain  {
 	public DriveTrain() {
 	   //mecanumDrive = new HomebrewMecanum(Consts.driveMotorFrontLeft,Consts.driveMotorBottomLeft, Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
 	   m_Joystick= new XboxController(Consts.joystickComPort);
-		
+		SmartDashboard.putNumber("Desired Distance", 0);
 	    fL = new Wheel(Consts.driveEncoderFrontLeftA, Consts.driveEncoderFrontLeftB, Consts.driveMotorFrontLeft, false);
 		rL = new Wheel(Consts.driveEncoderRearLeftA, Consts.driveEncoderRearLeftB, Consts.driveMotorBottomLeft, false);
 		fR = new Wheel(Consts.driveEncoderFrontRightA, Consts.driveEncoderFrontRightB, Consts.driveMotorFrontRight, true);
@@ -86,8 +86,9 @@ public class DriveTrain  {
 	//Expecting numbers between -1 and 1.
 	mecanumDrive.setAllPID();
 	*/
-	 double speed = SmartDashboard.getNumber("Desired Speed", 0) * Math.PI*2;
-	 
+	 double speed = SmartDashboard.getNumber("Desired Distance", 0) * Math.PI*2;
+	SmartDashboard.putBoolean("PID at Target? "+String.valueOf(rR.talon.getChannel()), rR.pid.onTarget());
+
 	 fL.setWheelSpeed(speed);
 	 rL.setWheelSpeed(speed);
 	 fR.setWheelSpeed(speed);

@@ -49,10 +49,10 @@ public static final int winchStopPin = 10;
 //Drivetrain Encoder DIO pin assignments
 public static final int driveEncoderFrontLeftA = 0;
 public static final int driveEncoderFrontLeftB = 1;
-public static final int driveEncoderRearLeftA = 2;
-public static final int driveEncoderRearLeftB = 3;
-public static final int driveEncoderFrontRightA = 4;
-public static final int driveEncoderFrontRightB = 5;
+public static final int driveEncoderRearLeftA = 4;
+public static final int driveEncoderRearLeftB = 5;
+public static final int driveEncoderFrontRightA = 2;
+public static final int driveEncoderFrontRightB = 3;
 public static final int driveEncoderRearRightA = 6;
 public static final int driveEncoderRearRightB = 7;
 public static final int buttonSwitchDirection = 2;
