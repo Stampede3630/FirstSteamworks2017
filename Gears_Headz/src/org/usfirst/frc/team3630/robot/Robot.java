@@ -84,6 +84,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("drivetrain kP", .05);
 		SmartDashboard.putNumber("drivetrain kI", 0.0075);
 		SmartDashboard.putNumber("drivetrain kD", 0);
+		SmartDashboard.putNumber("Desired Distance", 0);
+		driveTrain.teleopInit();
 		
 	}
 

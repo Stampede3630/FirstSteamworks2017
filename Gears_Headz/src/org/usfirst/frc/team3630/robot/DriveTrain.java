@@ -65,7 +65,12 @@ public class DriveTrain  {
 	   return result;
    }
    
-
+   public void teleopInit(){
+	   fL.encoder.reset();
+	   fR.encoder.reset();
+	   rL.encoder.reset();
+	   rR.encoder.reset();
+   }
    
    public void telopPeriodic(){
 	//WPILIB Version
@@ -86,7 +91,7 @@ public class DriveTrain  {
 	//Expecting numbers between -1 and 1.
 	mecanumDrive.setAllPID();
 	*/
-	 double speed = SmartDashboard.getNumber("Desired Distance", 0) * Math.PI*2;
+	 double speed = SmartDashboard.getNumber("Desired Distance", 0);
 	SmartDashboard.putBoolean("PID at Target? "+String.valueOf(rR.talon.getChannel()), rR.pid.onTarget());
 
 	 fL.setWheelSpeed(speed);
