@@ -65,7 +65,12 @@ public class DriveTrain  {
 	   return result;
    }
    
-
+   public void teleopInit(){
+	   fL.encoder.reset();
+	   fR.encoder.reset();
+	   rL.encoder.reset();
+	   rR.encoder.reset();
+   }
    
    public void telopPeriodic(){
 	//WPILIB Version
@@ -97,6 +102,7 @@ public class DriveTrain  {
 	   rL.setWheelSpeed(speed);
 	   fR.setWheelSpeed(speed);
 	   rR.setWheelSpeed(speed);
+
 }
 
 }

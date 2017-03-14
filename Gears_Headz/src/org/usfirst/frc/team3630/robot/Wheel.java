@@ -35,7 +35,7 @@ public class Wheel {
 				
 		encoder.setMaxPeriod(1);
 		// Define distance in terms of INC
-		encoder.setDistancePerPulse(2*Math.PI/pulsesPerRevolution);
+		encoder.setDistancePerPulse(Consts.mecanumWheelRadiusInches*2*Math.PI/pulsesPerRevolution);
 		encoder.setMinRate(10);
 		encoder.setReverseDirection(!reversed);
 		encoder.setSamplesToAverage(7);
@@ -52,7 +52,7 @@ public class Wheel {
 				);
 		//pid.setInputRange(-100, 100);
 		pid.setOutputRange(-1, 1);
-		pid.setAbsoluteTolerance(.3);
+		pid.setAbsoluteTolerance(1);
 		pid.enable();
 	}
 	
