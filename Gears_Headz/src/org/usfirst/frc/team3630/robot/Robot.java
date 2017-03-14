@@ -81,8 +81,8 @@ public class Robot extends IterativeRobot {
 	 */
 	
 	public void teleopInit() {
-		SmartDashboard.putNumber("drivetrain kP", .05);
-		SmartDashboard.putNumber("drivetrain kI", 0.0075);
+		SmartDashboard.putNumber("drivetrain kP", .01);
+		SmartDashboard.putNumber("drivetrain kI", 0.0005);
 		SmartDashboard.putNumber("drivetrain kD", 0);
 		
 	}

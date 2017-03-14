@@ -86,13 +86,17 @@ public class DriveTrain  {
 	//Expecting numbers between -1 and 1.
 	mecanumDrive.setAllPID();
 	*/
-	 double speed = SmartDashboard.getNumber("Desired Distance", 0) * Math.PI*2;
-	SmartDashboard.putBoolean("PID at Target? "+String.valueOf(rR.talon.getChannel()), rR.pid.onTarget());
-
-	 fL.setWheelSpeed(speed);
-	 rL.setWheelSpeed(speed);
-	 fR.setWheelSpeed(speed);
-	 rR.setWheelSpeed(speed);
+	
+	   double speed = SmartDashboard.getNumber("Desired Distance", 0) * Math.PI*2;
+	   SmartDashboard.putBoolean("PID at Target? "+String.valueOf(fL.talon.getChannel()), fL.pid.onTarget());
+	   SmartDashboard.putBoolean("PID at Target? "+String.valueOf(rL.talon.getChannel()), rL.pid.onTarget());
+	   SmartDashboard.putBoolean("PID at Target? "+String.valueOf(fR.talon.getChannel()), fR.pid.onTarget());
+	   SmartDashboard.putBoolean("PID at Target? "+String.valueOf(rR.talon.getChannel()), rR.pid.onTarget());
+	   
+	   fL.setWheelSpeed(speed);
+	   rL.setWheelSpeed(speed);
+	   fR.setWheelSpeed(speed);
+	   rR.setWheelSpeed(speed);
 }
 
 }
