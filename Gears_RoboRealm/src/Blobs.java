@@ -61,7 +61,9 @@ public class Blobs { // implements Comparable<Corner> {
 	public double distanceFromTargetWidthInches() {
 		return Utils.cvtWidthPxToDistInches(getTargetWidthPx(), Consts.gearTapesWidthInches);
 		}
-		
+	public double distanceFromTargetOneBlobInches(){
+		return Utils.cvtWidthPxToDistInches(myBlobs[0].distanceFromWidthInches(), Consts.gearTapeWidthInches);
+			}
 	public double distanceFromHeightInches() {
 		double targetDistanceInches = 0.0;
 		for (int i=0; i < Consts.gearImageBlobCount; i++)
