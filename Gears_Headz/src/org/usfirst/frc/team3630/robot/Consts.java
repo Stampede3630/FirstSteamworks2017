@@ -4,7 +4,7 @@ package org.usfirst.frc.team3630.robot;
 public final class Consts {
 
 //Mecanum Drive adjustments
-public static final double motorDriveAdjustment = 1;
+public static final double motorDriveAdjustment = .5;
 public static final double mecanumPositionConstant = 29.5;
 public static final double mecanumWheelRadiusInches = 3.0;
 
@@ -49,13 +49,14 @@ public static final int winchStopPin = 10;
 //Drivetrain Encoder DIO pin assignments
 public static final int driveEncoderFrontLeftA = 0;
 public static final int driveEncoderFrontLeftB = 1;
-public static final int driveEncoderRearLeftA = 2;
-public static final int driveEncoderRearLeftB = 3;
-public static final int driveEncoderFrontRightA = 4;
-public static final int driveEncoderFrontRightB = 5;
+public static final int driveEncoderRearLeftA = 4;
+public static final int driveEncoderRearLeftB = 5;
+public static final int driveEncoderFrontRightA = 2;
+public static final int driveEncoderFrontRightB = 3;
 public static final int driveEncoderRearRightA = 6;
 public static final int driveEncoderRearRightB = 7;
 public static final int buttonSwitchDirection = 2;
+public static final double talonConversion = 50;
 
 
 }

@@ -21,7 +21,6 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	DriveTrain driveTrain;
-	Ultrasonics ultraDistance;
 	GearsManip gears;
 //	NavX navxmxp;
 	WinchSystem winch;
@@ -38,7 +37,7 @@ public class Robot extends IterativeRobot {
 
 		winch = new WinchSystem();
 		gears= new GearsManip();
-
+		
 	}
 
 	/**
@@ -80,6 +79,14 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	
+	public void teleopInit() {
+		SmartDashboard.putNumber("drivetrain kP", .01);
+		SmartDashboard.putNumber("drivetrain kI", 0.0005);
+		SmartDashboard.putNumber("drivetrain kD", 0);
+		SmartDashboard.putNumber("Desired Distance", 0);
+		driveTrain.teleopInit();
+		
+	}
 
 	@Override
 	public void teleopPeriodic() {
@@ -89,7 +96,7 @@ public class Robot extends IterativeRobot {
 		//ultraDistance.sensorPeriodic();
 		winch.telopPeriodic();
 		gears.telopPeridic();
-		
+
 	}
 
 	/**

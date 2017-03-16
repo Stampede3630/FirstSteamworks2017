@@ -1,6 +1,5 @@
 package org.usfirst.frc.team3630.robot;
 
-
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.Joystick;
@@ -10,75 +9,126 @@ import edu.wpi.first.wpilibj.JoystickBase;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * @author StampedeRobotics
- *
- */
-public class DriveTrain  {
 
-	XboxController m_Joystick;// 2 for shooting and driving 
- 
- //  AnalogInput ai0;
+public class DriveTrain {
 
-    //boolean driveAutoCorrect;
-   // double driveStrength;
-    
-    //Made new gyro class
-    //AnalogGyro gyro;
-    //NAVX
-    //Sensors sensors;
-    
+	XboxController m_Joystick;// 2 for shooting and driving
+	VisionMath vision;
+	// AnalogInput ai0;
 
-    // initialize drives 
-	HomebrewMecanum mecanumDrive; 
+	// boolean driveAutoCorrect;
+	// double driveStrength;
+
+	// Made new gyro class
+	// AnalogGyro gyro;
+	// NAVX
+	// Sensors sensors;
+
+	// initialize drives
+	HomebrewMecanum mecanumDrive;
 	boolean directionForward = true;
-   
+
 	public DriveTrain() {
-	   mecanumDrive = new HomebrewMecanum(Consts.driveMotorFrontLeft,Consts.driveMotorBottomLeft, Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
-	   m_Joystick= new XboxController(Consts.joystickComPort);
-    
-    }
+		SmartDashboard.putBoolean("PID Control", false);
+		SmartDashboard.putBoolean("vision pid", false);
 
-   public double getRoundX() {
-	   double result = m_Joystick.getX(GenericHID.Hand.kLeft);
-	   SmartDashboard.putNumber("Joystick X", result);
-	   return result;
-   }
-   
-   public double getRoundY() {
-	   double result = m_Joystick.getY(GenericHID.Hand.kLeft);
-	   SmartDashboard.putNumber("Joystick Y", result);
+		mecanumDrive = new HomebrewMecanum(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,
+				Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
+		m_Joystick = new XboxController(Consts.joystickComPort);
+		SmartDashboard.putNumber("Desired Distance", 0);
+	}
 
-	   return result;
-   }
-   
-   public double getRoundTwist() {
-	   double result = m_Joystick.getX(GenericHID.Hand.kRight);
-	   SmartDashboard.putNumber("Joystick Twist", result);
+	public double getRoundX() {
+		double result = m_Joystick.getX(GenericHID.Hand.kLeft);
+		SmartDashboard.putNumber("Joystick X", result);
+		return result;
+	}
 
-	   return result;
-   }
-   
+	public double getRoundY() {
+		double result = m_Joystick.getY(GenericHID.Hand.kLeft);
+		SmartDashboard.putNumber("Joystick Y", result);
 
-   
-   public void telopPeriodic(){
-	//WPILIB Version
-	/*
-	 * m_robotDrive.mecanumDrive_Cartesian(m_Joystick.getX()/5, m_Joystick.getTwist(), m_Joystick.getY(),0);
-	 */
-	//Homebrew Version
-	   
+		return result;
+	}
 
-	double speedy = 1;
-	if (m_Joystick.getRawButton(Consts.buttonSprint)||m_Joystick.getRawButton(Consts.buttonSprintAlternate)) speedy = Consts.fastK;
-	else speedy = Consts.slowK;
-	
-	if (m_Joystick.getRawButton(Consts.buttonSwitchDirection)) directionForward = !directionForward;
-	if  (!directionForward) speedy *= -1;
-	
-	mecanumDrive.driveImplementation(getRoundY()*speedy,getRoundX()*speedy,getRoundTwist()*speedy*360, false);
-	//Expecting numbers between -1 and 1.
-	mecanumDrive.setAllPID();
-}
+	public double getRoundTwist() {
+		double result = m_Joystick.getX(GenericHID.Hand.kRight);
+		SmartDashboard.putNumber("Joystick Twist", result);
+
+		return result;
+	}
+
+	public void teleopInit() {
+		mecanumDrive.fL.encoder.reset();
+		mecanumDrive.fR.encoder.reset();
+		mecanumDrive.rL.encoder.reset();
+		mecanumDrive.rR.encoder.reset();
+	}
+
+	public void telopPeriodic() {
+		// WPILIB Version
+		/*
+		 * m_robotDrive.mecanumDrive_Cartesian(m_Joystick.getX()/5,
+		 * m_Joystick.getTwist(), m_Joystick.getY(),0);
+		 */
+		// Homebrew Version
+
+
+//
+//		boolean usePid = SmartDashboard.getBoolean("PID Control", false);
+//		boolean visionPid = SmartDashboard.getBoolean("vision pid", false);
+//		SmartDashboard.putBoolean("Is PID1 Enabled?", mecanumDrive.fL.pid.isEnabled());
+//		if (usePid) {
+//			mecanumDrive.setAllPID();
+//			mecanumDrive.fL.pid.enable();
+//			mecanumDrive.fR.pid.enable();
+//			mecanumDrive.rL.pid.enable();
+//			mecanumDrive.rR.pid.enable();
+//			double speedX, speedY, speedTheta;
+//			if (!visionPid) {
+//				speedX = SmartDashboard.getNumber("Desired Distance X", 0) * Math.PI * 2;
+//				speedY = SmartDashboard.getNumber("Desired Distance Y", 0) * Math.PI * 2;
+//				speedTheta = SmartDashboard.getNumber("Desired Distance theta", 0) * Math.PI * 2;
+//				SmartDashboard.putString("Drive State: ", "Standard PID");
+//			} else {
+//				vision.refereshImageValues();
+//				speedX = vision.robotToFrontDX(48);
+//				speedY = vision.robotToFrontDY(48);
+//				speedTheta = vision.rotateRobotAngle()*180/Math.PI;
+//				SmartDashboard.putString("Drive State: ", "Vision PID");
+//
+//			}
+//
+//			double[] distanceResult = mecanumDrive.mecanumCalc(speedX, speedY, speedTheta, true);
+//
+//			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(mecanumDrive.fL.talon.getChannel()),
+//					mecanumDrive.fL.pid.onTarget());
+//			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(mecanumDrive.rL.talon.getChannel()),
+//					mecanumDrive.rL.pid.onTarget());
+//			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(mecanumDrive.fR.talon.getChannel()),
+//					mecanumDrive.fR.pid.onTarget());
+//			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(mecanumDrive.rR.talon.getChannel()),
+//					mecanumDrive.rR.pid.onTarget());
+//
+//			mecanumDrive.fL.setWheelSpeed(distanceResult[0]);
+//			mecanumDrive.rL.setWheelSpeed(distanceResult[1]);
+//			mecanumDrive.fR.setWheelSpeed(distanceResult[3]);
+//			mecanumDrive.rR.setWheelSpeed(distanceResult[2]);
+//		} else {
+//			mecanumDrive.fL.pid.disable();
+//			mecanumDrive.fR.pid.disable();
+//			mecanumDrive.rL.pid.disable();
+//			mecanumDrive.rR.pid.disable();
+
+			double speedy = 1;
+			if (m_Joystick.getRawButton(Consts.buttonSprint)||m_Joystick.getRawButton(Consts.buttonSprintAlternate)) speedy = Consts.fastK;
+			else speedy = Consts.slowK;
+			if (m_Joystick.getRawButton(Consts.buttonSwitchDirection)) directionForward = !directionForward;
+			if  (directionForward) speedy *= -1;
+			
+			mecanumDrive.driveImplementation(-getRoundY()*speedy,-getRoundX()*speedy,-getRoundTwist()*speedy/2, true);			
+			SmartDashboard.putString("Drive State: ", "Driver Operation");
+//		}
+	}
 
 }
