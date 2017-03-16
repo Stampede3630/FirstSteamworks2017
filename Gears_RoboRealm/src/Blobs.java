@@ -84,12 +84,21 @@ public class Blobs { // implements Comparable<Corner> {
 		return degOff;
 	}
 	
+	
 	public double perspectiveFormulaDeg() { // this implements the professor's perspective formula needs further testing 
 		double seperationOfStripes = (Consts.gearTapesWidthInches/2.0); // this is the a value returns inches
 		double distanceToTarget = distanceFromHeightInches(); // this is the d value
 		double ratioTape = (double) myBlobs[0].getLeftHeightPx() / (double) myBlobs[1].getRightHeightPx();// this is the r value
 		double perRads = Math.asin((distanceToTarget/seperationOfStripes)*((ratioTape-1)/(ratioTape+1)));//  the output is radians
 		return Utils.cvtRadiansToDegrees(perRads);
+	}
+	public double getOffsetOneBlobXDeg(){
+		double averageLeftXPx = getAverageLeftXPx();
+		double halfWidthPx = distanceFromTargetOneBlobInches() / 2.0;
+		double MidXpx = halfWidthPx + averageLeftXPx;
+		double pxOff = MidXpx - Consts.imageWidthPx / 2.0;
+		double degOff = pxOff * Consts.imageWidthDeg / Consts.imageWidthPx;
+		return degOff;
 	}
 
 	public boolean areSideBySide() {

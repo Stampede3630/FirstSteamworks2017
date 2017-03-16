@@ -96,6 +96,15 @@ public class gears {
 					
 					// Only do processing when we are given two blobs that are side by side.
 					int nBlobs = RRVar.BLOB_COUNT.getInt(0);
+					if (nBlobs == 1) {// IF THE BLOB count has one blob
+						Blobs blobs = new Blobs(RRVar.HARRIS_CORNERS.getCorners());
+						double distanceXInchesOneBlob = Math.round(blobs.distanceFromTargetOneBlobInches() * 100d)/100d;
+						
+						double offsetXDegOneBlob = Math.round(blobs.getOffsetOneBlobXDeg() * 100d)/100d;
+		
+						System.out.print(Double.toString(distanceXInchesOneBlob) + ",");
+						System.out.print(Double.toString( offsetXDegOneBlob) + ",");
+					}
 					if (nBlobs == 2) {
 						RRVar.HARRIS_CORNERS.sortByX(); // Not needed, but in case they are printed.
 						// Transform HARRIS_CORNERS into blobs
@@ -132,6 +141,8 @@ public class gears {
 							rr.setDistances(distanceXInches, distanceBlobsXInches, distanceBlobsYInches,
 								offsetXDeg, perspecDeg);
 						}
+						
+						
 					}
 				}
 			}
