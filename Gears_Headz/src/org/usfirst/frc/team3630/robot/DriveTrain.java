@@ -37,8 +37,7 @@ public class DriveTrain  {
 	public DriveTrain() {
 	   mecanumDrive = new HomebrewMecanum(Consts.driveMotorFrontLeft,Consts.driveMotorBottomLeft, Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
 	   m_Joystick= new XboxController(Consts.joystickComPort);
-		SmartDashboard.putNumber("Desired Distance", 0);
-	 
+	   SmartDashboard.putNumber("Desired Distance", 0);
 		
 	}
 

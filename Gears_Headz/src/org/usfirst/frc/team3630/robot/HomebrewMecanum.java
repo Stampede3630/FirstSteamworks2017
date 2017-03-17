@@ -7,9 +7,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class HomebrewMecanum {
-	private Wheel fL, rL, fR, rR;
-	private double kP, kI, kD;
-	private RobotDrive wpiDrive;
+	public Wheel fL, rL, fR, rR;
 
 	/**
 	 * @param frontLeft
@@ -27,6 +25,12 @@ public class HomebrewMecanum {
 		fR = new Wheel(Consts.driveEncoderFrontRightA, Consts.driveEncoderFrontRightB, frontRight, true);
 		rR = new Wheel(Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, rearRight, true);
 
+	   SmartDashboard.putBoolean("PID Control?", false);
+	   SmartDashboard.putNumber("Desired Distance X", 0);
+	   SmartDashboard.putNumber("Desired Distance Y", 0);
+	   SmartDashboard.putNumber("Desired Distance theta", 0);
+
+	
 	}
 
 	/**
@@ -60,15 +64,15 @@ public class HomebrewMecanum {
 	 *            desired angular velocity in degrees per second
 	 * @param postDiagnostics
 	 *            default should be false. Post junk to smartDashboard?
-	 * @return wheelspeeds in radians
+	 * @return wheelspeeds in radians/second
 	 */
 	public double[] mecanumCalc(double velocityX, double velocityY, double angularVelocityDeg,
 			boolean postDiagnostics) {
 		// This function takes the velocity in x and y and theta and converts
 		// them to
 		// input is in inches/second, deg/sec
-		velocityX *= 100;
-		velocityY *= 100;
+//		velocityX *= 100;
+//		velocityY *= 100;
 		double angularVelocityRad = angularVelocityDeg * Math.PI / 180;
 
 		double[] wheelspeedResult;
@@ -91,6 +95,32 @@ public class HomebrewMecanum {
 			SmartDashboard.putNumber("Vx", velocityX);
 			SmartDashboard.putNumber("Vy", velocityY);
 			SmartDashboard.putNumber("Vtheta", angularVelocityRad);
+
+		}
+		return wheelspeedResult; // in rad/sec
+	}
+	public double[] distanceCalc(double velocityX, double velocityY, double angularVelocityDeg,
+			boolean postDiagnostics) {
+		double angularVelocityRad = angularVelocityDeg * Math.PI / 180;
+
+		double[] wheelspeedResult;
+		wheelspeedResult = new double[4];
+		// For more information about this formula, see the mecanum kinematics
+		wheelspeedResult[0] = velocityX - velocityY - Consts.mecanumPositionConstant * angularVelocityRad;
+		wheelspeedResult[1] = velocityX + velocityY - Consts.mecanumPositionConstant * angularVelocityRad;
+		wheelspeedResult[2] = velocityX - velocityY + Consts.mecanumPositionConstant * angularVelocityRad;
+		wheelspeedResult[3] = velocityX + velocityY + Consts.mecanumPositionConstant * angularVelocityRad;
+
+
+		if (postDiagnostics) {
+			SmartDashboard.putNumber("FrontLeftDist", wheelspeedResult[0]);
+			SmartDashboard.putNumber("RearLeftDist", wheelspeedResult[1]);
+			SmartDashboard.putNumber("FrontRightDist", wheelspeedResult[2]);
+			SmartDashboard.putNumber("RearRightDist", wheelspeedResult[3]);
+
+			SmartDashboard.putNumber("delta x", velocityX);
+			SmartDashboard.putNumber("delta y", velocityY);
+			SmartDashboard.putNumber("delta theta", angularVelocityRad);
 
 		}
 		return wheelspeedResult; // in rad/sec
@@ -124,20 +154,36 @@ public class HomebrewMecanum {
 	 */
 	public void driveImplementation(double velocityX, double velocityY, double angularVelocityDeg,
 			boolean postDiagnostics) {
-		if (true) {
-			double speed = SmartDashboard.getNumber("Desired Distance", 0);
+		if (SmartDashboard.getBoolean("PID Control?",true)) {
+			fL.pid.enable();
+			fR.pid.enable();
+			rL.pid.enable();
+			rR.pid.enable();
+
+			double speedX = SmartDashboard.getNumber("Desired Distance X", 0);
+			double speedY = SmartDashboard.getNumber("Desired Distance Y", 0);
+			double speedTheta = SmartDashboard.getNumber("Desired Distance theta", 0);
+
+			double wheelDistances [] = distanceCalc(speedX, speedY, speedTheta, true);
+			
+			fL.setWheelSpeed(wheelDistances[0]);
+			rL.setWheelSpeed(wheelDistances[1]);
+			rR.setWheelSpeed(wheelDistances[2]);
+			fR.setWheelSpeed(wheelDistances[3]);
+		
 			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fL.talon.getChannel()), fL.pid.onTarget());
 			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rL.talon.getChannel()), rL.pid.onTarget());
 			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fR.talon.getChannel()), fR.pid.onTarget());
 			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rR.talon.getChannel()), rR.pid.onTarget());
 
-			fL.setWheelSpeed(speed);
-			rL.setWheelSpeed(speed);
-			fR.setWheelSpeed(speed);
-			rR.setWheelSpeed(speed);
-
-		} else {
+		} 
+		
+		else {
 			double[] wheelSpeeds = mecanumCalc(velocityX, velocityY, angularVelocityDeg, postDiagnostics);
+			fL.pid.disable();
+			fR.pid.disable();
+			rL.pid.disable();
+			rR.pid.disable();
 
 			motorDrive(fL, wheelSpeeds[0], postDiagnostics);
 			motorDrive(rL, wheelSpeeds[1], postDiagnostics);
