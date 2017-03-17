@@ -15,7 +15,6 @@ public class Wheel {
 	public Encoder encoder;
 	public Talon talon;
 
-	private talonConverter pidToTalon;
 	
 	public PIDController pid;
 
@@ -32,9 +31,8 @@ public class Wheel {
 		
 		talon = new Talon(talonChannel);		
 		talon.setInverted(reversed);
-				
 		encoder.setMaxPeriod(1);
-		// Define distance in terms of INC
+		// Define distance in terms of inches
 		encoder.setDistancePerPulse(Consts.mecanumWheelRadiusInches*2*Math.PI/pulsesPerRevolution);
 		encoder.setMinRate(10);
 		encoder.setReverseDirection(!reversed);
@@ -73,7 +71,6 @@ public class Wheel {
 		SmartDashboard.putNumber("PID result"+String.valueOf(talon.getChannel()), pid.get());
 		SmartDashboard.putNumber("Encoder Distance"+String.valueOf(talon.getChannel()), encoder.getDistance());
 		
-		if (xbox.getStartButton()) encoder.reset();
 		
 		}
 

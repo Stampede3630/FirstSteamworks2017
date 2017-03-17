@@ -1,10 +1,10 @@
-/*package org.usfirst.frc.team3630.robot;
+package org.usfirst.frc.team3630.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import com.kauailabs.navx.frc.AHRS;
+import com.kauailabs.navx.frc.*;
 import edu.wpi.first.wpilibj.SPI;
 
-public class NavX extends Robot{
+public class NavX {
 	
 	AHRS ahrs;
 	
@@ -34,4 +34,3 @@ public class NavX extends Robot{
 		ahrs.startLiveWindowMode();
 	}
 }
-*/

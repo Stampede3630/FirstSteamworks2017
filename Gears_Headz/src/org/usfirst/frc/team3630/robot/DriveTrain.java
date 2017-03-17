@@ -30,18 +30,15 @@ public class DriveTrain  {
     
 
     // initialize drives 
-	//HomebrewMecanum mecanumDrive; 
+	HomebrewMecanum mecanumDrive; 
 	Wheel fL, rL, fR, rR;
 	boolean directionForward = true;
    
 	public DriveTrain() {
-	   //mecanumDrive = new HomebrewMecanum(Consts.driveMotorFrontLeft,Consts.driveMotorBottomLeft, Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
+	   mecanumDrive = new HomebrewMecanum(Consts.driveMotorFrontLeft,Consts.driveMotorBottomLeft, Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
 	   m_Joystick= new XboxController(Consts.joystickComPort);
 		SmartDashboard.putNumber("Desired Distance", 0);
-	    fL = new Wheel(Consts.driveEncoderFrontLeftA, Consts.driveEncoderFrontLeftB, Consts.driveMotorFrontLeft, false);
-		rL = new Wheel(Consts.driveEncoderRearLeftA, Consts.driveEncoderRearLeftB, Consts.driveMotorBottomLeft, false);
-		fR = new Wheel(Consts.driveEncoderFrontRightA, Consts.driveEncoderFrontRightB, Consts.driveMotorFrontRight, true);
-		rR = new Wheel(Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, Consts.driveMotorBottomRight, true);
+	 
 		
 	}
 
@@ -66,10 +63,7 @@ public class DriveTrain  {
    }
    
    public void teleopInit(){
-	   fL.encoder.reset();
-	   fR.encoder.reset();
-	   rL.encoder.reset();
-	   rR.encoder.reset();
+	  mecanumDrive.teleopInit();
    }
    
    public void telopPeriodic(){
@@ -80,7 +74,7 @@ public class DriveTrain  {
 	//Homebrew Version
 	   
 
-	/*double speedy = 1;
+	double speedy = 1;
 	if (m_Joystick.getRawButton(Consts.buttonSprint)||m_Joystick.getRawButton(Consts.buttonSprintAlternate)) speedy = Consts.fastK;
 	else speedy = Consts.slowK;
 	
@@ -90,19 +84,12 @@ public class DriveTrain  {
 	mecanumDrive.driveImplementation(getRoundY()*speedy,getRoundX()*speedy,getRoundTwist()*speedy*360, false);
 	//Expecting numbers between -1 and 1.
 	mecanumDrive.setAllPID();
-	*/
 	
-	   double speed = SmartDashboard.getNumber("Desired Distance", 0) * Math.PI*2;
-	   SmartDashboard.putBoolean("PID at Target? "+String.valueOf(fL.talon.getChannel()), fL.pid.onTarget());
-	   SmartDashboard.putBoolean("PID at Target? "+String.valueOf(rL.talon.getChannel()), rL.pid.onTarget());
-	   SmartDashboard.putBoolean("PID at Target? "+String.valueOf(fR.talon.getChannel()), fR.pid.onTarget());
-	   SmartDashboard.putBoolean("PID at Target? "+String.valueOf(rR.talon.getChannel()), rR.pid.onTarget());
+	
+	 
 	   
-	   fL.setWheelSpeed(speed);
-	   rL.setWheelSpeed(speed);
-	   fR.setWheelSpeed(speed);
-	   rR.setWheelSpeed(speed);
+	   }
 
 }
 
-}
+

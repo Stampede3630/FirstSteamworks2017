@@ -27,8 +27,6 @@ public class HomebrewMecanum {
 		fR = new Wheel(Consts.driveEncoderFrontRightA, Consts.driveEncoderFrontRightB, frontRight, true);
 		rR = new Wheel(Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, rearRight, true);
 
-
-	
 	}
 
 	/**
@@ -71,8 +69,7 @@ public class HomebrewMecanum {
 		// input is in inches/second, deg/sec
 		velocityX *= 100;
 		velocityY *= 100;
-		double angularVelocityRad = angularVelocityDeg * Math.PI / 180; 
-	
+		double angularVelocityRad = angularVelocityDeg * Math.PI / 180;
 
 		double[] wheelspeedResult;
 		wheelspeedResult = new double[4];
@@ -103,11 +100,13 @@ public class HomebrewMecanum {
 		// This function maps the motor drive to the talon speed. More tuning
 		// from the constant is needed.
 		double adjustedMotorSpeed = motorSpeed * Consts.motorDriveAdjustment;
-		
+
 		myWheel.talon.set(adjustedMotorSpeed);
 
-		SmartDashboard.putNumber("motorDrive commandSpeed" + String.valueOf(myWheel.talon.getChannel()), adjustedMotorSpeed);
-		SmartDashboard.putNumber("encoder input value" + String.valueOf(myWheel.talon.getChannel()), myWheel.talon.getSpeed());
+		SmartDashboard.putNumber("motorDrive commandSpeed" + String.valueOf(myWheel.talon.getChannel()),
+				adjustedMotorSpeed);
+		SmartDashboard.putNumber("encoder input value" + String.valueOf(myWheel.talon.getChannel()),
+				myWheel.talon.getSpeed());
 	}
 
 	/**
@@ -125,29 +124,44 @@ public class HomebrewMecanum {
 	 */
 	public void driveImplementation(double velocityX, double velocityY, double angularVelocityDeg,
 			boolean postDiagnostics) {
+		if (true) {
+			double speed = SmartDashboard.getNumber("Desired Distance", 0);
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fL.talon.getChannel()), fL.pid.onTarget());
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rL.talon.getChannel()), rL.pid.onTarget());
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fR.talon.getChannel()), fR.pid.onTarget());
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rR.talon.getChannel()), rR.pid.onTarget());
 
-		double[] wheelSpeeds = mecanumCalc(velocityX, velocityY, angularVelocityDeg, postDiagnostics);
+			fL.setWheelSpeed(speed);
+			rL.setWheelSpeed(speed);
+			fR.setWheelSpeed(speed);
+			rR.setWheelSpeed(speed);
 
-		motorDrive(fL, wheelSpeeds[0], postDiagnostics);
-		motorDrive(rL, wheelSpeeds[1], postDiagnostics);
-		motorDrive(rR, wheelSpeeds[2], postDiagnostics);
-		motorDrive(fR, wheelSpeeds[3], postDiagnostics);
+		} else {
+			double[] wheelSpeeds = mecanumCalc(velocityX, velocityY, angularVelocityDeg, postDiagnostics);
 
+			motorDrive(fL, wheelSpeeds[0], postDiagnostics);
+			motorDrive(rL, wheelSpeeds[1], postDiagnostics);
+			motorDrive(rR, wheelSpeeds[2], postDiagnostics);
+			motorDrive(fR, wheelSpeeds[3], postDiagnostics);
+		}
 	}
-
-
-
 
 	public void setAllPID() {
 		double kP = SmartDashboard.getNumber("drivetrain kP", 10);
 		double kI = SmartDashboard.getNumber("drivetrain kI", 0);
 		double kD = SmartDashboard.getNumber("drivetrain kD", 0);
-		double kF = SmartDashboard.getNumber("drivetrain kF", 1);
 
 		fL.pid.setPID(kP, kI, kD);
 		fR.pid.setPID(kP, kI, kD);
 		rL.pid.setPID(kP, kI, kD);
 		rR.pid.setPID(kP, kI, kD);
+	}
+
+	public void teleopInit() {
+		fL.encoder.reset();
+		   fR.encoder.reset();
+		   rL.encoder.reset();
+		   rR.encoder.reset();
 	}
 
 }

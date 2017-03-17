@@ -20,10 +20,7 @@ public WinchSystem(){
 	 winchDown = new DigitalInput(Consts.winchStopPin);
 	 winchEncoder = new Encoder(Consts.winchEncoderPinA, Consts.winchEncoderPinB, false, CounterBase.EncodingType.k4X);
 	 winchEncoder.setDistancePerPulse(( 2*Math.PI) /(400000));
-
 }
-
-	
 
 	public void upWinch(){
 		winch.set(-1);
