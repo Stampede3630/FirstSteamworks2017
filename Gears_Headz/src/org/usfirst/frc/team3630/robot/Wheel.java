@@ -11,9 +11,11 @@ import edu.wpi.first.wpilibj.SpeedController;
 public class Wheel {
 	private static final int pulsesPerRevolution = 250;
 	
+	XboxController xbox;
 	public Encoder encoder;
 	public Talon talon;
 
+	private talonConverter pidToTalon;
 	
 	public PIDController pid;
 
@@ -25,6 +27,7 @@ public class Wheel {
 	 * @param reversed
 	 */
 	public Wheel (int encoderChannel1, int encoderChannel2, int talonChannel, boolean reversed){
+		xbox = new XboxController(0);
 		encoder = new Encoder(encoderChannel1, encoderChannel2, reversed, EncodingType.k4X);
 		
 		talon = new Talon(talonChannel);		
@@ -50,7 +53,7 @@ public class Wheel {
 		//pid.setInputRange(-100, 100);
 		pid.setOutputRange(-1, 1);
 		pid.setAbsoluteTolerance(1);
-		pid.disable();
+		pid.enable();
 	}
 	
 	public void setWheelSpeed (double speed){
@@ -69,7 +72,9 @@ public class Wheel {
 		SmartDashboard.putNumber("PID P"+String.valueOf(talon.getChannel()), pid.getP());
 		SmartDashboard.putNumber("PID result"+String.valueOf(talon.getChannel()), pid.get());
 		SmartDashboard.putNumber("Encoder Distance"+String.valueOf(talon.getChannel()), encoder.getDistance());
-				
+		
+		if (xbox.getStartButton()) encoder.reset();
+		
 		}
 
 	

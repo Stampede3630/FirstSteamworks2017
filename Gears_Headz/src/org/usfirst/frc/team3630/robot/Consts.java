@@ -4,7 +4,7 @@ package org.usfirst.frc.team3630.robot;
 public final class Consts {
 
 //Mecanum Drive adjustments
-public static final double motorDriveAdjustment = .5;
+public static final double motorDriveAdjustment = 1;
 public static final double mecanumPositionConstant = 29.5;
 public static final double mecanumWheelRadiusInches = 3.0;
 

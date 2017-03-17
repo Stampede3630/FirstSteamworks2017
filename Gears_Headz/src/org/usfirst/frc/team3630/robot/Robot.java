@@ -21,6 +21,7 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	DriveTrain driveTrain;
+	Ultrasonics ultraDistance;
 	GearsManip gears;
 //	NavX navxmxp;
 	WinchSystem winch;
@@ -37,7 +38,7 @@ public class Robot extends IterativeRobot {
 
 		winch = new WinchSystem();
 		gears= new GearsManip();
-		
+
 	}
 
 	/**
@@ -96,7 +97,7 @@ public class Robot extends IterativeRobot {
 		//ultraDistance.sensorPeriodic();
 		winch.telopPeriodic();
 		gears.telopPeridic();
-
+		
 	}
 
 	/**

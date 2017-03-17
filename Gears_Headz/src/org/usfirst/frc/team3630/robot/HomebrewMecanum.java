@@ -7,7 +7,9 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 public class HomebrewMecanum {
-	public Wheel fL, rL, fR, rR;
+	private Wheel fL, rL, fR, rR;
+	private double kP, kI, kD;
+	private RobotDrive wpiDrive;
 
 	/**
 	 * @param frontLeft
@@ -24,6 +26,8 @@ public class HomebrewMecanum {
 		rL = new Wheel(Consts.driveEncoderRearLeftA, Consts.driveEncoderRearLeftB, rearLeft, false);
 		fR = new Wheel(Consts.driveEncoderFrontRightA, Consts.driveEncoderFrontRightB, frontRight, true);
 		rR = new Wheel(Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, rearRight, true);
+
+
 	
 	}
 
@@ -69,6 +73,7 @@ public class HomebrewMecanum {
 		velocityY *= 100;
 		double angularVelocityRad = angularVelocityDeg * Math.PI / 180; 
 	
+
 		double[] wheelspeedResult;
 		wheelspeedResult = new double[4];
 		// For more information about this formula, see the mecanum kinematics
@@ -102,7 +107,7 @@ public class HomebrewMecanum {
 		myWheel.talon.set(adjustedMotorSpeed);
 
 		SmartDashboard.putNumber("motorDrive commandSpeed" + String.valueOf(myWheel.talon.getChannel()), adjustedMotorSpeed);
-		SmartDashboard.putNumber("talon speed" + String.valueOf(myWheel.talon.getChannel()), myWheel.talon.getSpeed());
+		SmartDashboard.putNumber("encoder input value" + String.valueOf(myWheel.talon.getChannel()), myWheel.talon.getSpeed());
 	}
 
 	/**
