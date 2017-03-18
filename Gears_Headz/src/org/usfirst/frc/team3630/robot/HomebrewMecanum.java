@@ -64,8 +64,7 @@ public class HomebrewMecanum {
 
 
 		double angularVelocityRad = angularVelocityDeg * Math.PI / 180; //Converts degrees to radians for you, liam
-		double[] wheelspeedResult;
-		wheelspeedResult = new double[4];
+		double[] wheelspeedResult = new double[4];
 		//For more information about this formula, see the mecanum kinematics 
 		wheelspeedResult[0] = velocityX - velocityY - Consts.mecanumPositionConstant * angularVelocityRad;	
 		wheelspeedResult[1] = velocityX + velocityY - Consts.mecanumPositionConstant * angularVelocityRad;
