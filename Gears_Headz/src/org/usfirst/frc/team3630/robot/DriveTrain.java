@@ -37,8 +37,7 @@ public class DriveTrain  {
 	public DriveTrain() {
 	   mecanumDrive = new HomebrewMecanum(Consts.driveMotorFrontLeft,Consts.driveMotorBottomLeft, Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
 	   m_Joystick= new XboxController(Consts.joystickComPort);
-	   SmartDashboard.putNumber("Desired Distance", 0);
-		
+	   SmartDashboard.putBoolean("Auto Control", false);
 	}
 
    public double getRoundX() {
@@ -72,23 +71,26 @@ public class DriveTrain  {
 	 */
 	//Homebrew Version
 	   
-
-	double speedy = 1;
-	if (m_Joystick.getRawButton(Consts.buttonSprint)||m_Joystick.getRawButton(Consts.buttonSprintAlternate)) speedy = Consts.fastK;
-	else speedy = Consts.slowK;
+	if (SmartDashboard.getBoolean("Auto Control", false)){
+		mecanumDrive.setAllPID();
+		mecanumDrive.pidDrive();
+	}
+	else {
+		double speedy = 15;
+		if (m_Joystick.getRawButton(Consts.buttonSprint)||m_Joystick.getRawButton(Consts.buttonSprintAlternate)) speedy = Consts.fastK;
+		else speedy = Consts.slowK;
+		
+		if (m_Joystick.getRawButton(Consts.buttonSwitchDirection)) directionForward = !directionForward;
+		if  (!directionForward) speedy *= -1;
+		
+		mecanumDrive.driveImplementation(getRoundY()*speedy,getRoundX()*speedy,getRoundTwist()*speedy, true);
+		//Expecting numbers between -1 and 1.
+		
+	}
+	}
 	
-	if (m_Joystick.getRawButton(Consts.buttonSwitchDirection)) directionForward = !directionForward;
-	if  (!directionForward) speedy *= -1;
-	
-	mecanumDrive.driveImplementation(getRoundY()*speedy,getRoundX()*speedy,getRoundTwist()*speedy*360, false);
-	//Expecting numbers between -1 and 1.
-	mecanumDrive.setAllPID();
 	
 	
-	 
-	   
-	   }
-
 }
 
 

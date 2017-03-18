@@ -57,6 +57,9 @@ public static final int driveEncoderRearRightA = 6;
 public static final int driveEncoderRearRightB = 7;
 public static final int buttonSwitchDirection = 2;
 public static final double talonConversion = 50;
+public static final double wheelKP = .015;
+public static final double wheelKI = 0;
+public static final double wheelKD = 0;
 
 
 }

@@ -42,15 +42,15 @@ public class Wheel {
 		
 		//PID WILL ONLY DEAL WITH INCHES/SECONDz
 		pid = new PIDController(
-				SmartDashboard.getNumber("drivetrain kP", .05),
-				SmartDashboard.getNumber("drivetrain kI", 0),
-				SmartDashboard.getNumber("drivetrain kD", 0),
+				SmartDashboard.getNumber("drivetrain kP", Consts.wheelKP),
+				SmartDashboard.getNumber("drivetrain kI", Consts.wheelKI),
+				SmartDashboard.getNumber("drivetrain kD", Consts.wheelKD),
 				encoder, 
 				talon
 				);
 		//pid.setInputRange(-100, 100);
 		pid.setOutputRange(-1, 1);
-		pid.setAbsoluteTolerance(1);
+		pid.setAbsoluteTolerance(2);
 		pid.enable();
 	}
 	
@@ -59,17 +59,15 @@ public class Wheel {
 
 		
 		pid.setPID(
-			SmartDashboard.getNumber("drivetrain kP", .1),
-			SmartDashboard.getNumber("drivetrain kI", 0),
-			SmartDashboard.getNumber("drivetrain kD", 0)
-		);
+				SmartDashboard.getNumber("drivetrain kP", Consts.wheelKP),
+				SmartDashboard.getNumber("drivetrain kI", Consts.wheelKI),
+				SmartDashboard.getNumber("drivetrain kD", Consts.wheelKD)
+			);
 		
 		pid.setSetpoint(speed);//speed);
 		SmartDashboard.putNumber("PID Encoder Input"+String.valueOf(talon.getChannel()), encoder.pidGet());
 		SmartDashboard.putNumber("PID Setpoint "+String.valueOf(talon.getChannel()), pid.getSetpoint());
-		SmartDashboard.putNumber("PID P"+String.valueOf(talon.getChannel()), pid.getP());
 		SmartDashboard.putNumber("PID result"+String.valueOf(talon.getChannel()), pid.get());
-		SmartDashboard.putNumber("Encoder Distance"+String.valueOf(talon.getChannel()), encoder.getDistance());
 		
 		
 		}

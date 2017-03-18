@@ -26,6 +26,20 @@ public class VisionMath {
 	private double xrf;
 	private double yrf;
 
+	VisionMath() {
+		prespecDeg = 0;
+		offsetXDeg = 0;
+		distanceX = 0;
+		drsAngle = 0;
+		xrs = 0;
+		yrs = 0;
+		dsfAngle = 0;
+		xsf = 0;
+		ysf = 0;
+		xrf = 0;
+		yrf = 0;
+	}
+	
 	private double dRobotToSpringX() {
 		xrs = distanceX * Math.cos(drsAngle);
 		return xrs;
