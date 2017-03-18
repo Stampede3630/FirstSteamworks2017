@@ -49,8 +49,8 @@ public class GearsManip {
 		public void telopPeridic(){
 			SmartDashboard.putBoolean("LimitOpen", limitOpen.get());
 			SmartDashboard.putBoolean("LimitClose", limitClose.get());
-			SmartDashboard.putBoolean("OpenButton", m_joystick.getRawButton(Consts.openButton));
-			SmartDashboard.putBoolean("CloseButton", m_joystick.getRawButton(Consts.closeButton));
+//			SmartDashboard.putBoolean("OpenButton", m_joystick.getRawButton(Consts.openButton));
+//			SmartDashboard.putBoolean("CloseButton", m_joystick.getRawButton(Consts.closeButton));
 			switch (getValue()) {
 				case 1:
 					open();

@@ -16,7 +16,7 @@ public class talonConverter implements PIDOutput {
 
 		if (Math.abs(output)<= 1) {
 			talon.set(output);
-			SmartDashboard.putNumber("Talon Output" + String.valueOf(talon.getChannel()), output);
+		//	SmartDashboard.putNumber("Talon Output" + String.valueOf(talon.getChannel()), output);
 		}
 	}
 
