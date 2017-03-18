@@ -14,6 +14,10 @@ class Blob {
 		cornerCount = 0;
 	}
 	
+	/**
+	 * Add a corner to the blob
+	 * @param corner object to add
+	 */
 	public void addCorner(Corner corner) {
 		if (cornerCount < Consts.cornersPerBlob) {
 			myCorner[cornerCount].setX(corner.getX());
@@ -86,8 +90,9 @@ class Blob {
 		return Utils.cvtHeightPxToDistInches(getAverageHeightPx(), Consts.gearTapeHeightInches);
 	}
 
-	// Puts the corners in this order:
-	// topright, topleft, botleft, botright
+	/**
+	 * Puts the corners in this order: topright, topleft, botleft, botright
+	 */
 	public void orderCorners() {
 		if (cornerCount > 0) {
 			// First calculate the average x and y coordinate over all the corners.
@@ -134,11 +139,30 @@ class Blob {
 		return str.toString();
 	}
 
+	/**
+	 * @return Comma separated variable format string of this blob.
+	 */
 	public String toCSV() {
 		StringBuilder str = new StringBuilder(64);
 		for (int i=0; i < cornerCount; i++) {
 			str.append(myCorner[i].toCSV());
 		}
 		return str.toString();
+	}
+
+	/**
+	 * @return true if this blob's corners meet consistency checks.
+	 */
+	public boolean isValid() {
+		boolean valid = cornerCount == 4;
+		double botLimit = 0.0;
+		double topLimit = Math.PI / 2.0;
+		for (int i=0; valid && (i < cornerCount); i++) {
+			valid = valid && myCorner[i].getAngle() >= botLimit;
+			valid = valid && myCorner[i].getAngle() <= topLimit;
+			botLimit = topLimit;
+			topLimit = botLimit + (Math.PI / 2.0);
+		}
+		return valid;
 	}
 }
