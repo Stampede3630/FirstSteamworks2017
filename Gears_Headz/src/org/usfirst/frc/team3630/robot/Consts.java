@@ -5,7 +5,7 @@ public final class Consts {
 
 //Mecanum Drive adjustments
 public static final double motorDriveAdjustment = 1;
-public static final double mecanumPositionConstant = 29.5;
+public static final double mecanumPositionConstant = 90;
 public static final double mecanumWheelRadiusInches = 3.0;
 
 //Motor PWM Pin assignments
@@ -56,7 +56,7 @@ public static final int driveEncoderFrontRightB = 3;
 public static final int driveEncoderRearRightA = 6;
 public static final int driveEncoderRearRightB = 7;
 public static final int buttonSwitchDirection = 2;
-public static final double talonConversion = 50;
+public static final double talonConversion = 1;
 public static final double wheelKP = .015;
 public static final double wheelKI = 0;
 public static final double wheelKD = 0;
