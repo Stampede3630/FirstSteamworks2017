@@ -64,8 +64,7 @@ public class HomebrewMecanum {
 
 
 		double angularVelocityRad = angularVelocityDeg * Math.PI / 180; //Converts degrees to radians for you, liam
-		double[] wheelspeedResult;
-		wheelspeedResult = new double[4];
+		double[] wheelspeedResult = new double[4];
 		//For more information about this formula, see the mecanum kinematics 
 		wheelspeedResult[0] = velocityX - velocityY - Consts.mecanumPositionConstant * angularVelocityRad;	
 		wheelspeedResult[1] = velocityX + velocityY - Consts.mecanumPositionConstant * angularVelocityRad;
@@ -98,6 +97,8 @@ public class HomebrewMecanum {
 		System.out.println(adjustedMotorSpeed);
 		SmartDashboard.putNumber("adjusted"+String.valueOf(talon.getChannel()), talon.getSpeed());
 		SmartDashboard.putNumber("Encoder"+String.valueOf(talon.getChannel()), talon.getSpeed());
+	
+
 	}
 
 	/**
@@ -115,8 +116,11 @@ public class HomebrewMecanum {
 		motorDrive(rL, wheelSpeeds[1], postDiagnostics);
 		motorDrive(rR, wheelSpeeds[2], postDiagnostics);
 		motorDrive(fR, wheelSpeeds[3], postDiagnostics);
-
-
+		
+		SmartDashboard.putNumber("FL Rate", fLe.getRate());
+		SmartDashboard.putNumber("FR Rate", fRe.getRate());
+		SmartDashboard.putNumber("RL Rate", rLe.getRate());
+		SmartDashboard.putNumber("RR Rate", rRe.getRate());
 
 	}
 }

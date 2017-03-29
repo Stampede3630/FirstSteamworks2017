@@ -9,8 +9,12 @@ import edu.wpi.first.wpilibj.JoystickBase;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+
+
 public class Drive_Train  {
 
+	boolean wasPressed = false;
+	
 	XboxController m_Joystick;// 2 for shooting and driving 
  
  //  AnalogInput ai0;
@@ -34,7 +38,7 @@ public class Drive_Train  {
     }
 
    public double getRoundX() {
-	   double result = m_Joystick.getX(GenericHID.Hand.kRight);
+	   double result = m_Joystick.getX(GenericHID.Hand.kLeft);
 	   result *= 50;
 	   result = Math.round(result);
 	   result /= 50;
@@ -43,7 +47,7 @@ public class Drive_Train  {
    }
    
    public double getRoundY() {
-	   double result = m_Joystick.getY(GenericHID.Hand.kRight);
+	   double result = m_Joystick.getY(GenericHID.Hand.kLeft);
 	   result *= 50;
 	   result = Math.round(result);
 	   result /= 50;
@@ -53,10 +57,10 @@ public class Drive_Train  {
    }
    
    public double getRoundTwist() {
-	   double result = m_Joystick.getX(GenericHID.Hand.kLeft);
-	   result *= 50;
+	   double result = m_Joystick.getX(GenericHID.Hand.kRight);
+	   result *= 100;
 	   result = Math.round(result);
-	   result /= 50;
+	   result /= 100;
 	   SmartDashboard.putNumber("Joystick 2", result);
 
 	   return result;
@@ -70,10 +74,14 @@ public class Drive_Train  {
 	double speedy = 1;
 	if (m_Joystick.getRawButton(Consts.buttonSprint)||m_Joystick.getRawButton(Consts.buttonSprintAlternate)) speedy = Consts.fastK;
 	else speedy = Consts.slowK;
-	if (m_Joystick.getRawButton(Consts.buttonSwitchDirection)) directionForward = !directionForward;
+	if (m_Joystick.getRawButton(Consts.buttonSwitchDirection)&& !wasPressed){
+		wasPressed = true;
+		directionForward = !directionForward;
+	}
+	else wasPressed = false;
 	if  (directionForward) speedy *= -1;
 	
 	mecanumDrive.driveImplementation(-getRoundY()*speedy,-getRoundX()*speedy,-getRoundTwist()*speedy/2, true);
-	 	
+	
 }
 }
