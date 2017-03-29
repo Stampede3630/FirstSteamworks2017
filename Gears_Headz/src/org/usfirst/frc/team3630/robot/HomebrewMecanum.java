@@ -70,10 +70,8 @@ public class HomebrewMecanum {
 	public double[] mecanumCalc(double velocityX, double velocityY, double angularVelocityDeg,
 			boolean postDiagnostics) {
 		// This function takes the velocity in x and y and theta and converts
-		// them to
-		// input is in inches/second, deg/sec
-//		velocityX *= 100;
-//		velocityY *= 100;
+		// them to input is in inches/second, deg/sec
+
 		double angularVelocityRad = angularVelocityDeg * Math.PI / 180;
 
 		double[] wheelspeedResult;
