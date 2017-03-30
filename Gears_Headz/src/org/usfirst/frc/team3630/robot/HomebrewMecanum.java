@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-public class HomebrewMecanum {
+public  class HomebrewMecanum {
 	public Wheel fL, rL, fR, rR;
 	private VisionMath myVisionMath;
 
@@ -20,7 +20,7 @@ public class HomebrewMecanum {
 	 * @param rearRight
 	 *            pin for rear right motor
 	 */
-	public HomebrewMecanum(int frontLeft, int rearLeft, int frontRight, int rearRight) {
+	 public  HomebrewMecanum (int frontLeft, int rearLeft, int frontRight, int rearRight) {
 		fL = new Wheel(Consts.driveEncoderFrontLeftA, Consts.driveEncoderFrontLeftB, frontLeft, false);
 		rL = new Wheel(Consts.driveEncoderRearLeftA, Consts.driveEncoderRearLeftB, rearLeft, false);
 		fR = new Wheel(Consts.driveEncoderFrontRightA, Consts.driveEncoderFrontRightB, frontRight, true);
@@ -81,9 +81,6 @@ public class HomebrewMecanum {
 		wheelspeedResult[1] = velocityX + velocityY - Consts.mecanumPositionConstant * angularVelocityRad;
 		wheelspeedResult[2] = velocityX - velocityY + Consts.mecanumPositionConstant * angularVelocityRad;
 		wheelspeedResult[3] = velocityX + velocityY + Consts.mecanumPositionConstant * angularVelocityRad;
-
-		for (int i = 0; i < wheelspeedResult.length; i++)
-			wheelspeedResult[i] /= Consts.mecanumWheelRadiusInches;
 
 		if (postDiagnostics) {
 			SmartDashboard.putNumber("HM FrontLeft", wheelspeedResult[0]);
@@ -186,9 +183,9 @@ public class HomebrewMecanum {
 		double speedX, speedY, speedTheta;
 		if (SmartDashboard.getBoolean("PID Control?",false)) {
 			if (!fL.pid.isEnabled()) fL.pid.enable();
-			if (!fR.pid.isEnabled())fR.pid.enable();
-			if (!rL.pid.isEnabled())rL.pid.enable();
-			if (!rR.pid.isEnabled())rR.pid.enable();
+			if (!fR.pid.isEnabled()) fR.pid.enable();
+			if (!rL.pid.isEnabled()) rL.pid.enable();
+			if (!rR.pid.isEnabled()) rR.pid.enable();
 
 			if (SmartDashboard.getBoolean("Vision Pipe?", false)){
 				myVisionMath.refereshImageValues();
@@ -212,10 +209,10 @@ public class HomebrewMecanum {
 			rR.setWheelSpeed(wheelDistances[2]);
 			fR.setWheelSpeed(wheelDistances[3]);
 		
-//			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fL.talon.getChannel()), fL.pid.onTarget());
-//			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rL.talon.getChannel()), rL.pid.onTarget());
-//			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fR.talon.getChannel()), fR.pid.onTarget());
-//			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rR.talon.getChannel()), rR.pid.onTarget());
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fL.talon.getChannel()), fL.pid.onTarget());
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rL.talon.getChannel()), rL.pid.onTarget());
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fR.talon.getChannel()), fR.pid.onTarget());
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rR.talon.getChannel()), rR.pid.onTarget());
 
 	}
 

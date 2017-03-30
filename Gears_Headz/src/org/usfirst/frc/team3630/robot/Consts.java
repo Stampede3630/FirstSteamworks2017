@@ -35,7 +35,7 @@ public static final int gearLimitSwitchClosed = 9;
 
 //speed constants
 public static final double gearSpeed = 1;
-public static final double slowK = .2;
+public static final double slowK = .25;
 public static final double fastK = 1;
 public static final double joystickToInchesPerSecond = 90;
 
