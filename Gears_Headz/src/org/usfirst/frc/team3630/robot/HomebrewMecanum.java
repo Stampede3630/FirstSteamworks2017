@@ -74,9 +74,8 @@ public  class HomebrewMecanum {
 		// them to input is in inches/second, deg/sec
 
 		double angularVelocityRad = angularVelocityDeg * Math.PI / 180;
-
-
-		double angularVelocityRad = angularVelocityDeg * Math.PI / 180; //Converts degrees to radians for you, liam
+		//Converts degrees to radians for you, liam
+		
 		double[] wheelspeedResult = new double[4];
 		//For more information about this formula, see the mecanum kinematics 
 		wheelspeedResult[0] = velocityX - velocityY - Consts.mecanumPositionConstant * angularVelocityRad;	
@@ -218,5 +217,4 @@ public  class HomebrewMecanum {
 
 	}
 	}
-}
 }
