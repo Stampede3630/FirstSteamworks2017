@@ -35,8 +35,10 @@ public static final int gearLimitSwitchClosed = 9;
 
 //speed constants
 public static final double gearSpeed = 1;
-public static final double slowK = .2;
-public static final double fastK = .6;
+
+public static final double slowK = .25;
+public static final double fastK = 1;
+public static final double joystickToInchesPerSecond = 90;
 
 //winch encoder assignment
 public static final int winchEncoderPinA = 11;
@@ -48,13 +50,17 @@ public static final int winchStopPin = 10;
 //Drivetrain Encoder DIO pin assignments
 public static final int driveEncoderFrontLeftA = 0;
 public static final int driveEncoderFrontLeftB = 1;
-public static final int driveEncoderRearLeftA = 2;
-public static final int driveEncoderRearLeftB = 3;
-public static final int driveEncoderFrontRightA = 4;
-public static final int driveEncoderFrontRightB = 5;
+public static final int driveEncoderRearLeftA = 4;
+public static final int driveEncoderRearLeftB = 5;
+public static final int driveEncoderFrontRightA = 2;
+public static final int driveEncoderFrontRightB = 3;
 public static final int driveEncoderRearRightA = 6;
 public static final int driveEncoderRearRightB = 7;
 public static final int buttonSwitchDirection = 2;
+public static final double talonConversion = 1;
+public static final double wheelKP = .015;
+public static final double wheelKI = 0;
+public static final double wheelKD = 0;
 
 
 }

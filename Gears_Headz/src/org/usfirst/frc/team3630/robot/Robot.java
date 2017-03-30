@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3630.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,10 +20,10 @@ public class Robot extends IterativeRobot {
 	final String customAuto = "My Auto";
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
-	Drive_Train driveTrain;
+	DriveTrain driveTrain;
 	Ultrasonics ultraDistance;
 	GearsManip gears;
-//	NavX navxmxp;
+	NavX myNavX;
 	WinchSystem winch;
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -30,19 +31,12 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		//chooser.addDefault("Default Auto", defaultAuto);
-		//hooser.addObject("My Auto", customAuto);
-		//SmartDashboard.putData("Auto choices", chooser);
-		driveTrain = new Drive_Train();
-		//navxmxp = new NavX();
-		//navxmxp.NavXInit();
 
-		// ultraDistance = new Ultrasonics();
-		// ultraDistance.ultraInit(1);
+		driveTrain = new DriveTrain();
+		myNavX = new NavX();
+
 		winch = new WinchSystem();
 		gears= new GearsManip();
-	//	navxmxp = new NavX();
-		//WheelEncoder rightFrontEnc = new WheelEncoder(); rightFrontEnc.encoderInit(0, 1);
 
 	}
 
@@ -84,10 +78,18 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during operator control
 	 */
+	
+	public void teleopInit() {
+		SmartDashboard.putNumber("drivetrain kP", Consts.wheelKP);
+		SmartDashboard.putNumber("drivetrain kI", Consts.wheelKI);
+		SmartDashboard.putNumber("drivetrain kD", Consts.wheelKD);
+		driveTrain.teleopInit();
+	}
+
 	@Override
 	public void teleopPeriodic() {
 		driveTrain.telopPeriodic();
-		//navxmxp.teleopPeriodic();
+		myNavX.teleopPeriodic();
 		//rightFrontEnc.get();
 		//ultraDistance.sensorPeriodic();
 		winch.telopPeriodic();
@@ -100,7 +102,6 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		
 	}
 }
 
