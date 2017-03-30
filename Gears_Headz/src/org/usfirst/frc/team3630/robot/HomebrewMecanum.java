@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3630.robot;
 
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -132,6 +133,7 @@ public  class HomebrewMecanum {
 		SmartDashboard.putNumber("motorDrive commandSpeed" + String.valueOf(myWheel.talon.getChannel()),
 				adjustedMotorSpeed);
 	}
+	
 
 	/**
 	 * this function does the full drive implementation for teleop
@@ -215,6 +217,6 @@ public  class HomebrewMecanum {
 			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rR.talon.getChannel()), rR.pid.onTarget());
 
 	}
-
+	}
 }
 }
