@@ -20,10 +20,7 @@ public WinchSystem(){
 	 winchDown = new DigitalInput(Consts.winchStopPin);
 	 winchEncoder = new Encoder(Consts.winchEncoderPinA, Consts.winchEncoderPinB, false, CounterBase.EncodingType.k4X);
 	 winchEncoder.setDistancePerPulse(( 2*Math.PI) /(400000));
-
 }
-
-	
 
 	public void upWinch(){
 		winch.set(-1);
@@ -44,11 +41,11 @@ public WinchSystem(){
 	}
 	
 	public void telopPeriodic(){
-		SmartDashboard.putNumber("Winch Encoder Raw Value", winchEncoder.getRaw());
-		SmartDashboard.putNumber("Winch Encoder Rad value", winchEncoder.getDistance()/(2*Math.PI));
-		SmartDashboard.putBoolean("WinchDown Limit", winchDown.get());
-		SmartDashboard.putBoolean("Winch Button", mecXbox.getRawButton(Consts.joystickWinchButton));
-		SmartDashboard.putNumber("Winch Talon State", winch.get());
+//		SmartDashboard.putNumber("Winch Encoder Raw Value", winchEncoder.getRaw());
+//		SmartDashboard.putNumber("Winch Encoder Rad value", winchEncoder.getDistance()/(2*Math.PI));
+//		SmartDashboard.putBoolean("WinchDown Limit", winchDown.get());
+//		SmartDashboard.putBoolean("Winch Button", mecXbox.getRawButton(Consts.joystickWinchButton));
+//		SmartDashboard.putNumber("Winch Talon State", winch.get());
 		switch(onOff()) {
 			case 1:
 				upWinch();
