@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3630.robot;
 
 public class Auto {
-	private static int autoStage;
+	private static int autoStage = 0;
 	public static void runAuto () {
 		switch (autoStage) {
 			case 0:
