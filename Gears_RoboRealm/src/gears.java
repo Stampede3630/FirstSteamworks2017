@@ -96,21 +96,13 @@ public class gears {
 					
 					// Only do processing when we are given two blobs that are side by side.
 					int nBlobs = RRVar.BLOB_COUNT.getInt(0);
-					if (nBlobs == 1) {// IF THE BLOB count has one blob
-						Blobs blob = new Blobs(RRVar.HARRIS_CORNERS.getCorners());
-					 double distanceXInchesOneBlob = Math.round(blob.distanceFromTargetOneBlobInches() * 100d)/100d;
-						
-						double offsetXDegOneBlob = Math.round(blob.getOffsetOneBlobXDeg() * 100d)/100d;
-		
-						System.out.print(Double.toString(distanceXInchesOneBlob) + ",");
-						System.out.print(Double.toString( offsetXDegOneBlob) + ",");
-						rr.setDistanceOneBlob(distanceXInchesOneBlob, offsetXDegOneBlob);// need to change varible structure					}
-					
-					if (nBlobs == 2) {
-						RRVar.HARRIS_CORNERS.sortByX(); // Not needed, but in case they are printed.
+					if ((nBlobs == 1) || (nBlobs == 2)) {
 						// Transform HARRIS_CORNERS into blobs
-						Blobs blobs = new Blobs(RRVar.HARRIS_CORNERS.getCorners());
-						if (blobs.areSideBySide()) {
+						Blobs blobs = new Blobs(nBlobs, RRVar.HARRIS_CORNERS.getCorners());
+						
+						if (blobs.isValid()) {
+							RRVar.HARRIS_CORNERS.sortByX(); // Not needed, but in case they are printed.
+
 							// Reduce distance result to 2 decimal places.
 							double distanceXInches = Math.round(blobs.distanceFromTargetWidthInches() * 100d)/100d;
 							double distanceBlobsXInches = Math.round(blobs.distanceFromWidthInches() * 100d)/100d;
@@ -146,7 +138,7 @@ public class gears {
 					}
 				}
 			}
-			}
+			
 			catch (Exception e) {
 				// Disconnect from API Server
 				rr.disconnect();
@@ -159,9 +151,6 @@ public class gears {
 				e.printStackTrace();
 				// break;
 			} 
-		}
-			
-	
-	
-}
+		}	
+	}
 }
