@@ -1,6 +1,6 @@
 @echo off
 c:
-cd C:\Users\Eric\Robot17\FirstSteamworks2017\Gears_RoboRealm\bin
+cd C:\Users\breck\workspace2017\FirstSteamworks2017\Gears_RoboRealm\bin
 
 java gears
 cd ..

@@ -1,6 +1,6 @@
 <head><version>2.83.14</version></head>
 <zoom>8</zoom>
-<DLink_Internet_Camera>
+<DLink_Internet_Camera disabled>
   <focus_speed_index>6</focus_speed_index>
   <ip_address>10.36.30.15</ip_address>
   <is_active>FALSE</is_active>
@@ -12,6 +12,26 @@
   <username>admin</username>
   <zoom_speed_index>6</zoom_speed_index>
 </DLink_Internet_Camera>
+<Axis_Internet_Camera>
+  <auto_back_light>TRUE</auto_back_light>
+  <auto_exposure>FALSE</auto_exposure>
+  <auto_white_balance>TRUE</auto_white_balance>
+  <brightness_value>50</brightness_value>
+  <color_level_value>50</color_level_value>
+  <compression_index>3</compression_index>
+  <contrast_value>50</contrast_value>
+  <exposure_value>50</exposure_value>
+  <ip_address>10.36.30.11</ip_address>
+  <is_active>TRUE</is_active>
+  <mirrot>FALSE</mirrot>
+  <password>root</password>
+  <port>80</port>
+  <resolution>640x480</resolution>
+  <sharpness_value>50</sharpness_value>
+  <username>root</username>
+  <view_only>TRUE</view_only>
+  <zoom_value>50</zoom_value>
+</Axis_Internet_Camera>
 <Set_Variable>
   <set_1_array>0</set_1_array>
   <set_1_once>1</set_1_once>
@@ -140,9 +160,10 @@
   <method>8</method>
 </Grayscale>
 <Threshold>
-  <end>247</end>
+  <end>202</end>
   <hysteresis>0</hysteresis>
-  <start>216</start>
+  <result_type>1</result_type>
+  <start>0</start>
 </Threshold>
 <Open>
   <dilate_count>2</dilate_count>
@@ -173,7 +194,7 @@
         <weight_threshold>0.5</weight_threshold>
       </filter>
       <filter:2>
-        <amount>9</amount>
+        <amount>15</amount>
         <count_threshold>0</count_threshold>
         <create_array>0</create_array>
         <filter_id>134</filter_id>
@@ -197,7 +218,7 @@
         <invert_count>0</invert_count>
         <invert_threshold>0</invert_threshold>
         <ratio>0.4</ratio>
-        <weight_threshold>0.35</weight_threshold>
+        <weight_threshold>0.42</weight_threshold>
       </filter:4>
     </tab>
     <tab:2/>
@@ -208,7 +229,7 @@
   </filters>
   <font_size>Normal (10pt)</font_size>
   <largest_is_background>FALSE</largest_is_background>
-  <show_weights>FALSE</show_weights>
+  <show_weights>TRUE</show_weights>
   <sort_array_on_x>FALSE</sort_array_on_x>
   <sort_array_on_y>FALSE</sort_array_on_y>
 </Blob_Filter>
@@ -316,15 +337,10 @@ perspecDeg
   <port>1735</port>
   <prefix>/SmartDashboard/</prefix>
   <variables_to_send>BLOB_COUNT
-BOTTOM_LEFT_X
-BOTTOM_LEFT_Y
-BOTTOM_RIGHT_X
-BOTTOM_RIGHT_Y
+DISTANCE_X
 HEIGHT
-TOP_LEFT_X
-TOP_LEFT_Y
-TOP_RIGHT_X
-TOP_RIGHT_Y
+OFFSET_X_DEG
+perspecDeg
 WIDTH</variables_to_send>
   <variable_type_index>0</variable_type_index>
 </NetworkTables>

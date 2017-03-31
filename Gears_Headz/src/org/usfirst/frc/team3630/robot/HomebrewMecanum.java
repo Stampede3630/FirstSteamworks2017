@@ -30,6 +30,7 @@ public  class HomebrewMecanum {
 		myVisionMath = new VisionMath();
 		
 	    SmartDashboard.putBoolean("PID Control?", false);
+	    SmartDashboard.putBoolean("Vision Pipe?", false);
 	     SmartDashboard.putNumber("Desired Distance X", 0);
 	    SmartDashboard.putNumber("Desired Distance Y", 0);
 	    SmartDashboard.putNumber("Desired Distance theta", 0);
@@ -209,7 +210,7 @@ public  class HomebrewMecanum {
 			rL.setWheelSpeed(wheelDistances[1]);
 			rR.setWheelSpeed(wheelDistances[2]);
 			fR.setWheelSpeed(wheelDistances[3]);
-		
+		/**/
 			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fL.talon.getChannel()), fL.pid.onTarget());
 			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rL.talon.getChannel()), rL.pid.onTarget());
 			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fR.talon.getChannel()), fR.pid.onTarget());
