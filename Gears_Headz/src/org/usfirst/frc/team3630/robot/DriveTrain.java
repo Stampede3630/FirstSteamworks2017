@@ -81,7 +81,7 @@ public class DriveTrain {
 			if (!directionForward)
 				speedy *= -1;
 
-			mecanumDrive.driveImplementation(getRoundY() * speedy, getRoundX() * speedy, getRoundTwist() * speedy,
+			mecanumDrive.driveImplementation(- getRoundY() * speedy,- getRoundX() * speedy,- getRoundTwist() * speedy,
 					true);
 			// Expecting numbers between -1 and 1.
 
