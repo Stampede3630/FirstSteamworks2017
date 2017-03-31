@@ -158,7 +158,6 @@ public class Blobs { // implements Comparable<Corner> {
 		return perspecDeg;
 	}
 
-
 	public boolean isValid() {
 		if (myValid) {
 			int topYPx[] = new int[Consts.gearImageBlobCount];

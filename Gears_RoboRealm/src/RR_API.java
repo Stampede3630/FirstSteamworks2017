@@ -536,32 +536,19 @@ class RR_API
 
     return null;
   }
-// mabey mabey make anpother print out method for this 
+
   public boolean setDistances(double distXInches, double distBlobsXInches, double distBlobsYInches,
 	double offsetXDeg, double perspecDeg)
   {
-	String names[] = {"DISTANCE_X", "DIST_BLOBS_X", "DIST_BLOBS_Y", "OFFSET_X_DEG","perspecDeg","distanceXInchesOneBlob","offsetXDegOneBlob"};
+	String names[] = {"DISTANCE_X", "DIST_BLOBS_X", "DIST_BLOBS_Y", "OFFSET_X_DEG","perspecDeg"};
 	String values[] = {
 			Double.toString(distXInches),
 			Double.toString(distBlobsXInches),
 			Double.toString(distBlobsYInches),
 			Double.toString(offsetXDeg),
-			Double.toString(perspecDeg),
-			//Double.toString(distanceXInchesOneBlob),
-			//Double.toString(offsetXDegOneBlob)
-			
+			Double.toString(perspecDeg)
 			};
 	return setVariables(names, values, 5);
-  }
-  public boolean setDistanceOneBlob(double distanceXInchesOneBlob,double offsetXDegOneBlob)// need further testing
-  {
-	String names[] = {"distanceXInchesOneBlob","offsetXDegOneBlob"};
-	String values[] = {
-				Double.toString(distanceXInchesOneBlob),
-			Double.toString(offsetXDegOneBlob)
-			
-			};
-	return setVariables(names, values, 2);
   }
 
   /*

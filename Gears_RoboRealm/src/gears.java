@@ -131,14 +131,12 @@ public class gears {
 							System.out.println("======================");
 							
 							// Tell RoboRealm distance to target, x-offsetPx and target orientation.
-							rr.setDistances(distanceXInches, distanceBlobsXInches, distanceBlobsYInches,offsetXDeg, perspecDeg );
+							rr.setDistances(distanceXInches, distanceBlobsXInches, distanceBlobsYInches,
+								offsetXDeg, perspecDeg);
 						}
-					
-						
 					}
 				}
 			}
-			
 			catch (Exception e) {
 				// Disconnect from API Server
 				rr.disconnect();
@@ -151,6 +149,6 @@ public class gears {
 				e.printStackTrace();
 				// break;
 			} 
-		}	
+		}
 	}
 }
