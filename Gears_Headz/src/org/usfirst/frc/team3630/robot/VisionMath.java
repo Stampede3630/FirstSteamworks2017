@@ -64,6 +64,11 @@ public class VisionMath {
 	/////////////////////////////////////////
 	// methods uesed globaly in robot system
 	/////////////////////////////////////////
+	
+	/**
+	 * @param dsfIN
+	 * @return
+	 */
 	public double robotToFrontDX(double dsfIN) {
 		xrf = dRobotToSpringX() + dSpringToFrontX(dsfIN);
 		return xrf; // this is in inches
