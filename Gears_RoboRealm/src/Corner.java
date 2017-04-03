@@ -9,14 +9,25 @@ public class Corner { // implements Comparable<Corner> {
 	private int cornerY;
 	private double angle; // Angle in radians of point from center of blob. Use for sorting.
 
+	/////////////////////////
+	// OBJECT CONSTRUCTION //
+	/////////////////////////
+
+	/**
+	 * Clear the corner's x, y and angle values.
+	 */
+	public void clear() {
+		cornerX = 0;
+		cornerY = 0;
+		angle = 0.0;
+	}
+
 	/**
 	 * Construct Corner with default values
 	 */
 	public Corner() {
 		super();
-		this.cornerX = 0;
-		this.cornerY = 0;
-		this.angle = 0.0;
+		this.clear();
 	}
 
 	/**
@@ -30,6 +41,10 @@ public class Corner { // implements Comparable<Corner> {
 		this.cornerY = cornerY;
 		this.angle = 0.0;
 	}
+
+	//////////////////////
+	// MEMBER ACCESSORS //
+	//////////////////////
 
 	/**
 	 * @return Corner pixel x-coordinate
@@ -66,20 +81,9 @@ public class Corner { // implements Comparable<Corner> {
 		this.angle = angle;
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString() {
-		double tempAngle = Math.round(angle * 100.0) / 100.0;
-		return "(" + Integer.toString(cornerX) + "," + Integer.toString(cornerY) + "/" + Double.toString(tempAngle) + ")";
-	}
-
-	/**
-	 * @return Corner in Coma Separated Variable format
-	 */
-	public String toCSV() {
-		return Integer.toString(cornerX) + "," + Integer.toString(cornerY) + ",";
-	}
+	///////////////////////////////////////
+	// METHODS RELATED TO CORNER SORTING //
+	///////////////////////////////////////
 
 	// public int compareTo(Corner compareCorner) {
     // 
@@ -128,4 +132,46 @@ public class Corner { // implements Comparable<Corner> {
 	      // return angle2 - angle1;
 	    }
 	};
+
+	/////////////////////////////////////////////////
+	// HELPER METHODS FOR AVERAGING MULTIPLE BLOBS //
+	/////////////////////////////////////////////////
+	
+	/**
+	 * @param corner add the corner values to this object's corner values
+	 */
+	public void sum(Corner corner) {
+		cornerX += corner.cornerX;
+		cornerY += corner.cornerY;
+	}
+
+	/**
+	 * @param divisor divide all the corners values by this
+	 */
+	public void divide(int divisor) {
+		if (divisor != 0) {
+			cornerX /= divisor;
+			cornerY /= divisor;
+		}
+	}
+
+	//////////////////////////////////////////
+	// STRING GENERATION methods for OUTPUT //
+	//////////////////////////////////////////
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		double tempAngle = Math.round(angle * 100.0) / 100.0;
+		return "(" + Integer.toString(cornerX) + "," + Integer.toString(cornerY) + "/" + Double.toString(tempAngle) + ")";
+	}
+
+	/**
+	 * @return Corner in Comma Separated Variable format
+	 */
+	public String toCSV() {
+		return Integer.toString(cornerX) + "," + Integer.toString(cornerY) + ",";
+	}
+
 }

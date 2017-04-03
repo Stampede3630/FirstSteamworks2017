@@ -18,6 +18,9 @@ public final class Consts {
 	public static final int cornersPerBlob = 4;
 	public static final int cornersCount = cornersPerBlob * gearImageBlobCount;
 
+	public static final int blobsHistorySize = 30;
+	public static final int blobsAverageCount = 1;
+	
 	/**
 	   The caller references the constants using <tt>Consts.EMPTY_STRING</tt>, 
 	   and so on. Thus, the caller should be prevented from constructing objects of 

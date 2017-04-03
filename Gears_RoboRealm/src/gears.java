@@ -17,8 +17,9 @@ public class gears {
 	
 	public static void main(String[] args) {
 
+		BlobsHist blobsHist = new BlobsHist(Consts.blobsHistorySize);
 		RR_API rr = new RR_API();
-		
+
 		if (!rr.connect("localhost")) {
 			System.out.println("Could not connect to localhost!");
 			return;
@@ -98,10 +99,13 @@ public class gears {
 					int nBlobs = RRVar.BLOB_COUNT.getInt(0);
 					if ((nBlobs == 1) || (nBlobs == 2)) {
 						// Transform HARRIS_CORNERS into blobs
-						Blobs blobs = new Blobs(nBlobs, RRVar.HARRIS_CORNERS.getCorners());
+						Blobs curBlobs = new Blobs(nBlobs, RRVar.HARRIS_CORNERS.getCorners());
 						
-						if (blobs.isValid()) {
+						if (curBlobs.isSideBySide()) {
+							blobsHist.add(curBlobs);
 							RRVar.HARRIS_CORNERS.sortByX(); // Not needed, but in case they are printed.
+							
+							Blobs blobs = blobsHist.getRecentAverage();
 
 							// Reduce distance result to 2 decimal places.
 							double distanceXInches = Math.round(blobs.distanceFromTargetWidthInches() * 100d)/100d;
@@ -122,8 +126,6 @@ public class gears {
 							System.out.println("OFFSET_X_DEG = " + Double.toString(offsetXDeg));
 							System.out.println("perspecDeg = " + Double.toString(perspecDeg));
 							
-							System.out.println("blob_dists = " + blobs.toDistString());
-							
 							System.out.println("======================");
 							RRVar.printAll();
 							System.out.println("Blobs: " + blobs.toString());
@@ -139,11 +141,13 @@ public class gears {
 			}
 			catch (Exception e) {
 				// Disconnect from API Server
+				System.out.println("Exception");
+				e.printStackTrace();
 				rr.disconnect();
 				break;
 			}
 			try {
-				Thread.sleep(200); // Wake up 5 times per second
+				Thread.sleep(33); // Wake up 30 times per second
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
