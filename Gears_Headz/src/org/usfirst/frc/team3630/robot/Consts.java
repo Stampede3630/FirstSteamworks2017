@@ -24,8 +24,8 @@ public static final int winchTalonPWM = 4;
 public static final int joytsickChannel = 0;
 public static final int joystickComPort = 0;
 public static final int openButton = 3;
-public static final int closeButton = 1;
-public static final int joystickWinchButton = 6;
+public static final int closeButton = 6;
+public static final int joystickWinchButton = 1;
 public static final int buttonSprint = 5;
 public static final int buttonSprintAlternate = 5;
 

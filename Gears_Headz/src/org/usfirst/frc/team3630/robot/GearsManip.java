@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3630.robot;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,6 +39,9 @@ public class GearsManip {
 		if (m_joystick.getRawButton(Consts.openButton)){
 			return (int)1;
 		}
+//		if (m_joystick.getZ(GenericHID.Hand.kRight) > .80 ){
+//		return (int)1;
+//	}
 		else if(m_joystick.getRawButton(Consts.closeButton)){
 			return (int)2;
 		}
