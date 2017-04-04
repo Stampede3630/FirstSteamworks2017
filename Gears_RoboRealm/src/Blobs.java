@@ -2,10 +2,19 @@ import java.util.Arrays;
 import java.lang.Math;
 
 public class Blobs { // implements Comparable<Corner> {
-	private Blob[] myBlobs;
+	private Blob[] myBlob;
 	private int myBlobCount;
 	private boolean myValid; // Is the blobs object valid?
 	
+	/////////////////////////
+	// OBJECT CONSTRUCTION //
+	/////////////////////////
+
+	/**
+	 * Construct a Blobs object.
+	 * @param nBlobs Number of blobs
+	 * @param corners Array of corners for the blobs, 4 corners per blob, need not be sorted.
+	 */
 	public Blobs(int nBlobs, Corner[] corners) {
 		myValid = false;
 		myBlobCount = 1;
@@ -13,34 +22,127 @@ public class Blobs { // implements Comparable<Corner> {
 			myValid = true;
 			myBlobCount = nBlobs;
 		}
-		myBlobs = new Blob[myBlobCount];
+		myBlob = new Blob[myBlobCount];
 		for (int i=0; i < myBlobCount; i++) {
-			myBlobs[i] = new Blob();
+			myBlob[i] = new Blob();
 		}
 		if (corners == null) {
-			myValid = false;
+			// Fabricate a set of corners.
+			myValid = true;
+			for (int i=0; i < (myBlobCount * 4); i++) {
+				myBlob[i/4].addCorner(0,0);
+			}
 		} else if (myValid) {
-			if (((corners.length/4) == myBlobCount) && ((corners.length % 4) == 0)) { // Must have a multiple of 4 corners
+			if (corners.length >= (myBlobCount * 4)) { // Must have enough corners.
+				// Must fix-up the number of corners, since the incoming array is enough for 2 blobs (8 corners),
+				// and the sort below will sort all the elements.
+				Corner[] newCorners = new Corner[myBlobCount * 4];
+				for (int i=0; i < (myBlobCount * 4); i++) {
+					newCorners[i] = corners[i];
+				}
 				// Put corners in increasing X order
-				Arrays.sort(corners, Corner.CornerXComparator);
+				Arrays.sort(newCorners, Corner.CornerXComparator);
 				// Split the corners into blobs
-				for (int i=0; i < Consts.cornersCount; i++) {
-					myBlobs[i/4].addCorner(corners[i]);
+				for (int i=0; i < (myBlobCount * 4); i++) {
+					myBlob[i/4].addCorner(newCorners[i]);
 				}
 				// Now re-order each blob's corners.
 				for (int i=0; i < myBlobCount; i++) {
-					myBlobs[i].orderCorners();
-					if (!myBlobs[i].isValid()) {
-						if (!myValid) {
-							System.out.println("BLOB : " + 
-									Integer.toString(i) + " NOT_VALID: CORNERS NOT IN QUADS");
-						}
+					myBlob[i].orderCorners();
+					if (!myBlob[i].isValid()) {
+						System.out.println("BLOB : " + 
+								Integer.toString(i) + " NOT_VALID: CORNERS NOT IN QUADS");
 						myValid = false;
 					}
 				}
 			} else {
 				myValid = false;
 			}
+		}
+	}
+	
+	/**
+	 * Clear each of the Blobs.
+	 */
+	public void clear() {
+		myValid = false;
+		for (int i=0; i < Consts.gearImageBlobCount; i++) {
+			myBlob[i].clear();
+		}
+	}
+	
+	/**
+	 * @param nBlobCount number of blobs in this Blobs object
+	 */
+	public void setBlobCount(int nBlobCount) {
+		myBlobCount = nBlobCount;
+	}
+	
+	/**
+	 * @return The number of blobs in this Blobs object, or zero if not a valid Blobs object.
+	 */
+	public int getBlobCount() {
+		int retBlobCount = 0;
+		if (myValid) {
+			retBlobCount = myBlobCount;
+		}
+		return retBlobCount;
+	}
+	
+	//////////////////////////////////////////
+	// METHODS RELATED TO VALIDITY CHECKING //
+	//////////////////////////////////////////
+
+	/**
+	 * @param isValid indicator of Blobs object validity.
+	 */
+	public void setValid(boolean isValid) {
+		myValid = isValid;
+	}
+
+	public boolean isValid() {
+		return myValid;
+	}
+
+	/**
+	 * @return true if there are two blobs and they are side by side. If one blob return its validity metric.
+	 */
+	public boolean isSideBySide() {
+		if (myValid && (2 == myBlobCount)) {
+			int topYPx[] = new int[2];
+			int botYPx[] = new int[2];
+
+			for (int i=0; i < 2; i++) {
+				int tlYPx = myBlob[i].topLeft().getY();
+				int trYPx = myBlob[i].topRight().getY();
+				int blYPx = myBlob[i].botLeft().getY();
+				int brYPx = myBlob[i].botRight().getY();
+
+				topYPx[i] = Math.max(tlYPx, trYPx);
+				botYPx[i] = Math.min(blYPx, brYPx);
+			}
+			// The first condition makes sure that there is overlap left to right.
+			int minTopsYPx = Math.min(topYPx[0], topYPx[1]);
+			int maxBotsYPx = Math.max(botYPx[0], botYPx[1]);
+			
+			myValid = minTopsYPx > maxBotsYPx;
+			if (!myValid) {
+				System.out.println("NOT_VALID: NOT SIDE BY SIDE");
+			}
+		}
+		return myValid;
+	}
+
+	//////////////////////////////////////////////////////////////////////////
+	// METHODS RELATED TO DISTANCES BETWEEN BLOB CORNERS. I.E. SIDE LENGTHS //
+	//////////////////////////////////////////////////////////////////////////
+	
+	/**
+	 * Construct the side distances and area metrics.
+	 */
+	public void build() {
+		for (int i=0; i < myBlobCount; i++) {
+			myBlob[i].build();
 		}
 	}
 	
@@ -52,16 +154,13 @@ public class Blobs { // implements Comparable<Corner> {
 		double widthPx = 0.0;
 		if (myValid)
 		{
-			double topXPx = 1;
-			double botXPx = 1;
 			if (myBlobCount == 1) {
-				topXPx = 1 + myBlobs[0].topRight().getX() - myBlobs[0].topLeft().getX();
-				botXPx = 1 + myBlobs[0].botRight().getX() - myBlobs[0].botLeft().getX();
+				widthPx = myBlob[0].getWidthPx();
 			} else if (myBlobCount == 2) {
-				topXPx = 1 + myBlobs[1].topRight().getX() - myBlobs[0].topLeft().getX();
-				botXPx = 1 + myBlobs[1].botRight().getX() - myBlobs[0].botLeft().getX();
+				double topXPx = 1.0 + myBlob[1].topRight().getX() - myBlob[0].topLeft().getX();
+				double botXPx = 1.0 + myBlob[1].botRight().getX() - myBlob[0].botLeft().getX();
+				widthPx = (topXPx + botXPx) / 2.0;
 			}
-			widthPx = (topXPx + botXPx) / 2.0;
 		}
 		return widthPx;
 	}
@@ -72,17 +171,47 @@ public class Blobs { // implements Comparable<Corner> {
 	public double getAverageLeftXPx() {
 		double averageLeftXPx = 0.0;
 		if (myValid) {
-			averageLeftXPx = (myBlobs[0].topLeft().getX() + myBlobs[0].botLeft().getX()) / 2.0;
+			averageLeftXPx = (myBlob[0].topLeft().getX() + myBlob[0].botLeft().getX()) / 2.0;
 		}
 		return averageLeftXPx;
 	}
 
-	// Get distance based on individual tape widths
+	/////////////////////////////////////////////////
+	// HELPER METHODS FOR AVERAGING MULTIPLE BLOBS //
+	/////////////////////////////////////////////////
+
+	/**
+	 * @param blobs add the corners values of blobs to this object's corners values
+	 */
+	public void sum(Blobs blobs) {
+		for (int i=0; i < myBlobCount; i++) {
+			myBlob[i].sum(blobs.myBlob[i]);
+		}
+	}
+
+	/**
+	 * @param divisor divide all the corners values by this
+	 */
+	public void divide(int divisor) {
+		if (divisor != 0) {
+			for (int i=0; i < myBlobCount; i++) {
+				myBlob[i].divide(divisor);
+			}
+		}
+	}
+
+	//////////////////////////////
+	// DISTANCE RELATED METHODS //
+	//////////////////////////////
+
+	/**
+	 * @return Distance based on individual tape widths
+	 */
 	public double distanceFromWidthInches() {
 		double distanceInches = 0.0;
 		if (myValid) {
 			for (int i=0; i < myBlobCount; i++) {
-				distanceInches += myBlobs[i].distanceFromWidthInches();
+				distanceInches += myBlob[i].distanceFromWidthInches();
 			}
 			// Return average distance to the blobs.
 			// We expect 2 blobs, so it will be the distance to the centerpoint between the blobs.
@@ -114,7 +243,7 @@ public class Blobs { // implements Comparable<Corner> {
 		if (myValid) {
 			for (int i=0; i < myBlobCount; i++)
 			{
-				distanceInches += myBlobs[i].distanceFromHeightInches();
+				distanceInches += myBlob[i].distanceFromHeightInches();
 			}
 			// Return average distance to the blobs.
 			// If 2 blobs, it will be the distance to the center point between the blobs.
@@ -124,7 +253,7 @@ public class Blobs { // implements Comparable<Corner> {
 	}
 	
 	/**
-	 * @return offset X px for image when we have 2 blobs.
+	 * @return Offset X px for image when we have 2 blobs.
 	 */
 	public double getOffsetXDeg() {
 		double offsetDeg = 0.0;
@@ -138,72 +267,55 @@ public class Blobs { // implements Comparable<Corner> {
 		return offsetDeg;
 	}
 	
-	public double perspectiveFormulaDeg() { // this implements the professor's perspective formula needs further testing
+	/**
+	 * @return the angle of the target plane from perpendicular with the imaging camera direction
+	 */
+	public double perspectiveFormulaDeg() { // this implements the professor's perspective formula
 		double perspecDeg = 0.0;
+		double perspecRads = 0.0;
 		if (myValid) {
+			// Want to use a distance metric that uses the same pixel data that rValueRatio uses:
+			double distanceToTargetInches = distanceFromHeightInches();
+			
 			if (myBlobCount == 1) {
 				double aValueXDistInches = (Consts.gearTapeWidthInches/2.0);
-				double distanceToTargetInches = distanceFromHeightInches();
-				double rValueRatio = (double) myBlobs[0].getLeftHeightPx() / (double) myBlobs[0].getRightHeightPx();
-				double perspecRads = Math.asin((distanceToTargetInches/aValueXDistInches)*((rValueRatio-1)/(rValueRatio+1)));
-				perspecDeg = Utils.cvtRadiansToDegrees(perspecRads);
+				double rValueRatio = (double) myBlob[0].sideLeftPx() / (double) myBlob[0].sideRightPx();
+				
+				double distRatio = distanceToTargetInches / aValueXDistInches;
+				double rRatio = (rValueRatio-1.0) / (rValueRatio+1.0);
+				perspecRads = Math.asin(distRatio * rRatio);
 			} else if (myBlobCount == 2) {
-				double aValueXDistInches = (Consts.gearTapesWidthInches/2.0);
-				double distanceToTargetInches = distanceFromHeightInches();
-				double rValueRatio = (double) myBlobs[0].getLeftHeightPx() / (double) myBlobs[1].getRightHeightPx();
-				double perspecRads = Math.asin((distanceToTargetInches/aValueXDistInches)*((rValueRatio-1)/(rValueRatio+1)));
-				perspecDeg = Utils.cvtRadiansToDegrees(perspecRads);
+				// Use the width from the center of each tape.
+				double aValueXDistInches = ((Consts.gearTapesWidthInches - Consts.gearTapeWidthInches)/2.0);
+				
+				// Gets the average height of each tape, i.e. from its center.
+				double rValueRatio = (double) myBlob[0].getHeightPx() / (double) myBlob[1].getHeightPx();
+				
+				double distRatio = distanceToTargetInches / aValueXDistInches;
+				double rRatio = (rValueRatio-1.0) / (rValueRatio+1.0);
+				perspecRads = Math.asin(distRatio * rRatio);
 			}
+			perspecDeg = Utils.cvtRadiansToDegrees(perspecRads);
 		}
 		return perspecDeg;
 	}
 
-	public boolean isValid() {
-		if (myValid) {
-			int topYPx[] = new int[Consts.gearImageBlobCount];
-			int botYPx[] = new int[Consts.gearImageBlobCount];
-
-			for (int i=0; i < Consts.gearImageBlobCount; i++) {
-				int tlYPx = myBlobs[i].topLeft().getY();
-				int trYPx = myBlobs[i].topRight().getY();
-				int blYPx = myBlobs[i].botLeft().getY();
-				int brYPx = myBlobs[i].botRight().getY();
-
-				topYPx[i] = Math.max(tlYPx, trYPx);
-				botYPx[i] = Math.min(blYPx, brYPx);
-			}
-			// The first condition makes sure that there is overlap left to right.
-			int minTopsYPx = Math.min(topYPx[0], topYPx[1]);
-			int maxBotsYPx = Math.max(botYPx[0], botYPx[1]);
-			
-			myValid = minTopsYPx > maxBotsYPx;
-			if (!myValid) {
-				System.out.println("NOT_VALID: NOT SIDE BY SIDE");
-			}
-		}
-		return myValid;
-	}
-
-	public String toDistString() {
-		StringBuilder str = new StringBuilder(128);
-		for (int i=0; i < Consts.gearImageBlobCount; i++) {
-			str.append(myBlobs[i].toDistString());
-		}
-		return str.toString();
-	}
+	//////////////////////////////////////////
+	// STRING GENERATION methods for OUTPUT //
+	//////////////////////////////////////////
 
 	public String toString() {
-		StringBuilder str = new StringBuilder(128);
-		for (int i=0; i < Consts.gearImageBlobCount; i++) {
-			str.append(myBlobs[i].toString());
+		StringBuilder str = new StringBuilder(96 * myBlobCount);
+		for (int i=0; i < myBlobCount; i++) {
+			str.append(myBlob[i].toString());
 		}
 		return str.toString();
 	}
 
 	public String toCSV() {
-		StringBuilder str = new StringBuilder(128);
-		for (int i=0; i < Consts.gearImageBlobCount; i++) {
-			str.append(myBlobs[i].toCSV());
+		StringBuilder str = new StringBuilder(96 * myBlobCount);
+		for (int i=0; i < myBlobCount; i++) {
+			str.append(myBlob[i].toCSV());
 		}
 		return str.toString();
 	}

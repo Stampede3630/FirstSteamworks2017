@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 <head><version>2.83.14</version></head>
-=======
-<head><version>2.83.17</version></head>
->>>>>>> origin/master
 <zoom>8</zoom>
 <DLink_Internet_Camera disabled>
   <focus_speed_index>6</focus_speed_index>
@@ -16,7 +12,6 @@
   <username>admin</username>
   <zoom_speed_index>6</zoom_speed_index>
 </DLink_Internet_Camera>
-<<<<<<< HEAD
 <Axis_Internet_Camera>
   <auto_back_light>TRUE</auto_back_light>
   <auto_exposure>FALSE</auto_exposure>
@@ -37,8 +32,6 @@
   <view_only>TRUE</view_only>
   <zoom_value>50</zoom_value>
 </Axis_Internet_Camera>
-=======
->>>>>>> origin/master
 <Set_Variable>
   <set_1_array>0</set_1_array>
   <set_1_once>1</set_1_once>
@@ -105,30 +98,17 @@
   <variable_15/>
   <variable_16/>
 </Set_Variable>
-<<<<<<< HEAD
 <Load_Image disabled>
   <filename>C:\Eng\Robot17\Images\Images_20170318\b000401.jpg</filename>
   <frame_delay>100</frame_delay>
   <large_bit_range_max>32768</large_bit_range_max>
   <large_bit_range_min>0</large_bit_range_min>
   <load_numbered_images>FALSE</load_numbered_images>
-=======
-<Load_Image>
-  <filename>C:\Images\B000068.jpg</filename>
-  <frame_delay>33</frame_delay>
-  <large_bit_range_max>32768</large_bit_range_max>
-  <large_bit_range_min>0</large_bit_range_min>
-  <load_numbered_images>TRUE</load_numbered_images>
->>>>>>> origin/master
   <loop_playback>1</loop_playback>
   <monitor_folder>FALSE</monitor_folder>
   <numerical_sort>TRUE</numerical_sort>
   <page_number>1</page_number>
-<<<<<<< HEAD
   <recursive>TRUE</recursive>
-=======
-  <recursive>FALSE</recursive>
->>>>>>> origin/master
   <reload_on_change>FALSE</reload_on_change>
 </Load_Image>
 <Marker>
@@ -180,16 +160,10 @@
   <method>8</method>
 </Grayscale>
 <Threshold>
-<<<<<<< HEAD
   <end>202</end>
   <hysteresis>0</hysteresis>
   <result_type>1</result_type>
   <start>0</start>
-=======
-  <end>255</end>
-  <hysteresis>0</hysteresis>
-  <start>202</start>
->>>>>>> origin/master
 </Threshold>
 <Open>
   <dilate_count>2</dilate_count>
@@ -217,17 +191,10 @@
         <filter_id>68</filter_id>
         <invert_count>0</invert_count>
         <invert_threshold>0</invert_threshold>
-<<<<<<< HEAD
         <weight_threshold>0.5</weight_threshold>
       </filter>
       <filter:2>
         <amount>15</amount>
-=======
-        <weight_threshold>0.6</weight_threshold>
-      </filter>
-      <filter:2>
-        <amount>12</amount>
->>>>>>> origin/master
         <count_threshold>0</count_threshold>
         <create_array>0</create_array>
         <filter_id>134</filter_id>
@@ -236,11 +203,7 @@
         <weight_threshold>0.5</weight_threshold>
       </filter:2>
       <filter:3>
-<<<<<<< HEAD
         <amount>62</amount>
-=======
-        <amount>70</amount>
->>>>>>> origin/master
         <count_threshold>0</count_threshold>
         <create_array>0</create_array>
         <filter_id>135</filter_id>
@@ -255,11 +218,7 @@
         <invert_count>0</invert_count>
         <invert_threshold>0</invert_threshold>
         <ratio>0.4</ratio>
-<<<<<<< HEAD
         <weight_threshold>0.42</weight_threshold>
-=======
-        <weight_threshold>0.7</weight_threshold>
->>>>>>> origin/master
       </filter:4>
     </tab>
     <tab:2/>
@@ -279,10 +238,7 @@
   <fill_shape>TRUE</fill_shape>
   <order_array_on_x>FALSE</order_array_on_x>
   <order_array_on_y>FALSE</order_array_on_y>
-<<<<<<< HEAD
   <shape_index>15</shape_index>
-=======
->>>>>>> origin/master
   <thickness>1</thickness>
 </Blob_Replace>
 <Harris_Corners>
@@ -292,11 +248,7 @@
   <isolation>4</isolation>
   <limit>8</limit>
   <shape_index>6</shape_index>
-<<<<<<< HEAD
   <size_index>4</size_index>
-=======
-  <size_index>2</size_index>
->>>>>>> origin/master
   <threshold>100</threshold>
   <use_color>TRUE</use_color>
   <use_non_maxima>TRUE</use_non_maxima>
@@ -385,22 +337,10 @@ perspecDeg
   <port>1735</port>
   <prefix>/SmartDashboard/</prefix>
   <variables_to_send>BLOB_COUNT
-<<<<<<< HEAD
 DISTANCE_X
 HEIGHT
 OFFSET_X_DEG
 perspecDeg
-=======
-BOTTOM_LEFT_X
-BOTTOM_LEFT_Y
-BOTTOM_RIGHT_X
-BOTTOM_RIGHT_Y
-HEIGHT
-TOP_LEFT_X
-TOP_LEFT_Y
-TOP_RIGHT_X
-TOP_RIGHT_Y
->>>>>>> origin/master
 WIDTH</variables_to_send>
   <variable_type_index>0</variable_type_index>
 </NetworkTables>
