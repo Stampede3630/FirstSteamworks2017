@@ -22,20 +22,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // yRF = yRS + ySF
 // Rotate Robot by Phi = perspecDeg
 
-// Fundamental changes to the notes above due to how sensitive perspecDeg is to the relative blob heights.
+// Note changes to the notes above due to how sensitive perspecDeg is to the relative blob heights.
 // A change of one pixel can change perspecDeg by over 20 degrees. So in the Gears_RoboRealm code it will
 // filter based on the number of pixels the blobs differ by. If the difference is under a threshold,
 // it will give us a perspecDeg of 0.0. We will use positive perspecDeg values to indicate we need to make
-// right blob heights grow relative to the left blob heights, so the robot should move right. A negative
-// value means robot should move left. Note that based on offsetXDeg 'right' and 'left' must be adjusted
-// per the robot's rotation.
+// right blob heights grow relative to the left blob heights, so the robot should move right. This is
+// implemented by limiting perspecDeg to a max value.  A negative perspecDeg means robot should move left.
+// This is done by limiting how negative it can be.
 
 // All variables with the word 'Angle' have units of radians.
 
 public class VisionMath {
 	private double perspecDeg;
 	private double offsetXDeg;
-	private double distanceX; // Direct distance from between the camera and the gear target in inches.
+	private double distanceRS; // Direct distance from between the camera and the gear target in inches.
 
 	////////////////////////////////////
 	// Robot (R) to Spring (S) Variables
@@ -61,7 +61,7 @@ public class VisionMath {
 	VisionMath() {
 		perspecDeg = 0.0;
 		offsetXDeg = 0.0;
-		distanceX = 0.0;
+		distanceRS = 0.0;
 		drsAngle = 0.0;
 		xRS = 0.0;
 		yRS = 0.0;
@@ -71,34 +71,41 @@ public class VisionMath {
 		xRF = 0.0;
 		yRF = 0.0;
 	}
-	
+
+	private boolean isValidReading() {
+		// Use nearZero constant to allow reliable comparison with 0.0 in floating point.
+		boolean invalidReading = (Math.abs(perspecDeg) < Consts.nearZero) &&
+				(Math.abs(offsetXDeg) < Consts.nearZero) &&
+				(Math.abs(distanceRS) < Consts.nearZero);
+		return !invalidReading;
+	}
+
 	/**
-	 * @return Robot (R) to Spring (S) Rectangular coordinate X-Dimension
+	 * @return Robot (R) to Spring (S) Rectangular coordinate X-Dimension (inches)
 	 */
 	private double dRobotToSpringX() {
-		xRS = distanceX * Math.cos(drsAngle);
+		xRS = distanceRS * Math.cos(drsAngle);
 		return xRS;
 	}
 
 	/**
-	 * @return Robot (R) to Spring (S) Rectangular coordinate Y-Dimension
+	 * @return Robot (R) to Spring (S) Rectangular coordinate Y-Dimension (inches)
 	 */
 	private double dRobotToSpringY() {
-		yRS = distanceX * Math.sin(drsAngle);
+		yRS = distanceRS * Math.sin(drsAngle);
 		return yRS;
 	}
 
 	/**
-	 * @return Spring (S) to Front (F) Rectangular coordinate X-Dimension
+	 * @return Spring (S) to Front (F) Rectangular coordinate X-Dimension (inches)
 	 */
-	private double dSpringToFrontX(double dsfIN) {// this value should be in
-													// inches
+	private double dSpringToFrontX(double dsfIN) {
 		xSF = dsfIN * Math.cos(dsfAngle);
 		return xSF;
 	}
 
 	/**
-	 * @return Spring (S) to Front (F) Rectangular coordinate Y-Dimension
+	 * @return Spring (S) to Front (F) Rectangular coordinate Y-Dimension (inches)
 	 */
 	private double dSpringToFrontY(double dsfIN) {
 		ySF = dsfIN * Math.sin(dsfAngle);
@@ -112,29 +119,35 @@ public class VisionMath {
 	/**
 	 * The vision system coordinate system is X-dimension is left-right, Y-dimension is forward-backward.
 	 * @param dsfIN the distance in inches directly in front of the gear target
-	 * @return the distance in inches the robot should move in the X-dimension
+	 * @return the distance in inches the robot should move in the X-dimension, or 0 if invalid vision reading.
 	 */
 	public double robotToFrontDX(double dsfIN) {
-		xRF = dRobotToSpringX() + dSpringToFrontX(dsfIN);
+		xRF = 0.0;
+		if (isValidReading()) {
+			xRF = dRobotToSpringX() + dSpringToFrontX(dsfIN);
+		}
 		return xRF;
 	}
 
 	/**
 	 * The vision system coordinate system is X-dimension is left-right, Y-dimension is forward-backward.
 	 * @param dsfIN the distance in inches directly in front of the gear target
-	 * @return the distance in inches the robot should move in the Y-dimension
+	 * @return the distance in inches the robot should move in the Y-dimension, or 0 if invalid vision reading.
 	 */
 	public double robotToFrontDY(double dsfIN) {
-		yRF = dRobotToSpringY() + dSpringToFrontY(dsfIN);
+		yRF = 0.0;
+		if (isValidReading()) {
+			yRF = dRobotToSpringY() + dSpringToFrontY(dsfIN);
+		}
 		return yRF;
 
 	}
 
 	/**
-	 * @return radians to rotate the robot such that it will be facing directly towards the gear-target.
+	 * @return radians to rotate the robot such that it points towards the gear-target.
 	 */
 	public double rotateRobotAngle() {
-		double rRotate = perspecDeg * (Math.PI / 180);
+		double rRotate = offsetXDeg * (Math.PI / 180);
 		return rRotate;
 	}
 
@@ -142,11 +155,15 @@ public class VisionMath {
 	 * Call this function to pull Vision System values from the Smart Dashboard before calling the other functions.
 	 */
 	public void refereshImageValues() {
-		perspecDeg = 0;
-		//perspecDeg = SmartDashboard.getNumber("perspecDeg", 0);
+		perspecDeg = SmartDashboard.getNumber("perspecDeg", 0);
+		// Limit perspecDeg. The robot will still move towards a more 'in-front-of-gear-target' position.
+		perspecDeg = Math.max(perspecDeg, -Consts.perspecLimitDeg);
+		perspecDeg = Math.min(perspecDeg, Consts.perspecLimitDeg);
+
 		offsetXDeg = SmartDashboard.getNumber("OFFSET_X_DEG", 0);
-		distanceX = SmartDashboard.getNumber("DISTANCE_X", 0);
+		distanceRS = SmartDashboard.getNumber("DIST_BLOBS_Y", 0);
 		drsAngle = (offsetXDeg + 90) * (Math.PI / 180); // Robot to Spring angle
 		dsfAngle = (perspecDeg - 90) * (Math.PI / 180); // Spring to Front angle
 	}
+	
 }

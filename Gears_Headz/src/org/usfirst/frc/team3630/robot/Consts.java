@@ -62,5 +62,7 @@ public static final double wheelKP = .015;
 public static final double wheelKI = 0;
 public static final double wheelKD = 0;
 
-
+// Vision related constants
+public static final double perspecLimitDeg = 5.0; // Must be positive.
+public static final double nearZero = 0.1; // For comparing against zero in floating point.
 }
