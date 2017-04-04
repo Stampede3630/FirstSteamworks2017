@@ -1,4 +1,4 @@
-<head><version>2.83.14</version></head>
+<head><version>2.83.17</version></head>
 <zoom>8</zoom>
 <DLink_Internet_Camera disabled>
   <focus_speed_index>6</focus_speed_index>
@@ -98,17 +98,17 @@
   <variable_15/>
   <variable_16/>
 </Set_Variable>
-<Load_Image disabled>
+<Load_Image>
   <filename>C:\Eng\Robot17\Images\Images_20170318\b000401.jpg</filename>
-  <frame_delay>100</frame_delay>
+  <frame_delay>33</frame_delay>
   <large_bit_range_max>32768</large_bit_range_max>
   <large_bit_range_min>0</large_bit_range_min>
-  <load_numbered_images>FALSE</load_numbered_images>
+  <load_numbered_images>TRUE</load_numbered_images>
   <loop_playback>1</loop_playback>
   <monitor_folder>FALSE</monitor_folder>
   <numerical_sort>TRUE</numerical_sort>
   <page_number>1</page_number>
-  <recursive>TRUE</recursive>
+  <recursive>FALSE</recursive>
   <reload_on_change>FALSE</reload_on_change>
 </Load_Image>
 <Marker>
@@ -160,18 +160,50 @@
   <method>8</method>
 </Grayscale>
 <Threshold>
-  <end>202</end>
+  <end>255</end>
   <hysteresis>0</hysteresis>
-  <result_type>1</result_type>
-  <start>0</start>
+  <start>225</start>
 </Threshold>
+<Close>
+  <close_borders>FALSE</close_borders>
+  <dilate_count>1</dilate_count>
+  <erode_count>1</erode_count>
+  <kernal_shape>4</kernal_shape>
+  <restrict_dilation>FALSE</restrict_dilation>
+  <symmetrical>TRUE</symmetrical>
+</Close>
 <Open>
   <dilate_count>2</dilate_count>
   <erode_count>2</erode_count>
   <open_borders>FALSE</open_borders>
   <restrict_dilation>FALSE</restrict_dilation>
-  <symmetrical>FALSE</symmetrical>
+  <symmetrical>TRUE</symmetrical>
 </Open>
+<Blob_Filter>
+  <create_blob_array_variable>FALSE</create_blob_array_variable>
+  <filters>
+    <tab>
+      <filter>
+        <count_threshold>0</count_threshold>
+        <create_array>0</create_array>
+        <filter_id>68</filter_id>
+        <invert_count>0</invert_count>
+        <invert_threshold>0</invert_threshold>
+        <weight_threshold>0.4</weight_threshold>
+      </filter>
+    </tab>
+    <tab:2/>
+    <tab:3/>
+    <tab:4/>
+    <tab:5/>
+    <tab:6/>
+  </filters>
+  <font_size>Normal (10pt)</font_size>
+  <largest_is_background>FALSE</largest_is_background>
+  <show_weights>FALSE</show_weights>
+  <sort_array_on_x>FALSE</sort_array_on_x>
+  <sort_array_on_y>FALSE</sort_array_on_y>
+</Blob_Filter>
 <Close>
   <close_borders>FALSE</close_borders>
   <dilate_count>5</dilate_count>
@@ -191,10 +223,10 @@
         <filter_id>68</filter_id>
         <invert_count>0</invert_count>
         <invert_threshold>0</invert_threshold>
-        <weight_threshold>0.5</weight_threshold>
+        <weight_threshold>0.6</weight_threshold>
       </filter>
       <filter:2>
-        <amount>15</amount>
+        <amount>10</amount>
         <count_threshold>0</count_threshold>
         <create_array>0</create_array>
         <filter_id>134</filter_id>
@@ -203,7 +235,7 @@
         <weight_threshold>0.5</weight_threshold>
       </filter:2>
       <filter:3>
-        <amount>62</amount>
+        <amount>70</amount>
         <count_threshold>0</count_threshold>
         <create_array>0</create_array>
         <filter_id>135</filter_id>
@@ -218,7 +250,7 @@
         <invert_count>0</invert_count>
         <invert_threshold>0</invert_threshold>
         <ratio>0.4</ratio>
-        <weight_threshold>0.42</weight_threshold>
+        <weight_threshold>0.7</weight_threshold>
       </filter:4>
     </tab>
     <tab:2/>
@@ -248,7 +280,7 @@
   <isolation>4</isolation>
   <limit>8</limit>
   <shape_index>6</shape_index>
-  <size_index>4</size_index>
+  <size_index>2</size_index>
   <threshold>100</threshold>
   <use_color>TRUE</use_color>
   <use_non_maxima>TRUE</use_non_maxima>
@@ -307,10 +339,11 @@ MOUSE_Y
 </east>
   <font_color>white</font_color>
   <font_size>Large (12pt)</font_size>
-  <north>TOP_RIGHT_X
-TOP_RIGHT_Y
-BLOB_COUNT
-</north>
+  <northeast>BLOB_COUNT
+WIDTH
+HEIGHT
+FPS
+</northeast>
   <northwest>AREA
 DISTANCE_X
 DIST_BLOBS_X
@@ -319,6 +352,7 @@ OFFSET_X_DEG
 perspecDeg
 </northwest>
   <southwest>HARRIS_CORNERS
+BOX_ASPECT_RATIO
 </southwest>
 </Display_Variables>
 <Math>
@@ -336,8 +370,13 @@ perspecDeg
   <hostname>roboRIO-3630-FRC.local</hostname>
   <port>1735</port>
   <prefix>/SmartDashboard/</prefix>
-  <variables_to_send>BLOB_COUNT
+  <variables_to_send>AREA
+BLOB_COUNT
+BOX_ASPECT_RATIO
+DIST_BLOBS_X
+DIST_BLOBS_Y
 DISTANCE_X
+HARRIS_CORNERS
 HEIGHT
 OFFSET_X_DEG
 perspecDeg
