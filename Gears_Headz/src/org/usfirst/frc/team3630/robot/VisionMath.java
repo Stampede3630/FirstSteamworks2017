@@ -22,6 +22,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // yRF = yRS + ySF
 // Rotate Robot by Phi = perspecDeg
 
+// Fundamental changes to the notes above due to how sensitive perspecDeg is to the relative blob heights.
+// A change of one pixel can change perspecDeg by over 20 degrees. So in the Gears_RoboRealm code it will
+// filter based on the number of pixels the blobs differ by. If the difference is under a threshold,
+// it will give us a perspecDeg of 0.0. We will use positive perspecDeg values to indicate we need to make
+// right blob heights grow relative to the left blob heights, so the robot should move right. A negative
+// value means robot should move left. Note that based on offsetXDeg 'right' and 'left' must be adjusted
+// per the robot's rotation.
+
 // All variables with the word 'Angle' have units of radians.
 
 public class VisionMath {

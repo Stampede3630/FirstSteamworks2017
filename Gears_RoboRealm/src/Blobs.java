@@ -278,22 +278,38 @@ public class Blobs { // implements Comparable<Corner> {
 			double distanceToTargetInches = distanceFromHeightInches();
 			
 			if (myBlobCount == 1) {
-				double aValueXDistInches = (Consts.gearTapeWidthInches/2.0);
-				double rValueRatio = (double) myBlob[0].sideLeftPx() / (double) myBlob[0].sideRightPx();
-				
-				double distRatio = distanceToTargetInches / aValueXDistInches;
-				double rRatio = (rValueRatio-1.0) / (rValueRatio+1.0);
-				perspecRads = Math.asin(distRatio * rRatio);
+				double heightDiffPx = Math.abs(myBlob[0].sideLeftPx() - myBlob[0].sideRightPx());
+				if (heightDiffPx < Consts.blobHeightSensitivity) {
+					perspecRads = 0.0; // Our robot orientation is good enough, do not rotate based on perspective angle.
+				} else {
+					double aValueXDistInches = (Consts.gearTapeWidthInches/2.0);
+					double rValueRatio = myBlob[0].sideLeftPx() / myBlob[0].sideRightPx();
+					
+					double distRatio = distanceToTargetInches / aValueXDistInches;
+					double rRatio = (rValueRatio-1.0) / (rValueRatio+1.0);
+					perspecRads = Math.asin(distRatio * rRatio);
+				}
 			} else if (myBlobCount == 2) {
 				// Use the width from the center of each tape.
 				double aValueXDistInches = ((Consts.gearTapesWidthInches - Consts.gearTapeWidthInches)/2.0);
 				
-				// Gets the average height of each tape, i.e. from its center.
-				double rValueRatio = (double) myBlob[0].getHeightPx() / (double) myBlob[1].getHeightPx();
-				
-				double distRatio = distanceToTargetInches / aValueXDistInches;
-				double rRatio = (rValueRatio-1.0) / (rValueRatio+1.0);
-				perspecRads = Math.asin(distRatio * rRatio);
+				double heightDiffPx = Math.abs(myBlob[0].getHeightPx() - myBlob[1].getHeightPx());
+				if (heightDiffPx < Consts.blobsHeightSensitivity) {
+					perspecRads = 0.0; // Our robot orientation is good enough, do not rotate based on perspective angle.
+				} else {
+					// Gets the average height of each tape, i.e. from its center.
+					double rValueRatio = myBlob[0].getHeightPx() / myBlob[1].getHeightPx();
+					
+					double distRatio = distanceToTargetInches / aValueXDistInches;
+					double rRatio = (rValueRatio-1.0) / (rValueRatio+1.0);
+					double aSinParam = distRatio * rRatio;
+					if (aSinParam > 1.0) {
+						aSinParam = 1.0;
+					} else if (aSinParam < -1.0) {
+						aSinParam = -1.0;
+					}
+					perspecRads = Math.asin(aSinParam);
+				}
 			}
 			perspecDeg = Utils.cvtRadiansToDegrees(perspecRads);
 		}

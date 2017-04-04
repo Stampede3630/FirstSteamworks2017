@@ -97,6 +97,11 @@ public class gears {
 					
 					// Only do processing when we are given two blobs that are side by side.
 					int nBlobs = RRVar.BLOB_COUNT.getInt(0);
+					double distanceXInches = 0.0;
+					double distanceBlobsXInches = 0.0;
+					double distanceBlobsYInches = 0.0;
+					double offsetXDeg = 0.0;
+					double perspecDeg = 0.0;
 					if ((nBlobs == 1) || (nBlobs == 2)) {
 						// Transform HARRIS_CORNERS into blobs
 						Blobs curBlobs = new Blobs(nBlobs, RRVar.HARRIS_CORNERS.getCorners());
@@ -108,35 +113,37 @@ public class gears {
 							Blobs blobs = blobsHist.getRecentAverage();
 
 							// Reduce distance result to 2 decimal places.
-							double distanceXInches = Math.round(blobs.distanceFromTargetWidthInches() * 100d)/100d;
-							double distanceBlobsXInches = Math.round(blobs.distanceFromWidthInches() * 100d)/100d;
-							double distanceBlobsYInches = Math.round(blobs.distanceFromHeightInches() * 100d)/100d;
-							double offsetXDeg = Math.round(blobs.getOffsetXDeg() * 100d)/100d;
-							double perspecDeg = Math.round(blobs.perspectiveFormulaDeg()*100d)/100d;
+							distanceXInches = Math.round(blobs.distanceFromTargetWidthInches() * 100d)/100d;
+							distanceBlobsXInches = Math.round(blobs.distanceFromWidthInches() * 100d)/100d;
+							distanceBlobsYInches = Math.round(blobs.distanceFromHeightInches() * 100d)/100d;
+							offsetXDeg = Math.round(blobs.getOffsetXDeg() * 100d)/100d;
+							perspecDeg = Math.round(blobs.perspectiveFormulaDeg()*100d)/100d;
 
-							System.out.print("Results," + Double.toString(distanceXInches) + ",");
-							System.out.print(Double.toString(distanceBlobsXInches) + ",");
-							System.out.print(Double.toString(distanceBlobsYInches) + ",");
-							System.out.print(Double.toString(offsetXDeg) + ",");
-							System.out.println(Double.toString(perspecDeg));
-							
-							System.out.println("DISTANCE_X  = " + Double.toString(distanceXInches));
-							System.out.println("DIST_BLOBS_X  = " + Double.toString(distanceBlobsXInches));
-							System.out.println("DIST_BLOBS_Y  = " + Double.toString(distanceBlobsYInches));
-							System.out.println("OFFSET_X_DEG = " + Double.toString(offsetXDeg));
-							System.out.println("perspecDeg = " + Double.toString(perspecDeg));
-							
 							System.out.println("======================");
-							RRVar.printAll();
 							System.out.println("Blobs: " + blobs.toString());
 							System.out.println("BlobsCSV: " + blobs.toCSV());
 							System.out.println("======================");
-							
-							// Tell RoboRealm distance to target, x-offsetPx and target orientation.
-							rr.setDistances(distanceXInches, distanceBlobsXInches, distanceBlobsYInches,
-								offsetXDeg, perspecDeg);
 						}
 					}
+					System.out.print("Results," + Double.toString(distanceXInches) + ",");
+					System.out.print(Double.toString(distanceBlobsXInches) + ",");
+					System.out.print(Double.toString(distanceBlobsYInches) + ",");
+					System.out.print(Double.toString(offsetXDeg) + ",");
+					System.out.println(Double.toString(perspecDeg));
+					
+					System.out.println("DISTANCE_X  = " + Double.toString(distanceXInches));
+					System.out.println("DIST_BLOBS_X  = " + Double.toString(distanceBlobsXInches));
+					System.out.println("DIST_BLOBS_Y  = " + Double.toString(distanceBlobsYInches));
+					System.out.println("OFFSET_X_DEG = " + Double.toString(offsetXDeg));
+					System.out.println("perspecDeg = " + Double.toString(perspecDeg));
+					
+					System.out.println("======================");
+					RRVar.printAll();
+					System.out.println("======================");
+					
+					// Tell RoboRealm distance to target, x-offsetPx and target orientation.
+					rr.setDistances(distanceXInches, distanceBlobsXInches, distanceBlobsYInches,
+						offsetXDeg, perspecDeg);
 				}
 			}
 			catch (Exception e) {
