@@ -21,7 +21,6 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	DriveTrain driveTrain;
-	Ultrasonics ultraDistance;
 	GearsManip gears;
 	NavX myNavX;
 	WinchSystem winch;
