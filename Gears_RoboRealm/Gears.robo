@@ -98,8 +98,8 @@
   <variable_15/>
   <variable_16/>
 </Set_Variable>
-<Load_Image>
-  <filename>C:\Eng\Robot17\Images\Images_20170318\b000401.jpg</filename>
+<Load_Image disabled>
+  <filename>C:\Eng\Robot17\Images2\Image000001.jpg</filename>
   <frame_delay>33</frame_delay>
   <large_bit_range_max>32768</large_bit_range_max>
   <large_bit_range_min>0</large_bit_range_min>
@@ -162,7 +162,7 @@
 <Threshold>
   <end>255</end>
   <hysteresis>0</hysteresis>
-  <start>225</start>
+  <start>165</start>
 </Threshold>
 <Close>
   <close_borders>FALSE</close_borders>
@@ -173,8 +173,8 @@
   <symmetrical>TRUE</symmetrical>
 </Close>
 <Open>
-  <dilate_count>2</dilate_count>
-  <erode_count>2</erode_count>
+  <dilate_count>4</dilate_count>
+  <erode_count>4</erode_count>
   <open_borders>FALSE</open_borders>
   <restrict_dilation>FALSE</restrict_dilation>
   <symmetrical>TRUE</symmetrical>
@@ -189,7 +189,7 @@
         <filter_id>68</filter_id>
         <invert_count>0</invert_count>
         <invert_threshold>0</invert_threshold>
-        <weight_threshold>0.4</weight_threshold>
+        <weight_threshold>0.63</weight_threshold>
       </filter>
     </tab>
     <tab:2/>
@@ -226,7 +226,7 @@
         <weight_threshold>0.6</weight_threshold>
       </filter>
       <filter:2>
-        <amount>10</amount>
+        <amount>15</amount>
         <count_threshold>0</count_threshold>
         <create_array>0</create_array>
         <filter_id>134</filter_id>
@@ -235,13 +235,13 @@
         <weight_threshold>0.5</weight_threshold>
       </filter:2>
       <filter:3>
-        <amount>70</amount>
+        <amount>80</amount>
         <count_threshold>0</count_threshold>
         <create_array>0</create_array>
         <filter_id>135</filter_id>
         <invert_count>0</invert_count>
         <invert_threshold>0</invert_threshold>
-        <weight_threshold>0.5</weight_threshold>
+        <weight_threshold>0.82</weight_threshold>
       </filter:3>
       <filter:4>
         <count_threshold>2</count_threshold>
@@ -334,20 +334,12 @@ HARRIS_CORNERS
   <dim_background>TRUE</dim_background>
   <display_as_annotation>TRUE</display_as_annotation>
   <display_value_only>FALSE</display_value_only>
-  <east>MOUSE_X
-MOUSE_Y
-</east>
   <font_color>white</font_color>
   <font_size>Large (12pt)</font_size>
   <northeast>BLOB_COUNT
-WIDTH
-HEIGHT
 FPS
 </northeast>
-  <northwest>AREA
-DISTANCE_X
-DIST_BLOBS_X
-DIST_BLOBS_Y
+  <northwest>DIST_BLOBS_Y
 OFFSET_X_DEG
 perspecDeg
 </northwest>
