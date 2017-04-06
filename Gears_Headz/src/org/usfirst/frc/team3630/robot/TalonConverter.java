@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class talonConverter implements PIDOutput {
+public class TalonConverter implements PIDOutput {
 	private Talon talon;
 	
-	public talonConverter (Talon t){
+	public TalonConverter (Talon t){
 		talon = t;
 	}
 	
