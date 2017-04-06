@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PIDSourceType;
-import edu.wpi.first.wpilibj.SpeedController;
 
 public class Wheel {
 	private static final int pulsesPerRevolution = 250;
@@ -14,7 +13,7 @@ public class Wheel {
 	XboxController xbox;
 	public Encoder encoder;
 	public Talon talon;
-
+	private TalonConverter maxRamp;
 	
 	public PIDController pid;
 
@@ -31,13 +30,13 @@ public class Wheel {
 		
 		talon = new Talon(talonChannel);		
 		talon.setInverted(reversed);
+		maxRamp = new TalonConverter(talon);
 		encoder.setMaxPeriod(1);
 		// Define distance in terms of inches
 		encoder.setDistancePerPulse(Consts.mecanumWheelRadiusInches*2*Math.PI/pulsesPerRevolution);
 		encoder.setMinRate(10);
 		encoder.setReverseDirection(!reversed);
 		encoder.setSamplesToAverage(7);
-
 		encoder.setPIDSourceType(PIDSourceType.kDisplacement);
 		
 		//PID WILL ONLY DEAL WITH INCHES/SECONDz
@@ -46,17 +45,15 @@ public class Wheel {
 				SmartDashboard.getNumber("drivetrain kI", Consts.wheelKI),
 				SmartDashboard.getNumber("drivetrain kD", Consts.wheelKD),
 				encoder, 
-				talon
+				maxRamp
 				);
 		//pid.setInputRange(-100, 100);
 		pid.setOutputRange(-1, 1);
 		pid.setAbsoluteTolerance(2);
 		pid.enable();
 	}
-	
-	public void setWheelSpeed (double speed){
+	public void setWheelDistance (double distance){
 		//Need to make this constant better.
-
 		
 		pid.setPID(
 				SmartDashboard.getNumber("drivetrain kP", Consts.wheelKP),
@@ -64,14 +61,18 @@ public class Wheel {
 				SmartDashboard.getNumber("drivetrain kD", Consts.wheelKD)
 			);
 		
-		pid.setSetpoint(speed);//speed);
+		pid.setSetpoint(distance);//speed);
 		SmartDashboard.putNumber("PID Encoder Input"+String.valueOf(talon.getChannel()), encoder.pidGet());
 		SmartDashboard.putNumber("PID Setpoint "+String.valueOf(talon.getChannel()), pid.getSetpoint());
-		SmartDashboard.putNumber("PID result"+String.valueOf(talon.getChannel()), pid.get());
-		
+		SmartDashboard.putNumber("PID result"+String.valueOf(talon.getChannel()), pid.get());		
 		
 		}
 
+	public void getInfo () {
+		SmartDashboard.putNumber("PID Encoder Input"+String.valueOf(talon.getChannel()), encoder.pidGet());
+		SmartDashboard.putNumber("PID Setpoint "+String.valueOf(talon.getChannel()), pid.getSetpoint());
+		SmartDashboard.putNumber("PID result"+String.valueOf(talon.getChannel()), pid.get());		
+	}
 	
 	
 	

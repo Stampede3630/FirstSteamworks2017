@@ -1,15 +1,12 @@
 package org.usfirst.frc.team3630.robot;
 
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.PIDController;
-import edu.wpi.first.wpilibj.PIDOutput;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
-public  class HomebrewMecanum {
+public class HomebrewMecanum  {
 	public Wheel fL, rL, fR, rR;
 	private VisionMath myVisionMath;
+	public double intendedRobotAngle = 0.0;
+
 
 	/**
 	 * @param frontLeft
@@ -31,10 +28,27 @@ public  class HomebrewMecanum {
 		
 	    SmartDashboard.putBoolean("PID Control?", false);
 	    SmartDashboard.putBoolean("Vision Pipe?", false);
-	     SmartDashboard.putNumber("Desired Distance X", 0);
+	    SmartDashboard.putNumber("Desired Distance X", 0);
 	    SmartDashboard.putNumber("Desired Distance Y", 0);
 	    SmartDashboard.putNumber("Desired Distance theta", 0);
+	    
 	}
+	 
+	 public  HomebrewMecanum (int frontLeft, int rearLeft, int frontRight, int rearRight, NavX myNavX) {
+			fL = new Wheel(Consts.driveEncoderFrontLeftA, Consts.driveEncoderFrontLeftB, frontLeft, false);
+			rL = new Wheel(Consts.driveEncoderRearLeftA, Consts.driveEncoderRearLeftB, rearLeft, false);
+			fR = new Wheel(Consts.driveEncoderFrontRightA, Consts.driveEncoderFrontRightB, frontRight, true);
+			rR = new Wheel(Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, rearRight, true);
+
+			myVisionMath = new VisionMath();
+			
+		    SmartDashboard.putBoolean("PID Control?", false);
+		    SmartDashboard.putBoolean("Vision Pipe?", false);
+		     SmartDashboard.putNumber("Desired Distance X", 0);
+		    SmartDashboard.putNumber("Desired Distance Y", 0);
+		    SmartDashboard.putNumber("Desired Distance theta", 0);
+	 }
+
 
 	/**
 	 * @param velocityX
@@ -161,6 +175,12 @@ public  class HomebrewMecanum {
 			motorDrive(rL, wheelSpeeds[1], postDiagnostics);
 			motorDrive(rR, wheelSpeeds[2], postDiagnostics);
 			motorDrive(fR, wheelSpeeds[3], postDiagnostics);
+			
+			
+			fL.getInfo();
+			fR.getInfo();
+			rL.getInfo();
+			rR.getInfo();
 	}
 
 	public void setAllPID() {
@@ -174,7 +194,7 @@ public  class HomebrewMecanum {
 		rR.pid.setPID(kP, kI, kD);
 	}
 
-	public void teleopInit() {
+	public void resetEncoders() {
 		   fL.encoder.reset();
 		   fR.encoder.reset();
 		   rL.encoder.reset();
@@ -206,10 +226,10 @@ public  class HomebrewMecanum {
 
 			double wheelDistances [] = distanceCalc(speedX, speedY, speedTheta, true);
 			
-			fL.setWheelSpeed(wheelDistances[0]);
-			rL.setWheelSpeed(wheelDistances[1]);
-			rR.setWheelSpeed(wheelDistances[2]);
-			fR.setWheelSpeed(wheelDistances[3]);
+			fL.setWheelDistance(wheelDistances[0]);
+			rL.setWheelDistance(wheelDistances[1]);
+			rR.setWheelDistance(wheelDistances[2]);
+			fR.setWheelDistance(wheelDistances[3]);
 		/**/
 			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fL.talon.getChannel()), fL.pid.onTarget());
 			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rL.talon.getChannel()), rL.pid.onTarget());
@@ -217,5 +237,150 @@ public  class HomebrewMecanum {
 			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rR.talon.getChannel()), rR.pid.onTarget());
 
 	}
+	}
+	
+	public void pidDrive(boolean pidControl, boolean visionPipe) {
+		double speedX, speedY, speedTheta;
+		if (pidControl) {
+			if (!fL.pid.isEnabled()) fL.pid.enable();
+			if (!fR.pid.isEnabled()) fR.pid.enable();
+			if (!rL.pid.isEnabled()) rL.pid.enable();
+			if (!rR.pid.isEnabled()) rR.pid.enable();
+
+			if (visionPipe){
+				
+				myVisionMath.refereshImageValues();
+				speedX = myVisionMath.robotToFrontDY(Consts.visionCutoff); //X is front and back, left and right in Sams code. 
+																			//This is correct.
+				speedY = myVisionMath.robotToFrontDX(Consts.visionCutoff);
+				speedTheta = myVisionMath.rotateRobotAngle();
+				SmartDashboard.putNumber("Desired Distance X", speedX);
+				SmartDashboard.putNumber("Desired Distance Y", speedY);
+				SmartDashboard.putNumber("Desired Distance theta", speedTheta);
+				intendedRobotAngle = speedTheta;
+				double wheelDistances [] = distanceCalc(speedX, speedY, speedTheta, true);
+			//SJV Why not just reset encoders
+				
+				if (speedX == 0 && speedY == 0 ){ //if vision is not working
+					pidDrive(true, 7, 0, 0);
+				}
+				
+				else {
+					fL.setWheelDistance(wheelDistances[0]+fL.encoder.getDistance());
+					rL.setWheelDistance(wheelDistances[1]+rL.encoder.getDistance());
+					rR.setWheelDistance(wheelDistances[2]+rR.encoder.getDistance());
+					fR.setWheelDistance(wheelDistances[3]+fR.encoder.getDistance());
+				}
+			}
+			else {
+					 speedX = SmartDashboard.getNumber("Desired Distance X", 0);
+					 speedY = SmartDashboard.getNumber("Desired Distance Y", 0);
+					 speedTheta = SmartDashboard.getNumber("Desired Distance theta", 0);
+					 intendedRobotAngle = speedTheta;
+						double wheelDistances [] = distanceCalc(speedX, speedY, speedTheta, true);
+
+						fL.setWheelDistance(wheelDistances[0]);
+						rL.setWheelDistance(wheelDistances[1]);
+						rR.setWheelDistance(wheelDistances[2]);
+						fR.setWheelDistance(wheelDistances[3]);
+
+			}
+
+			
+		
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fL.talon.getChannel()), fL.pid.onTarget());
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rL.talon.getChannel()), rL.pid.onTarget());
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fR.talon.getChannel()), fR.pid.onTarget());
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rR.talon.getChannel()), rR.pid.onTarget());
+
+	}
+	}
+	
+	
+	public void pidDrive(boolean pidControl, double desiredDistanceX, double desiredDistanceY, double desitedDistanceTheta) {
+		double speedX, speedY, speedTheta;
+		if (pidControl) {
+			if (!fL.pid.isEnabled()) fL.pid.enable();
+			if (!fR.pid.isEnabled()) fR.pid.enable();
+			if (!rL.pid.isEnabled()) rL.pid.enable();
+			if (!rR.pid.isEnabled()) rR.pid.enable();
+
+			speedX = desiredDistanceX;
+			speedY = desiredDistanceY;
+			//SJV
+			intendedRobotAngle = desitedDistanceTheta;
+			speedTheta = desitedDistanceTheta;
+
+			double wheelDistances [] = distanceCalc(speedX, speedY, speedTheta, true);
+			
+			fL.setWheelDistance(wheelDistances[0]);
+			rL.setWheelDistance(wheelDistances[1]);
+			rR.setWheelDistance(wheelDistances[2]);
+			fR.setWheelDistance(wheelDistances[3]);
+					
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fL.talon.getChannel()), fL.pid.onTarget());
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rL.talon.getChannel()), rL.pid.onTarget());
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fR.talon.getChannel()), fR.pid.onTarget());
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rR.talon.getChannel()), rR.pid.onTarget());
+
+		}
+	}
+	//SJV
+	public void pidDriveStraight(boolean pidControl, double desiredDistanceX, double desiredDistanceY, double fusedHeading) {
+		double errorAngle = intendedRobotAngle - fusedHeading;  //I'm sure you can fix this....
+		this.pidDrive(pidControl,desiredDistanceX,desiredDistanceY,-errorAngle);
+	}
+	
+
+	public void pidWrite(double output) {
+
+			if (!fL.pid.isEnabled()) fL.pid.enable();
+			if (!fR.pid.isEnabled()) fR.pid.enable();
+			if (!rL.pid.isEnabled()) rL.pid.enable();
+			if (!rR.pid.isEnabled()) rR.pid.enable();
+
+
+			double wheelDistances [] = distanceCalc(0, 0, output, true);
+			
+			fL.setWheelDistance(wheelDistances[0]);
+			rL.setWheelDistance(wheelDistances[1]);
+			rR.setWheelDistance(wheelDistances[2]);
+			fR.setWheelDistance(wheelDistances[3]);
+		
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fL.talon.getChannel()), fL.pid.onTarget());
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rL.talon.getChannel()), rL.pid.onTarget());
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(fR.talon.getChannel()), fR.pid.onTarget());
+			SmartDashboard.putBoolean("PID at Target? " + String.valueOf(rR.talon.getChannel()), rR.pid.onTarget());
+
+	}
+	
+	public boolean pidAtTarget () { //This is the workaround to avoid using PID on target. This is functional.
+		double rateMax = SmartDashboard.getNumber("RateMin", .5);
+		//may want to implement navX, and escape clause
+		boolean result = 
+				(
+						(
+							(Math.abs(fL.encoder.getDistance()-fL.pid.getSetpoint())< Consts.distanceMarginOfError) &&
+							(Math.abs(fR.encoder.getDistance()-fR.pid.getSetpoint())< Consts.distanceMarginOfError) &&
+							(Math.abs(rL.encoder.getDistance()-rL.pid.getSetpoint())< Consts.distanceMarginOfError) &&
+							(Math.abs(rR.encoder.getDistance()-rR.pid.getSetpoint())< Consts.distanceMarginOfError)
+								) &&
+				
+						(
+							(Math.abs(fL.encoder.getRate()) < rateMax) &&
+							(Math.abs(fR.encoder.getRate()) < rateMax) &&
+							(Math.abs(rL.encoder.getRate()) < rateMax) &&
+							(Math.abs(rR.encoder.getRate()) < rateMax)
+						)
+					)
+					||
+					(
+							(Math.abs(fL.encoder.getDistance()-fL.pid.getSetpoint())< Consts.strictDistanceMarginOfError) &&
+							(Math.abs(fR.encoder.getDistance()-fR.pid.getSetpoint())< Consts.strictDistanceMarginOfError) &&
+							(Math.abs(rL.encoder.getDistance()-rL.pid.getSetpoint())< Consts.strictDistanceMarginOfError) &&
+							(Math.abs(rR.encoder.getDistance()-rR.pid.getSetpoint())< Consts.strictDistanceMarginOfError)
+							);
+		
+		return result;
 	}
 }

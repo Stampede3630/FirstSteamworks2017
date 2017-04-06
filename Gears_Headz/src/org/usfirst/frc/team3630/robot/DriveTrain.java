@@ -1,11 +1,6 @@
 package org.usfirst.frc.team3630.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.JoystickBase;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -28,13 +23,13 @@ public class DriveTrain {
 	// Sensors sensors;
 
 	// initialize drives
-	HomebrewMecanum mecanumDrive;
+	public HomebrewMecanum mecanumDrive;
 	Wheel fL, rL, fR, rR;
 	boolean directionForward = true;
 
-	public DriveTrain() {
+	public DriveTrain(NavX myNavX) {
 		mecanumDrive = new HomebrewMecanum(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,
-				Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
+				Consts.driveMotorFrontRight, Consts.driveMotorBottomRight, myNavX);
 		m_Joystick = new XboxController(Consts.joystickComPort);
 		SmartDashboard.putBoolean("Auto Control", false);
 	}
@@ -60,7 +55,7 @@ public class DriveTrain {
 	}
 
 	public void teleopInit() {
-		mecanumDrive.teleopInit();
+		mecanumDrive.resetEncoders();
 	}
 
 	public void telopPeriodic() {

@@ -154,7 +154,7 @@ public class gears {
 				break;
 			}
 			try {
-				Thread.sleep(33); // Wake up 30 times per second
+				Thread.sleep(66); // Wake up 30 times per second
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -1,13 +1,11 @@
 package org.usfirst.frc.team3630.robot;
-
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GearsManip {
-	Talon gearMotor = new Talon(Consts.gearTalonPWM );
+	Talon gearMotor = new Talon(Consts.gearTalonPWM);
 	Joystick m_joystick= new Joystick(Consts.joytsickChannel);
 	
 	DigitalInput limitOpen; 
@@ -17,12 +15,25 @@ public class GearsManip {
 		limitOpen= new DigitalInput(Consts.gearLimitSwitchOpen);
 		limitClose= new DigitalInput(Consts.gearLimitSwitchClosed);
 	}
-	
+	public void stop(){
+		gearMotor.set(0);
+	}
 	public void open(){
-		if(limitOpen.get()){
+		/*while (limitOpen.get()) {
+			gearMotor.set(-Consts.gearSpeed);
+		}
+		stop();*/
+		if(limitOpen.get()){	
 			gearMotor.set(-Consts.gearSpeed);
 		}
 		else stop();
+	}
+	
+	public void autoOpen(){
+		while(limitOpen.get()){	
+			gearMotor.set(-Consts.gearSpeed);
+		}
+		stop();
 	}
 	
 	public void close(){
@@ -33,16 +44,15 @@ public class GearsManip {
 		else stop();
 	}
 	
-	public void stop(){
-		gearMotor.set(0);
+	public boolean isOpened () {
+		return !limitOpen.get();
 	}
+	
 	public  int getValue(){
 		if (m_joystick.getRawButton(Consts.openButton)){
 			return (int)1;
 		}
-		if (Math.abs(m_joystick.getRawAxis(2)) > .80 ){
-		 return (int)1;
-	    }
+
 		else if(m_joystick.getRawButton(Consts.closeButton)){
 			return (int)2;
 		}
