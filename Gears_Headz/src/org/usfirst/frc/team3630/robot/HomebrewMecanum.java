@@ -1,5 +1,5 @@
 package org.usfirst.frc.team3630.robot;
-
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class HomebrewMecanum  {
@@ -43,6 +43,8 @@ public class HomebrewMecanum  {
 
 			myVisionMath = new VisionMath();
 			
+			SmartDashboard.putNumber("Vision Retrycount", 0);
+
 		    SmartDashboard.putBoolean("PID Control?", false);
 		    SmartDashboard.putBoolean("Vision Pipe?", false);
 		     SmartDashboard.putNumber("Desired Distance X", 0);
@@ -269,6 +271,7 @@ public class HomebrewMecanum  {
 				int retryCount = (int) SmartDashboard.getNumber("Vision Retrycount", 0);
 				if (speedX == 0 && speedY == 0){ //if vision is not working
 					retryCount++;
+					Timer.delay(.1);
 					SmartDashboard.putNumber("Vision Retrycount", retryCount);	
 					if (retryCount > Consts.maxVisionRetryCount) {
 						pidDrive(true, Consts.visionMakeupDistance, 0, 0);
@@ -369,7 +372,7 @@ public class HomebrewMecanum  {
 	}
 	
 	public boolean pidAtTarget () { //This is the workaround to avoid using PID on target. This is functional.
-		double rateMax = SmartDashboard.getNumber("RateMin", .5);
+		double rateMax = SmartDashboard.getNumber("RateMin", 1);
 		//may want to implement navX, and escape clause
 		boolean result = 
 				(
@@ -395,6 +398,33 @@ public class HomebrewMecanum  {
 							(Math.abs(rR.encoder.getDistance()-rR.pid.getSetpoint())< Consts.strictDistanceMarginOfError)
 							);
 		
+		return result;
+	}
+	
+	public boolean visionAtTarget () {
+		double rateMax = SmartDashboard.getNumber("RateMin", .5);
+		//may want to implement navX, and escape clause
+		boolean result = 
+				(
+						
+				
+						(
+							(Math.abs(fL.encoder.getRate()) < rateMax) &&
+							(Math.abs(fR.encoder.getRate()) < rateMax) &&
+							(Math.abs(rL.encoder.getRate()) < rateMax) &&
+							(Math.abs(rR.encoder.getRate()) < rateMax)
+						)
+					)
+					&&
+					(
+							(fL.encoder.getDistance() > 4) &&
+							(fR.encoder.getDistance() > 4) &&
+							(rL.encoder.getDistance() > 4) &&
+							(rR.encoder.getDistance() > 4)
+							);
+		
+
+
 		return result;
 	}
 }

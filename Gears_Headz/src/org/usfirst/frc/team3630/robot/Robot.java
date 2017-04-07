@@ -42,7 +42,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Auto Drive", 0);
 		SmartDashboard.putNumber("MinRate", .5);
 		//SmartDashboard.putBoolean("CHEAT AUTO", false);
-		SmartDashboard.putBoolean("USE DRIVE STRAIGHT", false);
+		SmartDashboard.putBoolean("USE DRIVE STRAIGHT", true);
 		driveTrain = new DriveTrain(myNavX);
 		myNavX = new NavX();
 		winch = new WinchSystem();
@@ -64,6 +64,8 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		SmartDashboard.putNumber("Vision Retrycount", 0);
+
 		autoStage = 0;
 		init = true;
 		myNavX.calibrateHeading();
@@ -176,7 +178,7 @@ public class Robot extends IterativeRobot {
 				driveTrain.mecanumDrive.resetEncoders();
 				driveTrain.mecanumDrive.setAllPID();
 				if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
-					driveTrain.mecanumDrive.pidDriveStraight(true, 0, 0);
+					driveTrain.mecanumDrive.pidDriveStraight(true, Consts.visionMakeupDistance, 0);
 				} else {
 					driveTrain.mecanumDrive.pidDrive(true, Consts.visionMakeupDistance, 0, 0);
 				}
@@ -204,14 +206,14 @@ public class Robot extends IterativeRobot {
 				driveTrain.mecanumDrive.resetEncoders(); 
 				driveTrain.mecanumDrive.setAllPID();
 				if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
-					driveTrain.mecanumDrive.pidDriveStraight(true, 0, 0);
+					driveTrain.mecanumDrive.pidDriveStraight(true, Consts.finalDriveDistance, 0);
 				} else {
 					driveTrain.mecanumDrive.pidDrive(true, Consts.finalDriveDistance, 0, 0);
 				}
 
 			} 
 			
-			else if (driveTrain.mecanumDrive.pidAtTarget()) {
+			else if (driveTrain.mecanumDrive.visionAtTarget()) {
 				init = true;
 				autoStage++;
 			} 
@@ -250,7 +252,7 @@ public class Robot extends IterativeRobot {
 				init = false;
 				driveTrain.mecanumDrive.resetEncoders();
 				if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
-					driveTrain.mecanumDrive.pidDriveStraight(true, 0, 0);
+					driveTrain.mecanumDrive.pidDriveStraight(true, Consts.recoilDistance, 0);
 				} else {
 					driveTrain.mecanumDrive.pidDrive(true, Consts.recoilDistance, 0, 0);
 				}
