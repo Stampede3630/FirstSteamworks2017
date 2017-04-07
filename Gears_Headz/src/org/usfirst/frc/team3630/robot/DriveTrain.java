@@ -2,6 +2,7 @@ package org.usfirst.frc.team3630.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -32,6 +33,7 @@ public class DriveTrain {
 				Consts.driveMotorFrontRight, Consts.driveMotorBottomRight, myNavX);
 		m_Joystick = new XboxController(Consts.joystickComPort);
 		SmartDashboard.putBoolean("Auto Control", false);
+		
 	}
 
 	public double getRoundX() {
@@ -71,8 +73,10 @@ public class DriveTrain {
 			else
 				speedy = Consts.slowK;
 
-			if (m_Joystick.getBButton())
+			if (m_Joystick.getBButton()){
 				directionForward = !directionForward;
+				Timer.delay(.250);
+			}
 			if (!directionForward)
 				speedy *= -1;
 

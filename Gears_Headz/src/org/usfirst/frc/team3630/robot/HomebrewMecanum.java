@@ -24,6 +24,7 @@ public class HomebrewMecanum  {
 		fR = new Wheel(Consts.driveEncoderFrontRightA, Consts.driveEncoderFrontRightB, frontRight, true);
 		rR = new Wheel(Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, rearRight, true);
 
+		SmartDashboard.putNumber("Vision Retrycount", 0);
 		myVisionMath = new VisionMath();
 		
 	    SmartDashboard.putBoolean("PID Control?", false);
@@ -257,15 +258,23 @@ public class HomebrewMecanum  {
 				SmartDashboard.putNumber("Desired Distance X", speedX);
 				SmartDashboard.putNumber("Desired Distance Y", speedY);
 				SmartDashboard.putNumber("Desired Distance theta", speedTheta);
-				intendedRobotAngle = speedTheta;
-				double wheelDistances [] = distanceCalc(speedX, speedY, speedTheta, true);
-			//SJV Why not just reset encoders
-				
-				if (speedX == 0 && speedY == 0 ){ //if vision is not working
-					pidDrive(true, 7, 0, 0);
+				//intendedRobotAngle = speedTheta;
+				double wheelDistances [];
+				if (SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
+					wheelDistances = distanceCalc(speedX, speedY, intendedRobotAngle, true);
+				} else {
+					wheelDistances = distanceCalc(speedX, speedY, speedTheta, true);
 				}
+
+				int retryCount = (int) SmartDashboard.getNumber("Vision Retrycount", 0);
+				if (speedX == 0 && speedY == 0){ //if vision is not working
+					retryCount++;
+					SmartDashboard.putNumber("Vision Retrycount", retryCount);	
+					if (retryCount > Consts.maxVisionRetryCount) {
+						pidDrive(true, Consts.visionMakeupDistance, 0, 0);
+					}
 				
-				else {
+				}	else {
 					fL.setWheelDistance(wheelDistances[0]+fL.encoder.getDistance());
 					rL.setWheelDistance(wheelDistances[1]+rL.encoder.getDistance());
 					rR.setWheelDistance(wheelDistances[2]+rR.encoder.getDistance());
@@ -273,11 +282,16 @@ public class HomebrewMecanum  {
 				}
 			}
 			else {
+					
 					 speedX = SmartDashboard.getNumber("Desired Distance X", 0);
 					 speedY = SmartDashboard.getNumber("Desired Distance Y", 0);
 					 speedTheta = SmartDashboard.getNumber("Desired Distance theta", 0);
-					 intendedRobotAngle = speedTheta;
-						double wheelDistances [] = distanceCalc(speedX, speedY, speedTheta, true);
+						double wheelDistances [];
+						if (SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
+							wheelDistances = distanceCalc(speedX, speedY, intendedRobotAngle, true);
+						} else {
+							wheelDistances = distanceCalc(speedX, speedY, speedTheta, true);
+						}
 
 						fL.setWheelDistance(wheelDistances[0]);
 						rL.setWheelDistance(wheelDistances[1]);
@@ -326,8 +340,8 @@ public class HomebrewMecanum  {
 		}
 	}
 	//SJV
-	public void pidDriveStraight(boolean pidControl, double desiredDistanceX, double desiredDistanceY, double fusedHeading) {
-		double errorAngle = intendedRobotAngle - fusedHeading;  //I'm sure you can fix this....
+	public void pidDriveStraight(boolean pidControl, double desiredDistanceX, double desiredDistanceY) {
+		double errorAngle = intendedRobotAngle - Robot.ahrs.getYaw();
 		this.pidDrive(pidControl,desiredDistanceX,desiredDistanceY,-errorAngle);
 	}
 	

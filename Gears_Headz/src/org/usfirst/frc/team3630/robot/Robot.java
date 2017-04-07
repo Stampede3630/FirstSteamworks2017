@@ -1,9 +1,11 @@
 package org.usfirst.frc.team3630.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.kauailabs.navx.frc.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -19,30 +21,34 @@ public class Robot extends IterativeRobot {
 	SendableChooser<String> chooser = new SendableChooser<>();
 	DriveTrain driveTrain;
 	GearsManip gears;
-	NavX myNavX;
+	public static AHRS ahrs;
+	public NavX myNavX;
 	WinchSystem winch;
-//	Timer autoTimer;
+	Timer autoTimer;
 	// auto
 	int autoStage;
 	boolean init;
 	double adjustDegrees;
 	double desiredSpin;
+	
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 	@Override
 	public void robotInit() {
-		SmartDashboard.putBoolean("Gear Drop", true);
-		System.out.println("Init");
+		SmartDashboard.putBoolean("GEAR DROP", true);
 		SmartDashboard.putNumber("Auto Drive", 0);
 		SmartDashboard.putNumber("MinRate", .5);
-		SmartDashboard.putBoolean("Cheat Auto", false);
+		//SmartDashboard.putBoolean("CHEAT AUTO", false);
+		SmartDashboard.putBoolean("USE DRIVE STRAIGHT", false);
 		driveTrain = new DriveTrain(myNavX);
 		myNavX = new NavX();
 		winch = new WinchSystem();
 		gears = new GearsManip();
-//		autoTimer = new Timer();
+		autoTimer = new Timer();
+		ahrs = new AHRS(SPI.Port.kMXP);
 	}
 
 	/**
@@ -69,7 +75,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		myNavX.teleopPeriodic();
-//		SmartDashboard.putNumber("autoTime", autoTimer.get());
+		autoTimer.start();
+		SmartDashboard.putNumber("autoTime", autoTimer.get());
 		// runs through switch statement that goes through stages.
 		// each stage has an init which usually resets encoders and moves on to
 		// the next stage
@@ -79,47 +86,40 @@ public class Robot extends IterativeRobot {
 		switch (autoStage) {
 		// drive straight
 		case 0:
-			if(SmartDashboard.getBoolean("Cheat Auto", false)){
-				driveTrain.mecanumDrive.pidDrive(true, 75, 0, 0 );
+//			if(SmartDashboard.getBoolean("CHEAT AUTO", false)){
+//				driveTrain.mecanumDrive.pidDrive(true, 75, 0, 0 );
+//				
+//				if (driveTrain.mecanumDrive.pidAtTarget()) { // condition to move on
+//					// to next step o
+//					autoStage = 4; //moves to next stage
+//					init = true;
+//				}
+//			}
+//			else {
+				if(init){
+					//driveTrain.mecanumDrive.pidDrive(true, 84, 0, 0);
+					//				autoTimer.reset();
+					//				autoTimer.start();
+					driveTrain.mecanumDrive.resetEncoders(); // resets encoders
+					driveTrain.mecanumDrive.setAllPID(); //sets PID coefficients and updates desired distances
+					driveTrain.mecanumDrive.pidDrive(true, Consts.driveDistance, 0, 0); //drives in a straight line for driveDistance
+					init = false;
+	
+				}
 				
-				if (driveTrain.mecanumDrive.pidAtTarget()) { // condition to move on
-					// to next step o
-					autoStage = 4; //moves to next stage
+				if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
+					driveTrain.mecanumDrive.pidDriveStraight(true, Consts.driveDistance, 0);
+				} else {
+				 driveTrain.mecanumDrive.pidDrive(true, Consts.driveDistance, 0, 0); //FOUND ERROR HERE THIS WAS INSIDE INIT LOOP MINOR ERROR
+				 driveTrain.mecanumDrive.setAllPID();
+				}
+				
+				if (driveTrain.mecanumDrive.pidAtTarget() /*|| autoTimer.get() > 3.0 */) { // condition to move on
+																// to next step o
+					autoStage++; //moves to next stage
 					init = true;
 				}
-			}
-			else {
-			if(init){
-				//driveTrain.mecanumDrive.pidDrive(true, 84, 0, 0);
-//				autoTimer.reset();
-//				autoTimer.start();
-				driveTrain.mecanumDrive.resetEncoders(); // resets encoders
-				driveTrain.mecanumDrive.setAllPID(); //sets PID coefficients and updates desired distances
-				driveTrain.mecanumDrive.pidDrive(true, Consts.driveDistance, 0, 0); //drives in a straight line for driveDistance
-				init = false; // resets intitialization for each stage of auto to
-							// reset encoders
-			/*	//driveTrain.mecanumDrive.pidDrive(true, 86,0,0);
-				if ((int)SmartDashboard.getNumber("Auto Drive", 0) == (int) 0)
-					adjustDegrees = 0;
-				else if ((int)SmartDashboa
-				rd.getNumber("Auto Drive", 0) == (int) -1)
-					adjustDegrees = -1 * Consts.adjustDegrees;
-				else if ((int)SmartDashboard.getNumber("Auto Drive", 0) == (int) 1)
-					adjustDegrees = Consts.adjustDegrees;
-				else
-					adjustDegrees = 0;
-					
-			}
-			*/	
-			 driveTrain.mecanumDrive.pidDrive(true, Consts.driveDistance, 0, 0); //sets desired spin to line up with target
-			 driveTrain.mecanumDrive.setAllPID();
-			}
-			if (driveTrain.mecanumDrive.pidAtTarget() /*|| autoTimer.get() > 3.0 */) { // condition to move on
-															// to next step o
-				autoStage++; //moves to next stage
-				init = true;
-			}
-			}
+//			}
 			break;
 
 		case 1:
@@ -131,34 +131,40 @@ public class Robot extends IterativeRobot {
 				driveTrain.mecanumDrive.pidDrive(true, 0, 0, 0); //sets desired spin to line up with target
 				driveTrain.mecanumDrive.setAllPID();
 				
-				if ((int)SmartDashboard.getNumber("Auto Drive", 0) == (int) 0)
+				if ((int)SmartDashboard.getNumber("Auto Drive", 0) == (int) 2) 			//POSITION 2 AUTONOMOUS
 					adjustDegrees = 0;
-				else if ((int)SmartDashboard.getNumber("Auto Drive", 0) == (int) -1)
+				else if ((int)SmartDashboard.getNumber("Auto Drive", 0) == (int) 3) 	//POSITION 3 AUTONOMOUS
 					adjustDegrees = -1 * Consts.adjustDegrees;
-				else if ((int)SmartDashboard.getNumber("Auto Drive", 0) == (int) 1)
+				else if ((int)SmartDashboard.getNumber("Auto Drive", 0) == (int) 1)  	//POSITION 1 AUTONOMOUS
 					adjustDegrees = Consts.adjustDegrees;
-				else
+				else 
 					adjustDegrees = 0;
-				
-
+					
+				driveTrain.mecanumDrive.pidDrive(true, 0, 0,adjustDegrees);
 			}
-
-			// normal code
-			desiredSpin = adjustDegrees - myNavX.ahrs.getYaw();
-			driveTrain.mecanumDrive.resetEncoders();
-			driveTrain.mecanumDrive.pidDrive(true, 0, 0, desiredSpin); //sets desired spin to line up with target
-			driveTrain.mecanumDrive.setAllPID();
 			
-			 init = false;
-			// Building rudimentary P-only PID because PID controller is
-			// spitting out null pointers and this should be enough for what
-			// we are doing.
+			if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
+				driveTrain.mecanumDrive.pidDriveStraight(true, 0, 0);
+			} else {
+				// normal code
+				desiredSpin = adjustDegrees - ahrs.getYaw();
+				driveTrain.mecanumDrive.resetEncoders();
+				driveTrain.mecanumDrive.pidDrive(true, 0, 0, desiredSpin); //sets desired spin to line up with target
 				
-
-				 if (Math.abs(myNavX.getHeading() - adjustDegrees) < 5/* || autoTimer.get() > 2*/) { //if we are within 3deg of our desired target
-					autoStage=3; //moves to next stage
-					init = true;
-				}
+				driveTrain.mecanumDrive.setAllPID();
+				
+				 init = false;
+				// Building rudimentary P-only PID because PID controller is
+				// spitting out null pointers and this should be enough for what
+				// we are doing.
+				
+			}
+			
+			if (Math.abs(myNavX.getHeading() - adjustDegrees) < 5/* || autoTimer.get() > 2*/) { //if we are within 3deg of our desired target
+				 autoStage++; //moves to next stage
+				 init = true;
+			}
+			 
 			break;
 
 		case 2:
@@ -169,8 +175,11 @@ public class Robot extends IterativeRobot {
 				init = false;
 				driveTrain.mecanumDrive.resetEncoders();
 				driveTrain.mecanumDrive.setAllPID();
-				//driveTrain.mecanumDrive.pidDrive(true, 19, 0, 0);
-
+				if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
+					driveTrain.mecanumDrive.pidDriveStraight(true, 0, 0);
+				} else {
+					driveTrain.mecanumDrive.pidDrive(true, Consts.visionMakeupDistance, 0, 0);
+				}
 			}  
 			else {
 				// vision adjustment
@@ -194,26 +203,34 @@ public class Robot extends IterativeRobot {
 				init = false;
 				driveTrain.mecanumDrive.resetEncoders(); 
 				driveTrain.mecanumDrive.setAllPID();
-				driveTrain.mecanumDrive.pidDrive(true, Consts.finalDriveDistance, 0, 0);
-
+				if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
+					driveTrain.mecanumDrive.pidDriveStraight(true, 0, 0);
+				} else {
+					driveTrain.mecanumDrive.pidDrive(true, Consts.finalDriveDistance, 0, 0);
+				}
 
 			} 
 			
 			else if (driveTrain.mecanumDrive.pidAtTarget()) {
 				init = true;
 				autoStage++;
-			}
+			} 
 
 			break;
 
 		case 4:
 			
-			if (SmartDashboard.getBoolean("Gear Drop", true)){
+			if (SmartDashboard.getBoolean("GEAR DROP", true)){
 			//opens gear manipulator
 			if(init){
 //				autoTimer.reset();
 	//			autoTimer.start();
-				gears.autoOpen();
+				if (autoTimer.get() > Consts.maxAutoAbortTime) {
+					autoStage = 94;
+				} else {
+					gears.autoOpen();
+				}
+
 				init = false;
 		
 			}
@@ -228,20 +245,39 @@ public class Robot extends IterativeRobot {
 
 		case 5:
 			//closes gear manipulator and moves back so spring can be pulled up
-			if (SmartDashboard.getBoolean("Gear Drop", true)){
+			if (SmartDashboard.getBoolean("GEAR DROP", true)){
 			if (init) {
 				init = false;
 				driveTrain.mecanumDrive.resetEncoders();
-				driveTrain.mecanumDrive.pidDrive(true, Consts.recoilDistance, 0, 0);
-
+				if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
+					driveTrain.mecanumDrive.pidDriveStraight(true, 0, 0);
+				} else {
+					driveTrain.mecanumDrive.pidDrive(true, Consts.recoilDistance, 0, 0);
+				}
 			}
 			
 
 			//gears.close();
 			driveTrain.mecanumDrive.setAllPID();
-			driveTrain.mecanumDrive.pidDrive(true, Consts.recoilDistance, 0, 0);
+			if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
+				driveTrain.mecanumDrive.pidDriveStraight(true, 0, 0);
+			} else {
+				driveTrain.mecanumDrive.pidDrive(true, Consts.recoilDistance, 0, 0);
+			}
 			// this runs until the end.
 			}
+			break;
+		case 90:
+			
+			break;
+		case 91:
+			
+			break;
+		case 92:
+			
+			break;
+		case 93:
+			
 			break;
 
 		default:

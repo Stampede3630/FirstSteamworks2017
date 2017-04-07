@@ -65,8 +65,15 @@ public static final double rateMin = .5;
 
 
 //Auto constants
-public static final double driveDistance = 36; //in inches
-public static final double distanceMarginOfError = 3;
+
+/*
+ * DISTANCE TO TAPE (base line):		93.25 inches
+ * Total robot length:					35 inches
+ * Vision minimum:						24-30 inches
+ */
+
+public static final double driveDistance = 36; //in inches 
+public static final double distanceMarginOfError = 5;
 public static final double strictDistanceMarginOfError = 1;
 public static final double adjustDegrees = 30;
 public static final double visionCutoff = 30;
@@ -75,10 +82,14 @@ public static final double recoilDistance = -18;//in inches
 
 public static final double maxAcceleration = .35;
 public static final double angleKp = .1;
+public static final double maxAutoAbortTime = 10;
 
 
 // Vision related constants
 public static final double perspecLimitDeg = 5.0; // Must be positive.
 public static final double nearZero = 0.1; // For comparing against zero in floating point.
+public static final int maxVisionRetryCount = 10;
+public static final double visionMakeupDistance = 19;
+
 
 }
