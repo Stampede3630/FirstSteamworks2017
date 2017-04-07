@@ -46,6 +46,8 @@ public static final int winchEncoderPinB = 12;
 
 //winch engaged DIO pin assignment
 public static final int winchStopPin = 10;
+//Spring limit switch
+public static int springEngaged = 13;
 
 //Drivetrain Encoder DIO pin assignments
 public static final int driveEncoderFrontLeftA = 0;
@@ -78,7 +80,7 @@ public static final double strictDistanceMarginOfError = 1;
 public static final double adjustDegrees = 30;
 public static final double visionCutoff = 30;
 public static final double finalDriveDistance = 30;
-public static final double recoilDistance = -18;//in inches
+public static final double recoilDistance = -22;//in inches
 
 public static final double maxAcceleration = .35;
 public static final double angleKp = .1;
@@ -90,6 +92,7 @@ public static final double perspecLimitDeg = 5.0; // Must be positive.
 public static final double nearZero = 0.1; // For comparing against zero in floating point.
 public static final int maxVisionRetryCount = 10;
 public static final double visionMakeupDistance = 8;
+
 
 
 }

@@ -6,6 +6,8 @@ public class HomebrewMecanum  {
 	public Wheel fL, rL, fR, rR;
 	private VisionMath myVisionMath;
 	public double intendedRobotAngle = 0.0;
+	public double previousSpeedX;
+	public double previousSpeedY;
 
 
 	/**
@@ -151,7 +153,12 @@ public class HomebrewMecanum  {
 				adjustedMotorSpeed);
 	}
 	
-
+public void disablePID () {
+	if (fL.pid.isEnabled()) fL.pid.disable();
+	if (fR.pid.isEnabled())fR.pid.disable();
+	if (rL.pid.isEnabled())rL.pid.disable();
+	if (rR.pid.isEnabled())rR.pid.disable();
+}
 	/**
 	 * this function does the full drive implementation for teleop
 	 * 
@@ -251,8 +258,10 @@ public class HomebrewMecanum  {
 			if (!rR.pid.isEnabled()) rR.pid.enable();
 
 			if (visionPipe){
+				SmartDashboard.putNumber("drivetrain kP", .025);
 				SmartDashboard.putBoolean("Vision Pipe?", true);
 				myVisionMath.refereshImageValues();
+				
 				speedX = myVisionMath.robotToFrontDY(Consts.visionCutoff); //X is front and back, left and right in Sams code. 
 																			//This is correct.
 				speedY = myVisionMath.robotToFrontDX(Consts.visionCutoff);
@@ -274,10 +283,14 @@ public class HomebrewMecanum  {
 					Timer.delay(.1);
 					SmartDashboard.putNumber("Vision Retrycount", retryCount);	
 					if (retryCount > Consts.maxVisionRetryCount) {
-						pidDrive(true, Consts.visionMakeupDistance, 0, 0);
+						//pidDrive(true, Consts.visionMakeupDistance, 0, 0);
+						pidDrive(true, previousSpeedX, previousSpeedY, intendedRobotAngle);
+						//FIX THIS
 					}
 				
 				}	else {
+					previousSpeedX = speedX;
+					previousSpeedY = speedY;
 					fL.setWheelDistance(wheelDistances[0]+fL.encoder.getDistance());
 					rL.setWheelDistance(wheelDistances[1]+rL.encoder.getDistance());
 					rR.setWheelDistance(wheelDistances[2]+rR.encoder.getDistance());

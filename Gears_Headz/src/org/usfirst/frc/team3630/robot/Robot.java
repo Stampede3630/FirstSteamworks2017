@@ -1,6 +1,11 @@
 package org.usfirst.frc.team3630.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -25,12 +30,13 @@ public class Robot extends IterativeRobot {
 	public NavX myNavX;
 	WinchSystem winch;
 	Timer autoTimer;
+	DigitalInput springEngaged;
 	// auto
 	int autoStage;
 	boolean init;
 	double adjustDegrees;
 	double desiredSpin;
-	
+	int counter = 0;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -38,6 +44,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		springEngaged= new DigitalInput(Consts.springEngaged);
 		SmartDashboard.putBoolean("GEAR DROP", true);
 		SmartDashboard.putNumber("Auto Drive", 0);
 		SmartDashboard.putNumber("MinRate", .5);
@@ -76,17 +83,27 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		counter ++;
+		SmartDashboard.putNumber("counter", counter);
 		myNavX.teleopPeriodic();
 		autoTimer.start();
 		SmartDashboard.putNumber("autoTime", autoTimer.get());
 		// runs through switch statement that goes through stages.
 		// each stage has an init which usually resets encoders and moves on to
 		// the next stage
-		
+		SmartDashboard.putBoolean("Gears Open?", gears.isOpened());
 		SmartDashboard.putNumber("AutoStage", autoStage);
 		SmartDashboard.putBoolean("PID At Target", driveTrain.mecanumDrive.pidAtTarget());
+		SmartDashboard.putBoolean("SPRING Switch", springEngaged.get());
+		if (!(springEngaged.get())&& autoStage <= 4) {
+			autoStage = 4;
+			//hi sam i have become sentient
+			init = true;
+			SmartDashboard.putNumber("drivetrain kP", .05);
+		}
 		switch (autoStage) {
 		// drive straight
+		
 		case 0:
 //			if(SmartDashboard.getBoolean("CHEAT AUTO", false)){
 //				driveTrain.mecanumDrive.pidDrive(true, 75, 0, 0 );
@@ -118,7 +135,7 @@ public class Robot extends IterativeRobot {
 				
 				if (driveTrain.mecanumDrive.pidAtTarget() /*|| autoTimer.get() > 3.0 */) { // condition to move on
 																// to next step o
-					autoStage++; //moves to next stage
+					autoStage++; // = 94 (kicks us out); //moves to next stage
 					init = true;
 				}
 //			}
@@ -171,6 +188,15 @@ public class Robot extends IterativeRobot {
 
 		case 2:
 			//vision tracking
+			if (!(springEngaged.get())&& autoStage <= 4) {
+				driveTrain.mecanumDrive.disablePID();
+
+				autoStage = 4;
+				//hi sam i have become sentient
+				init = true;
+				SmartDashboard.putNumber("drivetrain kP", .05);
+				
+			}
 			if (init) {
 //				autoTimer.reset();
 //				autoTimer.start();
@@ -195,16 +221,20 @@ public class Robot extends IterativeRobot {
 			if (driveTrain.mecanumDrive.pidAtTarget()) { //make sure this is being triggered when we want it to
 				init = true;
 				autoStage++;
+				SmartDashboard.putNumber("drivetrain kP", .05);
+
 			}
 			
 			break;
 			
 		case 3:
 			//final non-vision approach. see comments for stage 0 for more information.
+			
 			if (init) {
 				init = false;
 				driveTrain.mecanumDrive.resetEncoders(); 
 				driveTrain.mecanumDrive.setAllPID();
+				driveTrain.mecanumDrive.disablePID();
 				if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
 					driveTrain.mecanumDrive.pidDriveStraight(true, Consts.finalDriveDistance, 0);
 				} else {
@@ -225,10 +255,13 @@ public class Robot extends IterativeRobot {
 			if (SmartDashboard.getBoolean("GEAR DROP", true)){
 			//opens gear manipulator
 			if(init){
+				driveTrain.mecanumDrive.resetEncoders();
+				driveTrain.mecanumDrive.pidDrive(true, 0, 0, 0);
+
 //				autoTimer.reset();
 	//			autoTimer.start();
 				if (autoTimer.get() > Consts.maxAutoAbortTime) {
-					autoStage = 94;
+					//autoStage = 94;
 				} else {
 					gears.autoOpen();
 				}
@@ -246,9 +279,15 @@ public class Robot extends IterativeRobot {
 			break;
 
 		case 5:
+		
 			//closes gear manipulator and moves back so spring can be pulled up
 			if (SmartDashboard.getBoolean("GEAR DROP", true)){
+				SmartDashboard.putNumber("drivetrain kP", .015);
+
 			if (init) {
+				Timer.delay(1);
+				driveTrain.mecanumDrive.disablePID();
+
 				init = false;
 				driveTrain.mecanumDrive.resetEncoders();
 				if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
@@ -256,13 +295,17 @@ public class Robot extends IterativeRobot {
 				} else {
 					driveTrain.mecanumDrive.pidDrive(true, Consts.recoilDistance, 0, 0);
 				}
+			
+
 			}
+			if (driveTrain.mecanumDrive.pidAtTarget()) 	driveTrain.mecanumDrive.disablePID();
+
 			
 
 			//gears.close();
 			driveTrain.mecanumDrive.setAllPID();
 			if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
-				driveTrain.mecanumDrive.pidDriveStraight(true, 0, 0);
+				driveTrain.mecanumDrive.pidDriveStraight(true, Consts.recoilDistance, 0);
 			} else {
 				driveTrain.mecanumDrive.pidDrive(true, Consts.recoilDistance, 0, 0);
 			}
@@ -302,6 +345,7 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void teleopPeriodic() {
+		SmartDashboard.putBoolean("SPRING Switch", springEngaged.get());
 		driveTrain.telopPeriodic();
 		myNavX.teleopPeriodic();
 		// rightFrontEnc.get();
