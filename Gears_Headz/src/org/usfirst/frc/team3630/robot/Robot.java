@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3630.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -20,7 +21,7 @@ public class Robot extends IterativeRobot {
 	GearsManip gears;
 	NavX myNavX;
 	WinchSystem winch;
-
+//	Timer autoTimer;
 	// auto
 	int autoStage;
 	boolean init;
@@ -41,7 +42,7 @@ public class Robot extends IterativeRobot {
 		myNavX = new NavX();
 		winch = new WinchSystem();
 		gears = new GearsManip();
-
+//		autoTimer = new Timer();
 	}
 
 	/**
@@ -68,13 +69,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		myNavX.teleopPeriodic();
-
+//		SmartDashboard.putNumber("autoTime", autoTimer.get());
 		// runs through switch statement that goes through stages.
 		// each stage has an init which usually resets encoders and moves on to
 		// the next stage
 		
 		SmartDashboard.putNumber("AutoStage", autoStage);
-		
+		SmartDashboard.putBoolean("PID At Target", driveTrain.mecanumDrive.pidAtTarget());
 		switch (autoStage) {
 		// drive straight
 		case 0:
@@ -90,6 +91,8 @@ public class Robot extends IterativeRobot {
 			else {
 			if(init){
 				//driveTrain.mecanumDrive.pidDrive(true, 84, 0, 0);
+//				autoTimer.reset();
+//				autoTimer.start();
 				driveTrain.mecanumDrive.resetEncoders(); // resets encoders
 				driveTrain.mecanumDrive.setAllPID(); //sets PID coefficients and updates desired distances
 				driveTrain.mecanumDrive.pidDrive(true, Consts.driveDistance, 0, 0); //drives in a straight line for driveDistance
@@ -111,7 +114,7 @@ public class Robot extends IterativeRobot {
 			 driveTrain.mecanumDrive.pidDrive(true, Consts.driveDistance, 0, 0); //sets desired spin to line up with target
 			 driveTrain.mecanumDrive.setAllPID();
 			}
-			if (driveTrain.mecanumDrive.pidAtTarget()) { // condition to move on
+			if (driveTrain.mecanumDrive.pidAtTarget() /*|| autoTimer.get() > 3.0 */) { // condition to move on
 															// to next step o
 				autoStage++; //moves to next stage
 				init = true;
@@ -122,6 +125,8 @@ public class Robot extends IterativeRobot {
 		case 1:
 			// rotate to angle
 			if (init) {
+//				autoTimer.reset();
+	//			autoTimer.start();
 				driveTrain.mecanumDrive.resetEncoders(); //resets encoders to go to desired distances				
 				driveTrain.mecanumDrive.pidDrive(true, 0, 0, 0); //sets desired spin to line up with target
 				driveTrain.mecanumDrive.setAllPID();
@@ -150,8 +155,8 @@ public class Robot extends IterativeRobot {
 			// we are doing.
 				
 
-				 if (Math.abs(myNavX.getHeading() - adjustDegrees) < 5) { //if we are within 3deg of our desired target
-					autoStage++; //moves to next stage
+				 if (Math.abs(myNavX.getHeading() - adjustDegrees) < 5/* || autoTimer.get() > 2*/) { //if we are within 3deg of our desired target
+					autoStage=3; //moves to next stage
 					init = true;
 				}
 			break;
@@ -159,10 +164,12 @@ public class Robot extends IterativeRobot {
 		case 2:
 			//vision tracking
 			if (init) {
+//				autoTimer.reset();
+//				autoTimer.start();
 				init = false;
 				driveTrain.mecanumDrive.resetEncoders();
 				driveTrain.mecanumDrive.setAllPID();
-				driveTrain.mecanumDrive.pidDrive(true, 7, 0, 0);
+				//driveTrain.mecanumDrive.pidDrive(true, 19, 0, 0);
 
 			}  
 			else {
@@ -204,8 +211,11 @@ public class Robot extends IterativeRobot {
 			if (SmartDashboard.getBoolean("Gear Drop", true)){
 			//opens gear manipulator
 			if(init){
+//				autoTimer.reset();
+	//			autoTimer.start();
 				gears.autoOpen();
 				init = false;
+		
 			}
 			
 			if (gears.isOpened()){
@@ -218,7 +228,7 @@ public class Robot extends IterativeRobot {
 
 		case 5:
 			//closes gear manipulator and moves back so spring can be pulled up
-			if (!SmartDashboard.getBoolean("Gear Drop", true)){
+			if (SmartDashboard.getBoolean("Gear Drop", true)){
 			if (init) {
 				init = false;
 				driveTrain.mecanumDrive.resetEncoders();

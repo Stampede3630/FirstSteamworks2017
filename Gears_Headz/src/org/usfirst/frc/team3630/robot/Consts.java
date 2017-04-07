@@ -65,7 +65,7 @@ public static final double rateMin = .5;
 
 
 //Auto constants
-public static final double driveDistance = 48; //in inches
+public static final double driveDistance = 36; //in inches
 public static final double distanceMarginOfError = 3;
 public static final double strictDistanceMarginOfError = 1;
 public static final double adjustDegrees = 30;

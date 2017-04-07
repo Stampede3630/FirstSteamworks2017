@@ -248,7 +248,7 @@ public class HomebrewMecanum  {
 			if (!rR.pid.isEnabled()) rR.pid.enable();
 
 			if (visionPipe){
-				
+				SmartDashboard.putBoolean("Vision Pipe?", true);
 				myVisionMath.refereshImageValues();
 				speedX = myVisionMath.robotToFrontDY(Consts.visionCutoff); //X is front and back, left and right in Sams code. 
 																			//This is correct.
