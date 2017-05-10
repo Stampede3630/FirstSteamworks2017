@@ -38,6 +38,7 @@ public class Robot extends IterativeRobot {
 	double desiredSpin;
 	int counter = 0;
 	
+	String [] autoStatus = {"initial drive straight", "rotate to angle", "vision tracking", "final release", "recoil"};
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -95,7 +96,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("AutoStage", autoStage);
 		SmartDashboard.putBoolean("PID At Target", driveTrain.mecanumDrive.pidAtTarget());
 		SmartDashboard.putBoolean("SPRING Switch", springEngaged.get());
-		if (!(springEngaged.get())&& autoStage <= 4) {
+		if (!(springEngaged.get())&& autoStage <= 4) { //spring is engaged. Cutout to gear release.
 			autoStage = 4;
 			//hi sam i have become sentient
 			init = true;
@@ -105,7 +106,7 @@ public class Robot extends IterativeRobot {
 		// drive straight
 		
 		case 0:
-//			if(SmartDashboard.getBoolean("CHEAT AUTO", false)){
+//			if(SmartDashboard.getBoolean("CHEAT AUTO", false)){ //Cheater non-vision auto. Should not be used.
 //				driveTrain.mecanumDrive.pidDrive(true, 75, 0, 0 );
 //				
 //				if (driveTrain.mecanumDrive.pidAtTarget()) { // condition to move on
@@ -121,7 +122,12 @@ public class Robot extends IterativeRobot {
 					//				autoTimer.start();
 					driveTrain.mecanumDrive.resetEncoders(); // resets encoders
 					driveTrain.mecanumDrive.setAllPID(); //sets PID coefficients and updates desired distances
-					driveTrain.mecanumDrive.pidDrive(true, Consts.driveDistance, 0, 0); //drives in a straight line for driveDistance
+
+					if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) //this should be used most of the time unless there is a NavX error.
+		                             	 driveTrain.mecanumDrive.pidDriveStraight(true, Consts.driveDistance, 0);
+					
+					else
+					   	driveTrain.mecanumDrive.pidDrive(true, Consts.driveDistance, 0, 0); //drives in a straight line for driveDistance
 					init = false;
 	
 				}
@@ -142,14 +148,15 @@ public class Robot extends IterativeRobot {
 			break;
 
 		case 1:
-			// rotate to angle
+			// rotate to angle. becuase we are usually using a NavX adjustment, this should go very quickly.
 			if (init) {
 //				autoTimer.reset();
 	//			autoTimer.start();
 				driveTrain.mecanumDrive.resetEncoders(); //resets encoders to go to desired distances				
 				driveTrain.mecanumDrive.pidDrive(true, 0, 0, 0); //sets desired spin to line up with target
 				driveTrain.mecanumDrive.setAllPID();
-				
+
+					
 				if ((int)SmartDashboard.getNumber("Auto Drive", 0) == (int) 2) 			//POSITION 2 AUTONOMOUS
 					adjustDegrees = 0;
 				else if ((int)SmartDashboard.getNumber("Auto Drive", 0) == (int) 3) 	//POSITION 3 AUTONOMOUS
@@ -161,7 +168,7 @@ public class Robot extends IterativeRobot {
 					
 				driveTrain.mecanumDrive.pidDrive(true, 0, 0,adjustDegrees);
 			}
-			
+				//this feels sketchy – sama
 			if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
 				driveTrain.mecanumDrive.pidDriveStraight(true, 0, 0);
 			} else {
@@ -188,7 +195,9 @@ public class Robot extends IterativeRobot {
 
 		case 2:
 			//vision tracking
-			if (!(springEngaged.get())&& autoStage <= 4) {
+			//I don't think we need this here, do we? – SamA
+			/*
+			  if (!(springEngaged.get())&& autoStage <= 4) {
 				driveTrain.mecanumDrive.disablePID();
 
 				autoStage = 4;
@@ -197,6 +206,7 @@ public class Robot extends IterativeRobot {
 				SmartDashboard.putNumber("drivetrain kP", .05);
 				
 			}
+		       	*/
 			if (init) {
 //				autoTimer.reset();
 //				autoTimer.start();
