@@ -10,9 +10,9 @@ public static final double mecanumWheelRadiusInches = 5.9863/2;
 
 //Motor PWM Pin assignments
 public static final int driveMotorFrontLeft = 0;
-public static final int driveMotorFrontRight = 2;
+public static final int driveMotorFrontRight = 3;
 public static final int driveMotorBottomLeft = 1;
-public static final int driveMotorBottomRight = 3;
+public static final int driveMotorBottomRight = 2;
 
 //Gear PWM Assignment
 public static final int gearTalonPWM = 4;
@@ -47,7 +47,7 @@ public static final int winchEncoderPinB = 12;
 //winch engaged DIO pin assignment
 public static final int winchStopPin = 10;
 //Spring limit switch
-public static int springEngaged = 13;
+public static final int springEngaged = 13;
 
 //Drivetrain Encoder DIO pin assignments
 public static final int driveEncoderFrontLeftA = 0;

@@ -62,10 +62,11 @@ public class DriveTrain {
 
 	public void telopPeriodic() {
 
-		if (SmartDashboard.getBoolean("Auto Control", false)) {
+		/*if (SmartDashboard.getBoolean("Auto Control", false)) {
 			mecanumDrive.setAllPID();
 			mecanumDrive.pidDrive();
 		} else {
+		*/
 			double speedy;
 
 			if (m_Joystick.getBumper(GenericHID.Hand.kLeft))
@@ -87,4 +88,4 @@ public class DriveTrain {
 		}
 	}
 
-}
+//}

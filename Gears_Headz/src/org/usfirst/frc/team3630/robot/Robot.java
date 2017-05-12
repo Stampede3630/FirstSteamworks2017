@@ -96,7 +96,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("AutoStage", autoStage);
 		SmartDashboard.putBoolean("PID At Target", driveTrain.mecanumDrive.pidAtTarget());
 		SmartDashboard.putBoolean("SPRING Switch", springEngaged.get());
-		if (!(springEngaged.get())&& autoStage <= 4) { //spring is engaged. Cutout to gear release.
+		SmartDashboard.putString("AutoStage", autoStatus[autoStage]);
+		if (!springEngaged.get()) { //spring is engaged. Cutout to gear release.
 			autoStage = 4;
 			//hi sam i have become sentient
 			init = true;
@@ -270,11 +271,8 @@ public class Robot extends IterativeRobot {
 
 //				autoTimer.reset();
 	//			autoTimer.start();
-				if (autoTimer.get() > Consts.maxAutoAbortTime) {
-					//autoStage = 94;
-				} else {
+
 					gears.autoOpen();
-				}
 
 				init = false;
 		
@@ -295,7 +293,7 @@ public class Robot extends IterativeRobot {
 				SmartDashboard.putNumber("drivetrain kP", .015);
 
 			if (init) {
-				Timer.delay(1);
+				//Timer.delay(1);
 				driveTrain.mecanumDrive.disablePID();
 
 				init = false;

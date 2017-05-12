@@ -153,12 +153,12 @@ public class HomebrewMecanum  {
 				adjustedMotorSpeed);
 	}
 	
-public void disablePID () {
-	if (fL.pid.isEnabled()) fL.pid.disable();
-	if (fR.pid.isEnabled())fR.pid.disable();
-	if (rL.pid.isEnabled())rL.pid.disable();
-	if (rR.pid.isEnabled())rR.pid.disable();
-}
+	public void disablePID () {
+		if (fL.pid.isEnabled()) fL.pid.disable();
+		if (fR.pid.isEnabled())fR.pid.disable();
+		if (rL.pid.isEnabled())rL.pid.disable();
+		if (rR.pid.isEnabled())rR.pid.disable();
+	}
 	/**
 	 * this function does the full drive implementation for teleop
 	 * 
