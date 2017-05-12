@@ -2,14 +2,10 @@ package org.usfirst.frc.team3630.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.kauailabs.navx.frc.*;
 
 /**
@@ -96,7 +92,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("AutoStage", autoStage);
 		SmartDashboard.putBoolean("PID At Target", driveTrain.mecanumDrive.pidAtTarget());
 		SmartDashboard.putBoolean("SPRING Switch", springEngaged.get());
-		SmartDashboard.putString("AutoStage", autoStatus[autoStage]);
+		SmartDashboard.putString("Auto status msg", autoStatus[autoStage]);
 		if (!springEngaged.get()) { //spring is engaged. Cutout to gear release.
 			autoStage = 4;
 			//hi sam i have become sentient
@@ -263,7 +259,7 @@ public class Robot extends IterativeRobot {
 
 		case 4:
 			
-			if (SmartDashboard.getBoolean("GEAR DROP", true)){
+			//if (SmartDashboard.getBoolean("GEAR DROP", true)){
 			//opens gear manipulator
 			if(init){
 				driveTrain.mecanumDrive.resetEncoders();
@@ -272,7 +268,7 @@ public class Robot extends IterativeRobot {
 //				autoTimer.reset();
 	//			autoTimer.start();
 
-					gears.autoOpen();
+				gears.autoOpen();
 
 				init = false;
 		
@@ -283,7 +279,7 @@ public class Robot extends IterativeRobot {
 				autoStage++;
 				init = true;
 			}
-			}
+			
 			break;
 
 		case 5:
@@ -308,8 +304,6 @@ public class Robot extends IterativeRobot {
 			}
 			if (driveTrain.mecanumDrive.pidAtTarget()) 	driveTrain.mecanumDrive.disablePID();
 
-			
-
 			//gears.close();
 			driveTrain.mecanumDrive.setAllPID();
 			if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
@@ -319,7 +313,7 @@ public class Robot extends IterativeRobot {
 			}
 			// this runs until the end.
 			}
-			break;
+		break;
 		case 90:
 			
 			break;
@@ -329,16 +323,16 @@ public class Robot extends IterativeRobot {
 		case 92:
 			
 			break;
-		case 93:
-			
+		case 93:			
 			break;
 
 		default:
 			System.out.println("Uh Oh");
 			break;
 		}
+		}
+		
 	
-	}
 
 	/**
 	 * This function is called periodically during operator control
