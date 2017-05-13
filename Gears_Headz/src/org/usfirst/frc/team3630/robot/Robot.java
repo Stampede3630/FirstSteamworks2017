@@ -34,7 +34,7 @@ public class Robot extends IterativeRobot {
 	double desiredSpin;
 	int counter = 0;
 	
-	String [] autoStatus = {"initial drive straight", "rotate to angle", "vision tracking", "final release", "recoil"};
+	String [] autoStatus = {"initial drive straight", "rotate to angle", "vision tracking", "final approach", "final release", "recoil"};
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -249,14 +249,14 @@ public class Robot extends IterativeRobot {
 				}
 
 			} 
-			
-			else if (driveTrain.mecanumDrive.visionAtTarget()) {
+			//CUTOVER ONLY WHEN BUTTON PRESSED
+			/*else if (driveTrain.mecanumDrive.visionAtTarget()) {
 				init = true;
 				autoStage++;
 			} 
-
+	*/
 			break;
-
+			
 		case 4:
 			
 			//if (SmartDashboard.getBoolean("GEAR DROP", true)){

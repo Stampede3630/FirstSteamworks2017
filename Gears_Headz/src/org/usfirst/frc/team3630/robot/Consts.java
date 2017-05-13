@@ -34,7 +34,7 @@ public static final int gearLimitSwitchOpen = 8;
 public static final int gearLimitSwitchClosed = 9;
 
 //speed constants
-public static final double gearSpeed = -1;
+public static final double gearSpeed = 1;
 
 public static final double slowK = .25;
 public static final double fastK = 1;
@@ -61,7 +61,7 @@ public static final int driveEncoderRearRightB = 7;
 public static final int buttonSwitchDirection = 2;
 public static final double talonConversion = 1;
 public static final double wheelKP = .05;
-public static final double wheelKI = 0.00015;
+public static final double wheelKI = 0.000175;
 public static final double wheelKD = 0;
 public static final double rateMin = .5;
 
@@ -80,7 +80,7 @@ public static final double strictDistanceMarginOfError = 1;
 public static final double adjustDegrees = 30;
 public static final double visionCutoff = 30;
 public static final double finalDriveDistance = 30;
-public static final double recoilDistance = -22;//in inches
+public static final double recoilDistance = -30;//in inches
 
 public static final double maxAcceleration = .35;
 public static final double angleKp = .1;
@@ -92,6 +92,7 @@ public static final double perspecLimitDeg = 5.0; // Must be positive.
 public static final double nearZero = 0.1; // For comparing against zero in floating point.
 public static final int maxVisionRetryCount = 10;
 public static final double visionMakeupDistance = 8;
+public static final double driveStraightTolerance = .5;
 
 
 
