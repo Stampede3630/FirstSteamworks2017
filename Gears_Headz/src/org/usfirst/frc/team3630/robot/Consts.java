@@ -15,10 +15,10 @@ public static final int driveMotorBottomLeft = 1;
 public static final int driveMotorBottomRight = 2;
 
 //Gear PWM Assignment
-public static final int gearTalonPWM = 4;
+public static final int gearTalonPWM = 5;
 
 //Winch talon PWM assignment
-public static final int winchTalonPWM = 5;
+public static final int winchTalonPWM = 4;
 
 //Joystick Assignments
 public static final int joytsickChannel = 0;
