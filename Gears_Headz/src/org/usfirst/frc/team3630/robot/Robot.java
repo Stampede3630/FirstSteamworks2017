@@ -69,7 +69,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		SmartDashboard.putNumber("Vision Retrycount", 0);
-
+		driveTrain.mecanumDrive.resetEncoders(); // resets encoders
 		autoStage = 0;
 		init = true;
 		myNavX.calibrateHeading();
@@ -122,15 +122,16 @@ public class Robot extends IterativeRobot {
 
 					if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) //this should be used most of the time unless there is a NavX error.
 		                             	 driveTrain.mecanumDrive.pidDriveStraight(true, Consts.driveDistance, 0);
-					
 					else
 					   	driveTrain.mecanumDrive.pidDrive(true, Consts.driveDistance, 0, 0); //drives in a straight line for driveDistance
+					
 					init = false;
 	
 				}
 				
 				if(SmartDashboard.getBoolean("USE DRIVE STRAIGHT", false)) {
 					driveTrain.mecanumDrive.pidDriveStraight(true, Consts.driveDistance, 0);
+					Timer.delay(.1);
 				} else {
 				 driveTrain.mecanumDrive.pidDrive(true, Consts.driveDistance, 0, 0); //FOUND ERROR HERE THIS WAS INSIDE INIT LOOP MINOR ERROR
 				 driveTrain.mecanumDrive.setAllPID();
@@ -138,7 +139,7 @@ public class Robot extends IterativeRobot {
 				
 				if (driveTrain.mecanumDrive.pidAtTarget() /*|| autoTimer.get() > 3.0 */) { // condition to move on
 																// to next step o
-					autoStage++; // = 94 (kicks us out); //moves to next stage
+					autoStage=2; // = 94 (kicks us out); //moves to next stage
 					init = true;
 				}
 //			}

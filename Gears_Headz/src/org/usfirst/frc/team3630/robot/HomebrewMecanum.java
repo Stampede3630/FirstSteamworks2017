@@ -359,7 +359,7 @@ public class HomebrewMecanum  {
 	public void pidDriveStraight(boolean pidControl, double desiredDistanceX, double desiredDistanceY) {
 		double errorAngle = intendedRobotAngle - Robot.ahrs.getYaw();
 		if(errorAngle < Consts.driveStraightTolerance) errorAngle = 0;
-		this.pidDrive(pidControl,desiredDistanceX,desiredDistanceY,-errorAngle);
+		this.pidDrive(pidControl,desiredDistanceX,desiredDistanceY,-errorAngle*1.25);
 	}
 	
 

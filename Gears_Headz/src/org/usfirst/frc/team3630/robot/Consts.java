@@ -35,7 +35,7 @@ public static final int gearLimitSwitchClosed = 9;
 public static final int buttonSwitchDirection = 2;
 
 //speed constants
-public static final double gearSpeed = 1;
+public static final double gearSpeed = -1;
 
 public static final double slowK = .25;
 public static final double fastK = 1;
@@ -92,6 +92,6 @@ public static final double perspecLimitDeg = 5.0; // Must be positive.
 public static final double nearZero = 0.1; // For comparing against zero in floating point.
 public static final int maxVisionRetryCount = 10;
 public static final double visionMakeupDistance = 8;
-public static final double driveStraightTolerance = .5;
+public static final double driveStraightTolerance = .25;
 
 }
