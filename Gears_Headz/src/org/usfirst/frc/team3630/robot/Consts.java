@@ -10,15 +10,15 @@ public static final double mecanumWheelRadiusInches = 5.9863/2;
 
 //Motor PWM Pin assignments
 public static final int driveMotorFrontLeft = 0;
-public static final int driveMotorFrontRight = 3;
+public static final int driveMotorFrontRight = 2;
 public static final int driveMotorBottomLeft = 1;
-public static final int driveMotorBottomRight = 2;
+public static final int driveMotorBottomRight = 3;
 
 //Gear PWM Assignment
-public static final int gearTalonPWM = 5;
+public static final int gearTalonPWM = 4;
 
 //Winch talon PWM assignment
-public static final int winchTalonPWM = 4;
+public static final int winchTalonPWM = 5;
 
 //Joystick Assignments
 public static final int joytsickChannel = 0;
@@ -32,6 +32,7 @@ public static final int buttonSprintAlternate = 5;
 //Gear limit switch DIO Assignments
 public static final int gearLimitSwitchOpen = 8;
 public static final int gearLimitSwitchClosed = 9;
+public static final int buttonSwitchDirection = 2;
 
 //speed constants
 public static final double gearSpeed = 1;
@@ -58,7 +59,6 @@ public static final int driveEncoderFrontRightA = 4;
 public static final int driveEncoderFrontRightB = 5;
 public static final int driveEncoderRearRightA = 6;
 public static final int driveEncoderRearRightB = 7;
-public static final int buttonSwitchDirection = 2;
 public static final double talonConversion = 1;
 public static final double wheelKP = .05;
 public static final double wheelKI = 0.000175;
@@ -93,7 +93,5 @@ public static final double nearZero = 0.1; // For comparing against zero in floa
 public static final int maxVisionRetryCount = 10;
 public static final double visionMakeupDistance = 8;
 public static final double driveStraightTolerance = .5;
-
-
 
 }
