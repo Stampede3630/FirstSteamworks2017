@@ -17,7 +17,7 @@ public interface Wheel {
 	public void setMode (boolean PIDControl);
 	
 	/**
-	 * Sets velocity in defined units for specific wheel
+	 * Sets velocity in wheel power
 	 * @param velocity desired velocity
 	 */
 	 public void setVelocity (int velocity);
@@ -34,14 +34,29 @@ public interface Wheel {
 	 public int getEncoderVelocity ();
 	 /**
 	  * Sets the velocity PID controller. Would reccomend keeping it to defined constants
+	  * @param position if setting position controller true, if setting velocity controller false
 	  * @param kP
 	  * @param kI
 	  * @param kD
 	  */
-	 public void setPID (float kP, float kI, float kD);
+	 public void setPID (boolean position, float kP, float kI, float kD);
 	 /**
 	  * Reset the encoder distance
 	  */
+	 /**
+	  * 
+	  * @param idealPosition the desired position of the wheel
+	  * @param actualPosition the actual position of the wheel
+	  * @param idealVelocity the desired velocity of the wheel, without position adjustment
+	  * @return
+	  */
+	 public int positionAdjustment (int idealPosition, int actualPosition, int idealVelocity);
+	 /**
+	  * runs velocity PID
+	  * @param requestedVelocity 
+	  * @return power level for motor controller
+	  */
+	 public int velocityAdjustment (int requestedVelocity);
 	 public void resetEncoder ();
 	 
 }
