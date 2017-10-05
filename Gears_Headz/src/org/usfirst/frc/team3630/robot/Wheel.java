@@ -56,6 +56,10 @@ public interface Wheel {
 	  * @param requestedVelocity 
 	  * @return power level for motor controller
 	  */
+	 
+	 public void selfTest () {
+		 //implement this
+	 }
 	 public int velocityAdjustment (int requestedVelocity);
 	 public void resetEncoder ();
 	 
