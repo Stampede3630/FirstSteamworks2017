@@ -32,32 +32,22 @@ public class TalonSR implements Wheel {
 			vAdjust=output;
 			
 		}
-
 		@Override
 		public void setPIDSourceType(PIDSourceType pidSource) {
-			pidSource= PIDSourceType.kRate;
-			
-			
+			pidSource= PIDSourceType.kRate;	
 		}
-
 		@Override
 		public PIDSourceType getPIDSourceType() {
 			// TODO Auto-generated method stub
 			return PIDSourceType.kRate;
 		}
-
-		
-	
 		public void setVDesired(double vAdjust) {
 			vFeed= vAdjust;
-			
 		}
 		public double pidGet() {
 			// need to fix
 			return vFeed+vAdjust;
 		}
-		
-		
 	}
 
 	
