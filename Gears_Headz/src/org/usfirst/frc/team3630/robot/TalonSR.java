@@ -105,27 +105,36 @@ public class TalonSR implements Wheel {
 		
 	}
 	
-	public TalonSR (int talonPin, int encoderPinA, int encoderPinB, boolean talonReversed,int distPerPulse, boolean encoderReversed,double kp, double ki,double kd,double kf, double kppp, double kip, double  kdp, double kfp) {
+	public TalonSR (int talonPin, int encoderPinA, int encoderPinB, boolean talonReversed,int distPerPulse, boolean encoderReversed,
+			double kp, double ki,double kd,double kf, double kpp, double kip, double  kdp, double kfp) {
+		
 		_encoder = new Encoder(encoderPinA, encoderPinB, encoderReversed );
-		_talon = new Talon(talonPin);
-		_talon.setInverted(talonReversed);
 		_encoder.setDistancePerPulse(distPerPulse );
 		_encoder.setPIDSourceType(PIDSourceType.kDisplacement);
+		
+		_talon = new Talon(talonPin);
+		_talon.setInverted(talonReversed);
+		
 		encoderPIDv= new AltEncoderPID(_encoder,PIDSourceType.kRate);
+		
 		vPID = new PIDController (kp,ki,kd,kf,convertT,_talon);
-		
-		pPID = new PIDController(kpp,kip,kdp,kfp,_encoder,convertT);
-		
-		
+		pPID = new PIDController(kpp,kip,kdp,kfp,_encoder,convertT);		
 		
 	}
+	
 	/* (non-Javadoc)
 	 * @see org.usfirst.frc.team3630.robot.Wheel#setMode(boolean)
 	 */
 	@Override
 	public void setMode(boolean PIDControl) {
-		// TODO Auto-generated method stub
-
+		if (PIDControl) {
+			vPID.enable();
+			pPID.enable();
+		}
+		else {
+			vPID.disable();
+			pPID.disable();
+		}
 	}
 
 	/* (non-Javadoc)
@@ -133,53 +142,36 @@ public class TalonSR implements Wheel {
 	 */
 	@Override
 	public void setVelocity(int velocity) {
-		// TODO Auto-generated method stub
-
+		convertT.setVDesired(velocity);
 	}
 
 	/* (non-Javadoc)
 	 * @see org.usfirst.frc.team3630.robot.Wheel#getEncoderPosition()
 	 */
 	@Override
-	public int getEncoderPosition() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double getEncoderPosition() {
+		return _encoder.getDistance();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.usfirst.frc.team3630.robot.Wheel#getEncoderVelocity()
 	 */
 	@Override
-	public int getEncoderVelocity() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double getEncoderVelocity() {
+		return _encoder.getRate();
 	}
 
 	/* (non-Javadoc)
 	 * @see org.usfirst.frc.team3630.robot.Wheel#setPID(boolean, float, float, float)
 	 */
 	@Override
-	public void setPID(boolean position, float kP, float kI, float kD) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/* (non-Javadoc)
-	 * @see org.usfirst.frc.team3630.robot.Wheel#positionAdjustment(int, int, int)
-	 */
-	@Override
-	public int positionAdjustment(int idealPosition, int actualPosition, int idealVelocity) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.usfirst.frc.team3630.robot.Wheel#velocityAdjustment(int)
-	 */
-	@Override
-	public int velocityAdjustment(int requestedVelocity) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void setPID(boolean position, double kP, double kI, double kD, double kF) {
+		if(position) {
+			pPID.setPID(kP, kI, kD, kF);
+		}
+		else {
+			vPID.setPID(kP, kI, kD, kF);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -187,13 +179,11 @@ public class TalonSR implements Wheel {
 	 */
 	@Override
 	public void resetEncoder() {
-		// TODO Auto-generated method stub
-
+		_encoder.reset();
 	}
 	@Override
 	public void selfTest() {
-		// TODO Auto-generated method stub
-		
+		//TODO: implement this
 	}
 
 }

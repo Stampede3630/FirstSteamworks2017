@@ -26,41 +26,35 @@ public interface Wheel {
 	  * gets the position of the encoder
 	  * @return position of the encoder in defined units
 	  */
-	 public int getEncoderPosition ();
+
 	 /**
 	  * gets the velocity of the encoder
 	  * @return velocity of encoder in defined units (usually units/second)
 	  */
-	 public int getEncoderVelocity ();
+	 public double getEncoderVelocity ();
 	 /**
-	  * Sets the velocity PID controller. Would reccomend keeping it to defined constants
+	  * Sets the velocity PID controller. Would recommend keeping it to defined constants
 	  * @param position if setting position controller true, if setting velocity controller false
 	  * @param kP
 	  * @param kI
 	  * @param kD
 	  */
-	 public void setPID (boolean position, float kP, float kI, float kD);
+	 public void setPID (boolean position, double kP, double kI, double kD, double kF);
 	 /**
 	  * Reset the encoder distance
 	  */
-	 /**
-	  * 
-	  * @param idealPosition the desired position of the wheel
-	  * @param actualPosition the actual position of the wheel
-	  * @param idealVelocity the desired velocity of the wheel, without position adjustment
-	  * @return
-	  */
-	 public int positionAdjustment (int idealPosition, int actualPosition, int idealVelocity);
+
 	 /**
 	  * runs velocity PID
 	  * @param requestedVelocity 
 	  * @return power level for motor controller
 	  */
 	 
-	 public void selfTest () {
+	 public void selfTest ();
 		 //implement this
-	 }
-	 public int velocityAdjustment (int requestedVelocity);
+		 // can bus double check sensor 
 	 public void resetEncoder ();
+
+	double getEncoderPosition();
 	 
 }
