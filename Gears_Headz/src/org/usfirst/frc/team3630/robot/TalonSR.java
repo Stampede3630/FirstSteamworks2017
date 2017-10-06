@@ -5,6 +5,7 @@ package org.usfirst.frc.team3630.robot;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
@@ -19,10 +20,57 @@ public class TalonSR implements Wheel {
 	private Talon _talon;
 	public PIDController pPID;
 	public PIDController vPID;
+	private AltEncoderPID encoderPIDv;
+	private vConverter convertT;
+	
+	class vConverter implements PIDOutput, PIDSource {
+		double vAdjust;
+		double vFeed;
+		
+		public void pidWrite(double output) {
+			// TODO Auto-generated method stub
+			vAdjust=output;
+			
+		}
+
+		@Override
+		public void setPIDSourceType(PIDSourceType pidSource) {
+			pidSource= PIDSourceType.kRate;
+			
+			
+		}
+
+		@Override
+		public PIDSourceType getPIDSourceType() {
+			// TODO Auto-generated method stub
+			return PIDSourceType.kRate;
+		}
+
+		
+	
+		public void setVDesired(double vAdjust) {
+			vFeed= vAdjust;
+			
+		}
+		public double pidGet() {
+			// need to fix
+			return vFeed+vAdjust;
+		}
+		
+		
+	}
+
+	
 	class  AltEncoderPID implements PIDSource{
+
 		PIDSourceType _PIDSourceType;
 		Encoder aEncoder;
-		
+		/**
+		 * 
+		 * @param e encoder 
+		 * 
+		 * @param pidSource wheather input is a dispacement or a rate 
+		 */
 		public AltEncoderPID(Encoder e, PIDSourceType pidSource){
 			aEncoder=e;
 			_PIDSourceType= pidSource;
@@ -57,13 +105,19 @@ public class TalonSR implements Wheel {
 		
 	}
 	
-	public TalonSR (int talonPin, int encoderPinA, int encoderPinB, boolean talonReversed,int distPerPulse, boolean encoderReversed) {
+	public TalonSR (int talonPin, int encoderPinA, int encoderPinB, boolean talonReversed,int distPerPulse, boolean encoderReversed,double kp, double ki,double kd,double kf, double kppp, double kip, double  kdp, double kfp) {
 		_encoder = new Encoder(encoderPinA, encoderPinB, encoderReversed );
 		_talon = new Talon(talonPin);
 		_talon.setInverted(talonReversed);
 		_encoder.setDistancePerPulse(distPerPulse );
-		_en
-		vPID = new PIDController (kp,ki,kd,);
+		_encoder.setPIDSourceType(PIDSourceType.kDisplacement);
+		encoderPIDv= new AltEncoderPID(_encoder,PIDSourceType.kRate);
+		vPID = new PIDController (kp,ki,kd,kf,convertT,_talon);
+		
+		pPID = new PIDController(kpp,kip,kdp,kfp,_encoder,convertT);
+		
+		
+		
 	}
 	/* (non-Javadoc)
 	 * @see org.usfirst.frc.team3630.robot.Wheel#setMode(boolean)
@@ -135,6 +189,11 @@ public class TalonSR implements Wheel {
 	public void resetEncoder() {
 		// TODO Auto-generated method stub
 
+	}
+	@Override
+	public void selfTest() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
