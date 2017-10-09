@@ -20,18 +20,17 @@ public class TalonSR implements Wheel {
 	private Talon _talon;
 	public PIDController pPID;
 	public PIDController vPID;
-	private AltEncoderPID encoderPIDv;
-	private vConverter convertT;
+	private AltEncoderPID velocityEncoderValues;
+	private VelocityAdjuster _velocityAdjuster;
 	
-	class vConverter implements PIDOutput, PIDSource {
+	class VelocityAdjuster implements PIDOutput, PIDSource {
 		double vAdjust;
 		double vFeed;
 		
 		public void pidWrite(double output) {
-			// TODO Auto-generated method stub
-			vAdjust=output;
-			
+			vAdjust=output;			
 		}
+		
 		@Override
 		public void setPIDSourceType(PIDSourceType pidSource) {
 			pidSource= PIDSourceType.kRate;	
@@ -54,15 +53,14 @@ public class TalonSR implements Wheel {
 	class  AltEncoderPID implements PIDSource{
 
 		PIDSourceType _PIDSourceType;
-		Encoder aEncoder;
+		Encoder _e;
 		/**
 		 * 
-		 * @param e encoder 
-		 * 
+		 * @param e encoder  
 		 * @param pidSource wheather input is a dispacement or a rate 
 		 */
 		public AltEncoderPID(Encoder e, PIDSourceType pidSource){
-			aEncoder=e;
+			_e=e;
 			_PIDSourceType= pidSource;
 		}
 		@Override
@@ -82,11 +80,11 @@ public class TalonSR implements Wheel {
 		public double pidGet() {
 			// TODO Auto-generated method stub
 			if (PIDSourceType.kDisplacement.equals(_PIDSourceType)) {
-				return aEncoder.getDistance();
+				return _e.getDistance();
 				
 			}
 			else if ( PIDSourceType.kRate.equals(_PIDSourceType)) {
-				return aEncoder.getRate();
+				return _e.getRate();
 			}
 			else {
 				return -1;
@@ -105,10 +103,10 @@ public class TalonSR implements Wheel {
 		_talon = new Talon(talonPin);
 		_talon.setInverted(talonReversed);
 		
-		encoderPIDv= new AltEncoderPID(_encoder,PIDSourceType.kRate);
+		velocityEncoderValues= new AltEncoderPID(_encoder,PIDSourceType.kRate);
 		
-		vPID = new PIDController (kp,ki,kd,kf,convertT,_talon);
-		pPID = new PIDController(kpp,kip,kdp,kfp,_encoder,convertT);		
+		vPID = new PIDController (kp,ki,kd,kf,_velocityAdjuster,_talon);
+		pPID = new PIDController(kpp,kip,kdp,kfp,_encoder,_velocityAdjuster);		
 		
 	}
 	
@@ -132,7 +130,7 @@ public class TalonSR implements Wheel {
 	 */
 	@Override
 	public void setVelocity(int velocity) {
-		convertT.setVDesired(velocity);
+		_velocityAdjuster.setVDesired(velocity);
 	}
 
 	/* (non-Javadoc)
