@@ -93,8 +93,7 @@ public class TalonSR implements Wheel {
 		
 	}
 	
-	public TalonSR (int talonPin, int encoderPinA, int encoderPinB, boolean talonReversed,int distPerPulse, boolean encoderReversed,
-			double kp, double ki,double kd,double kf, double kpp, double kip, double  kdp, double kfp) {
+	public TalonSR (int talonPin, int encoderPinA, int encoderPinB, boolean talonReversed,int distPerPulse, boolean encoderReversed) {
 		
 		_encoder = new Encoder(encoderPinA, encoderPinB, encoderReversed );
 		_encoder.setDistancePerPulse(distPerPulse );
@@ -105,8 +104,8 @@ public class TalonSR implements Wheel {
 		
 		velocityEncoderValues= new AltEncoderPID(_encoder,PIDSourceType.kRate);
 		
-		vPID = new PIDController (kp,ki,kd,kf,_velocityAdjuster,_talon);
-		pPID = new PIDController(kpp,kip,kdp,kfp,_encoder,_velocityAdjuster);		
+		vPID = new PIDController (.05,0,0,1,_velocityAdjuster,_talon);
+		pPID = new PIDController(.05,0,0,1,_encoder,_velocityAdjuster);		
 		
 	}
 	
