@@ -11,20 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveTrain {
 
-	XboxController m_Joystick;// 2 for shooting and driving
-
-	// AnalogInput ai0;
-
-	// boolean driveAutoCorrect;
-	// double driveStrength;
-
-	// Made new gyro class
-	// AnalogGyro gyro;
-	// NAVX
-	// Sensors sensors;
-
-	// initialize drives
-	public HomebrewMecanum mecanumDrive;
+	XboxHelper m_Joystick;// 2 for shooting and driving
 	Wheel fL, rL, fR, rR;
 	boolean directionForward = true;
 
@@ -33,28 +20,8 @@ public class DriveTrain {
 				Consts.driveMotorFrontRight, Consts.driveMotorBottomRight, myNavX);
 		m_Joystick = new XboxController(Consts.joystickComPort);
 		SmartDashboard.putBoolean("Auto Control", false);
-		
 	}
 
-	public double getRoundX() {
-		double result = m_Joystick.getX(GenericHID.Hand.kLeft);
-		SmartDashboard.putNumber("Joystick X", result);
-		return result;
-	}
-
-	public double getRoundY() {
-		double result = m_Joystick.getY(GenericHID.Hand.kLeft);
-		SmartDashboard.putNumber("Joystick Y", result);
-
-		return result;
-	}
-
-	public double getRoundTwist() {
-		double result = m_Joystick.getX(GenericHID.Hand.kRight);
-		SmartDashboard.putNumber("Joystick Twist", result);
-
-		return result;
-	}
 
 	public void teleopInit() {
 		mecanumDrive.resetEncoders();
