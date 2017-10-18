@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author StampedeRobotics
  *
  */
+
+/// need to impliment DRIVETRAin wraper ??
 public class DriveTrain {
 
 	XboxHelper m_Joystick;// 2 for shooting and driving
@@ -16,6 +18,14 @@ public class DriveTrain {
 	boolean directionForward = true;
 
 	public DriveTrain(NavX myNavX) {
+		////////////////////////////////////
+		/// need to make a robot drive system 
+		
+		/////////////////////////////////
+		
+		
+		///declare talon srs 
+		////////////////////
 		rDrive = new RobotDrive(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,
 				Consts.driveMotorFrontRight, Consts.driveMotorBottomRight, myNavX);
 		m_Joystick = new XboxController(Consts.joystickComPort);
@@ -24,7 +34,8 @@ public class DriveTrain {
 
 
 	public void teleopInit() {
-		mecanumDrive.resetEncoders();
+		//// reset encoders usseing talon sr
+		////mecanumDrive.resetEncoders();
 	}
 
 	public void telopPeriodic() {
@@ -47,7 +58,7 @@ public class DriveTrain {
 			}
 			if (!directionForward)
 				speedy *= -1;
-
+///// drive implmitation  need to do 
 			mecanumDrive.driveImplementation(- getRoundY() * speedy,- getRoundX() * speedy,- getRoundTwist() * speedy,
 					true);
 			// Expecting numbers between -1 and 1.

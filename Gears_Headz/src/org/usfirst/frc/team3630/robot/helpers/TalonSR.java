@@ -20,6 +20,8 @@ public class TalonSR implements Wheel {
 	private Talon _talon;
 	public PIDController pPID;
 	public PIDController vPID;
+	
+	/// need to define Alt Encoder PID and Velocity Adjuster
 	private AltEncoderPID velocityEncoderValues;
 	private VelocityAdjuster _velocityAdjuster;
 
@@ -32,10 +34,10 @@ public class TalonSR implements Wheel {
 
 		_talon = new Talon(talonPin);
 		_talon.setInverted(talonReversed);
-
+/// need to set k rate up 
 		velocityEncoderValues = new AltEncoderPID(_encoder, PIDSourceType.kRate);
 
-		vPID = new PIDController(.05, 0, 0, 1, _velocityAdjuster, _talon);
+		vPID = new PIDController(.05, 0, 0, 1,  _velocityAdjuster, _talon);
 		pPID = new PIDController(.05, 0, 0, 1, _encoder, _velocityAdjuster);
 
 	}
@@ -109,6 +111,8 @@ public class TalonSR implements Wheel {
 	@Override
 	public void resetEncoder() {
 		_encoder.reset();
+		
+		
 	}
 
 	@Override
