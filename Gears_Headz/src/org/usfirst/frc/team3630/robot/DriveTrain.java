@@ -16,7 +16,7 @@ public class DriveTrain {
 	boolean directionForward = true;
 
 	public DriveTrain(NavX myNavX) {
-		mecanumDrive = new HomebrewMecanum(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,
+		rDrive = new RobotDrive(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,
 				Consts.driveMotorFrontRight, Consts.driveMotorBottomRight, myNavX);
 		m_Joystick = new XboxController(Consts.joystickComPort);
 		SmartDashboard.putBoolean("Auto Control", false);
