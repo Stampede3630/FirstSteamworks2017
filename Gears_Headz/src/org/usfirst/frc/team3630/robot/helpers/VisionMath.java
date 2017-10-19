@@ -1,4 +1,6 @@
-package org.usfirst.frc.team3630.robot;
+package org.usfirst.frc.team3630.robot.helpers;
+
+import org.usfirst.frc.team3630.robot.Consts;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

@@ -1,16 +1,12 @@
 package org.usfirst.frc.team3630.robot.subsystems;
 
-import edu.wpi.first.wpilibj.XboxController;
-
-
+import org.usfirst.frc.team3630.robot.Consts;
 import org.usfirst.frc.team3630.robot.helpers.TalonSR;
 
 import org.usfirst.frc.team3630.robot.helpers.XBoxHelper;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /// need to impliment DRIVETRAin wraper ??

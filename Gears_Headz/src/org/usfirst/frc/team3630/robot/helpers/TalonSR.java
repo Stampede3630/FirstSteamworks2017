@@ -36,7 +36,7 @@ public class TalonSR implements Wheel {
 
 		_talon = new Talon(talonPin);
 		_talon.setInverted(talonReversed);
-/// need to set k rate up 
+
 		velocityEncoderValues = new EncoderPIDSource(_encoder, PIDSourceType.kRate);
 
 		vPID = new PIDController(Consts.kP_velocity, Consts.kI_velocity, Consts.kD_velocity, Consts.kF_velocity,  _velocityAdjuster, _talon);

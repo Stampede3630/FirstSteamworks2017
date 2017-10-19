@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3630.robot;
+package org.usfirst.frc.team3630.robot.helpers;
 
  /**
  * @author robotics
