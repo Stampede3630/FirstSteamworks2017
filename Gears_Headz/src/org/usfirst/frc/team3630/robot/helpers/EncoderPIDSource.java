@@ -12,12 +12,12 @@ class EncoderPIDSource implements PIDSource {
 		/**
 		 * @param e
 		 *            encoder
-		 * @param pidSource
+		 * @param pidSourceType
 		 *            Whether input is a displacement or a rate
 		 */
-		public EncoderPIDSource (Encoder e, PIDSourceType pidSource) {
+		public EncoderPIDSource (Encoder e, PIDSourceType pidSourceType) {
 			_e = e;
-			_PIDSourceType = pidSource;
+			_PIDSourceType = pidSourceType;
 		}
 
 		@Override
