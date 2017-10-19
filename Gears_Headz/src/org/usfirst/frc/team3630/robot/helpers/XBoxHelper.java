@@ -4,16 +4,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-<<<<<<< HEAD
 
 public class XBoxHelper extends XboxController {
-	
-	public XBoxHelper (int port) {
-		super (port);
-	}
-=======
-public class XBoxHelper extends XboxController {
->>>>>>> origin/newAuto
+
 	
 	public XBoxHelper (int pin) {
 		super(pin);

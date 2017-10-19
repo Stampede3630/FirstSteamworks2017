@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 
 import edu.wpi.first.wpilibj.PIDController;
 
-
+import org.usfirst.frc.team3630.robot.Consts;
 public class AutoWheelInput implements SpeedController{
  private  PIDController _pid ;
  private double speed; 
@@ -25,7 +25,7 @@ public AutoWheelInput(PIDController _pid ) {
 
 	public void set(double speed) {
 		// TODO Auto-generated method stub
-		_pid.setSetpoint(speed);
+		_pid.setSetpoint(speed * Consts.mecanumSanitizer);
 	}
 
 	public void setInverted(boolean isInverted) {
