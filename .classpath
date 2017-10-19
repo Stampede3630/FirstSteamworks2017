@@ -2,10 +2,18 @@
 <classpath>
 	<classpathentry kind="src" path="Gears_Headz/src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+<<<<<<< HEAD
+	<classpathentry exported="true" kind="var" path="wpilib" sourcepath="wpilib.sources">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/Users/aronsa/wpilib/java/current/javadoc/"/>
+		</attributes>
+	</classpathentry>
+=======
 	<classpathentry exported="true" kind="var" path="wpilib" sourcepath="wpilib.sources"/>
 	<classpathentry kind="lib" path="/Users/aronsa/programming/FRC Workspace/FirstSteamworks2017/Gears_Headz/build/jars/navx_frc.jar"/>
 	<classpathentry kind="lib" path="/Users/aronsa/programming/FRC Workspace/FirstSteamworks2017/Gears_Headz/build/jars/cscore.jar"/>
 	<classpathentry kind="lib" path="/Users/aronsa/programming/FRC Workspace/FirstSteamworks2017/Gears_Headz/build/jars/NetworkTables.jar"/>
 	<classpathentry kind="lib" path="/Users/aronsa/programming/FRC Workspace/FirstSteamworks2017/Gears_Headz/build/jars/opencv.jar"/>
+>>>>>>> origin/newAuto
 	<classpathentry kind="output" path="Gears_Headz/bin"/>
 </classpath>
