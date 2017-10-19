@@ -21,7 +21,7 @@ public class DriveTrain {
 	TalonSR fL, rL, fR, rR;
 	boolean directionForward = true;
 
-	public DriveTrain(NavX myNavX) {
+	public DriveTrain() {
 
 		////////////////////////////////////
 		/// need to make a robot drive system 
