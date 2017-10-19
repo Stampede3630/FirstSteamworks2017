@@ -94,4 +94,15 @@ public static final int maxVisionRetryCount = 10;
 public static final double visionMakeupDistance = 8;
 public static final double driveStraightTolerance = .25;
 
+//vPID and pPID constants
+public static final double kP_position = .05;
+public static final double kI_position = .00;
+public static final double kD_position = .00;
+public static final double kF_position = 1.00;
+
+public static final double kP_velocity = .05;
+public static final double kI_velocity = .00;
+public static final double kD_velocity = .00;
+public static final double kF_velocity = 1.00;
+
 }

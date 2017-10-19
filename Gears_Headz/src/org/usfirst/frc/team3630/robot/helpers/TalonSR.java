@@ -3,6 +3,8 @@
  */
 package org.usfirst.frc.team3630.robot.helpers;
 
+import org.usfirst.frc.team3630.robot.Consts;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -37,8 +39,8 @@ public class TalonSR implements Wheel {
 /// need to set k rate up 
 		velocityEncoderValues = new EncoderPIDSource(_encoder, PIDSourceType.kRate);
 
-		vPID = new PIDController(.05, 0, 0, 1,  _velocityAdjuster, _talon);
-		pPID = new PIDController(.05, 0, 0, 1, _encoder, _velocityAdjuster);
+		vPID = new PIDController(Consts.kP_velocity, Consts.kI_velocity, Consts.kD_velocity, Consts.kF_velocity,  _velocityAdjuster, _talon);
+		pPID = new PIDController(Consts.kP_position, Consts.kI_position, Consts.kD_position, Consts.kF_position, _encoder, _velocityAdjuster);
 
 	}
 
