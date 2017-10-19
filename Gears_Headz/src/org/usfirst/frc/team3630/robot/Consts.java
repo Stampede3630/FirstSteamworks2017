@@ -105,4 +105,7 @@ public static final double kI_velocity = .00;
 public static final double kD_velocity = .00;
 public static final double kF_velocity = 1.00;
 
+//Auto mecanum constants
+public static final double mecanumSanitizer = 1000;
+
 }
