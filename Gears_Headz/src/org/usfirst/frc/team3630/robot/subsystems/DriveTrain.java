@@ -1,28 +1,28 @@
-package org.usfirst.frc.team3630.robot;
+package org.usfirst.frc.team3630.robot.subsystems;
 
 import edu.wpi.first.wpilibj.XboxController;
 
+
 import org.usfirst.frc.team3630.robot.helpers.TalonSR;
+
+import org.usfirst.frc.team3630.robot.helpers.XBoxHelper;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * @author StampedeRobotics
- *
- */
 
 /// need to impliment DRIVETRAin wraper ??
 public class DriveTrain {
 
-//	XboxHelper m_Joystick;// 2 for shooting and driving
-///	TalonSR fL, rL, fR, rR;
-///	boolean directionForward = true;
-	TalonSR Fl , Fr,Rr, RL;
-	RobotDrive 
-	public DriveTrain() {
+
+	XBoxHelper m_Joystick;// 2 for shooting and driving
+	TalonSR fL, rL, fR, rR;
+	boolean directionForward = true;
+
+	public DriveTrain(NavX myNavX) {
+
 		////////////////////////////////////
 		/// need to make a robot drive system 
 		
@@ -44,7 +44,7 @@ public class DriveTrain {
 	
 
 			
-			rDrive = new RobotDrive(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,
+		///	rDrive = new RobotDrive(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,
 			//		Consts.driveMotorFrontRight, Consts.driveMotorBottomRight, myNavX);
 		
 		}
@@ -52,8 +52,8 @@ public class DriveTrain {
 		
 		/// clean up joystick 
 		///m_Joystick = new XboxController(Consts.joystickComPort);
-		SmartDashboard.putBoolean("Auto Control", false);
-	}
+		//SmartDashboard.putBoolean("Auto Control", false);
+	
 
 
 	public void teleopInit() {
@@ -92,8 +92,8 @@ public class DriveTrain {
 			//_rDrive= New M Drive
 			
 		
-			rdrive.mecanumDrive_Cartesian(m_Joystick.getX(), m_Joystick.getY(), m_Joystick.getTwist(),0);
+			//rdrive.mecanumDrive_Cartesian(m_Joystick.getX(), m_Joystick.getY(), m_Joystick.getTwist(),0);
 		}
 	}
 
-//}
+
