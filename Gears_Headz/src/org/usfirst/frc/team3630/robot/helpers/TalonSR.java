@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.usfirst.frc.team3630.robot;
+package org.usfirst.frc.team3630.robot.helpers;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
@@ -22,7 +22,7 @@ public class TalonSR implements Wheel {
 	public PIDController vPID;
 	
 	/// need to define Alt Encoder PID and Velocity Adjuster
-	private AltEncoderPID velocityEncoderValues;
+	private EncoderPIDSource velocityEncoderValues;
 	private PositionToVelocityPIDConverter _velocityAdjuster;
 
 	public TalonSR(int talonPin, int encoderPinA, int encoderPinB, boolean talonReversed, int distPerPulse,
@@ -35,7 +35,7 @@ public class TalonSR implements Wheel {
 		_talon = new Talon(talonPin);
 		_talon.setInverted(talonReversed);
 /// need to set k rate up 
-		velocityEncoderValues = new AltEncoderPID(_encoder, PIDSourceType.kRate);
+		velocityEncoderValues = new EncoderPIDSource(_encoder, PIDSourceType.kRate);
 
 		vPID = new PIDController(.05, 0, 0, 1,  _velocityAdjuster, _talon);
 		pPID = new PIDController(.05, 0, 0, 1, _encoder, _velocityAdjuster);
