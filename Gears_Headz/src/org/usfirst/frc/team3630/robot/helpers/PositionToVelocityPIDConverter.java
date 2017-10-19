@@ -1,8 +1,9 @@
+package org.usfirst.frc.team3630.robot.helpers;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
-class VelocityAdjuster implements PIDOutput, PIDSource {
+class PositionToVelocityPIDConverter implements PIDOutput, PIDSource {
 		double vAdjust;
 		double vFeed;
 

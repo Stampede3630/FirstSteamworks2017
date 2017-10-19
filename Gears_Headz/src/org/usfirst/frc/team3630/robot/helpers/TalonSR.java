@@ -23,7 +23,7 @@ public class TalonSR implements Wheel {
 	
 	/// need to define Alt Encoder PID and Velocity Adjuster
 	private AltEncoderPID velocityEncoderValues;
-	private VelocityAdjuster _velocityAdjuster;
+	private PositionToVelocityPIDConverter _velocityAdjuster;
 
 	public TalonSR(int talonPin, int encoderPinA, int encoderPinB, boolean talonReversed, int distPerPulse,
 			boolean encoderReversed) {
