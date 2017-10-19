@@ -1,4 +1,6 @@
-package org.usfirst.frc.team3630.robot;
+package org.usfirst.frc.team3630.robot.subsystems;
+import org.usfirst.frc.team3630.robot.Consts;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Talon;

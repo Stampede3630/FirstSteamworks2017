@@ -1,10 +1,9 @@
 package org.usfirst.frc.team3630.robot.helpers;
 
 import edu.wpi.first.wpilibj.SpeedController;
-st.frc.team3630.robot.helpers;
 
 import edu.wpi.first.wpilibj.PIDController;
-import org.usfirst.frc.team3630.robot.subsystems.DriveTrain;
+
 
 public class AutoWheelInput implements SpeedController{
  private  PIDController _pid ;

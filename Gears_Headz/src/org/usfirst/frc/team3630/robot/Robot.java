@@ -6,6 +6,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+ 
+import org.usfirst.frc.team3630.robot.subsystems.*;
+
 import com.kauailabs.navx.frc.*;
 
 /**
@@ -22,8 +25,6 @@ public class Robot extends IterativeRobot {
 	SendableChooser<String> chooser = new SendableChooser<>();
 	DriveTrain driveTrain;
 	GearsManip gears;
-	public static AHRS ahrs;
-	public NavX myNavX;
 	WinchSystem winch;
 	Timer autoTimer;
 	DigitalInput springEngaged;
@@ -47,12 +48,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("MinRate", .5);
 		//SmartDashboard.putBoolean("CHEAT AUTO", false);
 		SmartDashboard.putBoolean("USE DRIVE STRAIGHT", true);
-		driveTrain = new DriveTrain(myNavX);
-		myNavX = new NavX();
+		driveTrain = new DriveTrain();
 		winch = new WinchSystem();
 		gears = new GearsManip();
 		autoTimer = new Timer();
-		ahrs = new AHRS(SPI.Port.kMXP);
 	}
 
 	/**
@@ -97,7 +96,6 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		SmartDashboard.putBoolean("SPRING Switch", springEngaged.get());
 		driveTrain.telopPeriodic();
-		myNavX.teleopPeriodic();
 		// rightFrontEnc.get();
 		// ultraDistance.sensorPeriodic();
 		winch.telopPeriodic();
@@ -110,6 +108,5 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		myNavX.teleopPeriodic();
 	}
 }
