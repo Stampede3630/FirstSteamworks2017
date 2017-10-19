@@ -2,6 +2,7 @@ package org.usfirst.frc.team3630.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -24,15 +25,26 @@ public class DriveTrain {
 		/////////////////////////////////
 		
 		
-		///declare talon srs 
+		///declare talon sr
 		////////////////////
 		
 		
+		////// Define SR 
 		
-		//
+		// FL
+		//RL
+		//RR
+		///FR
+		
+		
+		
+		//// put it robot drive (FL, RL, FR,RR
 		rDrive = new RobotDrive(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,
 				Consts.driveMotorFrontRight, Consts.driveMotorBottomRight, myNavX);
-		m_Joystick = new XboxController(Consts.joystickComPort);
+	
+		
+		/// clean up joystick 
+		///m_Joystick = new XboxController(Consts.joystickComPort);
 		SmartDashboard.putBoolean("Auto Control", false);
 	}
 
@@ -67,9 +79,12 @@ public class DriveTrain {
 			
 			
 			///// drive implmitation  need to do 
-		//	mecanumDrive.driveImplementation(- getRoundY() * speedy,- getRoundX() * speedy,- getRoundTwist() * speedy,
-		//			true);
-			// Expecting numbers between -1 and 1.
+			
+			//// wpilib mecanum drive 
+			
+			//_rDrive= New M Drive
+			
+		
 
 		}
 	}
