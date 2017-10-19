@@ -4,28 +4,29 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+
 public class XBoxHelper extends XboxController {
-	public XboxController xBoxC;
 	
 	public XBoxHelper (int port) {
-		super(port);
+		super (port);
 	}
 	
+	
 	public double getRoundX() {
-		double result = xBoxC.getX(GenericHID.Hand.kLeft);
+		double result = super.getX(GenericHID.Hand.kLeft);
 		SmartDashboard.putNumber("Joystick X", result);
 		return result;
 	}
 
 	public double getRoundY() {
-		double result = xBoxC.getY(GenericHID.Hand.kLeft);
+		double result = super.getY(GenericHID.Hand.kLeft);
 		SmartDashboard.putNumber("Joystick Y", result);
 
 		return result;
 	}
 
 	public double getRoundTwist() {
-		double result = xBoxC.getX(GenericHID.Hand.kRight);
+		double result = super.getX(GenericHID.Hand.kRight);
 		SmartDashboard.putNumber("Joystick Twist", result);
 
 		return result;

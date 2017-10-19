@@ -27,6 +27,10 @@ public class DriveTrain {
 		
 		///declare talon srs 
 		////////////////////
+		
+		
+		
+		//
 		rDrive = new RobotDrive(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,
 				Consts.driveMotorFrontRight, Consts.driveMotorBottomRight, myNavX);
 		m_Joystick = new XboxController(Consts.joystickComPort);
@@ -59,9 +63,13 @@ public class DriveTrain {
 			}
 			if (!directionForward)
 				speedy *= -1;
-///// drive implmitation  need to do 
-			mecanumDrive.driveImplementation(- getRoundY() * speedy,- getRoundX() * speedy,- getRoundTwist() * speedy,
-					true);
+
+			
+			
+			
+			///// drive implmitation  need to do 
+		//	mecanumDrive.driveImplementation(- getRoundY() * speedy,- getRoundX() * speedy,- getRoundTwist() * speedy,
+		//			true);
 			// Expecting numbers between -1 and 1.
 
 		}
