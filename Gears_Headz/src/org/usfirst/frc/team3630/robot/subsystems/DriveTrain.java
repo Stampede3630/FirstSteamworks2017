@@ -1,6 +1,9 @@
 package org.usfirst.frc.team3630.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+
+import org.usfirst.frc.team3630.robot.helpers.TalonSR;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
@@ -17,8 +20,9 @@ public class DriveTrain {
 //	XboxHelper m_Joystick;// 2 for shooting and driving
 ///	TalonSR fL, rL, fR, rR;
 ///	boolean directionForward = true;
-
-	public DriveTrain(NavX myNavX) {
+	TalonSR Fl , Fr,Rr, RL;
+	RobotDrive 
+	public DriveTrain() {
 		////////////////////////////////////
 		/// need to make a robot drive system 
 		
@@ -35,12 +39,15 @@ public class DriveTrain {
 		//RL
 		//RR
 		///FR
+	
 		
+	
+
+			
+			rDrive = new RobotDrive(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,
+			//		Consts.driveMotorFrontRight, Consts.driveMotorBottomRight, myNavX);
 		
-		
-		//// put it robot drive (FL, RL, FR,RR
-		rDrive = new RobotDrive(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,
-				Consts.driveMotorFrontRight, Consts.driveMotorBottomRight, myNavX);
+		}
 	
 		
 		/// clean up joystick 
@@ -85,7 +92,7 @@ public class DriveTrain {
 			//_rDrive= New M Drive
 			
 		
-
+			rdrive.mecanumDrive_Cartesian(m_Joystick.getX(), m_Joystick.getY(), m_Joystick.getTwist(),0);
 		}
 	}
 
