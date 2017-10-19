@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import org.usfirst.frc.team3630.robot.helpers.TalonSR;
 
 import org.usfirst.frc.team3630.robot.helpers.XBoxHelper;
-
+import org.usfirst.frc.team3630.robot.Consts;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
@@ -18,47 +18,35 @@ public class DriveTrain {
 
 
 	XBoxHelper m_Joystick;// 2 for shooting and driving
-	TalonSR fL, rL, fR, rR;
+	TalonSR Fl, Rl, fR, rR;
 	boolean directionForward = true;
+	RobotDrive rDrive;
+	
+	public DriveTrain() {
 
-	public DriveTrain(NavX myNavX) {
 
-		////////////////////////////////////
-		/// need to make a robot drive system 
-		
-		/////////////////////////////////
 		
 		
 		///declare talon sr
 		////////////////////
 		
+		m_Joystick = new XBoxHelper(Consts.joystickComPort);
 		
-		////// Define SR 
-		
-		// FL
-		//RL
-		//RR
-		///FR
-	
-		
-	
-
-			
-		///	rDrive = new RobotDrive(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,
-			//		Consts.driveMotorFrontRight, Consts.driveMotorBottomRight, myNavX);
+		 Fl= new TalonSR(0, 0, 0, directionForward, 0, directionForward)
+		Rl= new TalonSR(0,0,0,);
+rDrive = new RobotDrive(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
 		
 		}
 	
 		
 		/// clean up joystick 
-		///m_Joystick = new XboxController(Consts.joystickComPort);
+	
 		//SmartDashboard.putBoolean("Auto Control", false);
 	
 
 
 	public void teleopInit() {
-		//// reset encoders usseing talon sr
-		////mecanumDrive.resetEncoders();
+		/// reset encoders 
 	}
 
 	public void telopPeriodic() {
@@ -84,15 +72,10 @@ public class DriveTrain {
 
 			
 			
-			
-			///// drive implmitation  need to do 
-			
-			//// wpilib mecanum drive 
-			
-			//_rDrive= New M Drive
+	/// need to figure out NAVX inputs 
 			
 		
-			//rdrive.mecanumDrive_Cartesian(m_Joystick.getX(), m_Joystick.getY(), m_Joystick.getTwist(),0);
+			rDrive.mecanumDrive_Cartesian(m_Joystick.getX(), m_Joystick.getY(), m_Joystick.getRoundTwist(),0);
 		}
 	}
 
