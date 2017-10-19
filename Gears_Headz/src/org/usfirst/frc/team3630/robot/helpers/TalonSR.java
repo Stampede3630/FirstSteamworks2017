@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.PIDSourceType;
 public class TalonSR implements Wheel {
 
 	private Encoder _encoder;
-	private Talon _talon;
+	public Talon _talon;
 	public PIDController pPID;
 	public PIDController vPID;
 	

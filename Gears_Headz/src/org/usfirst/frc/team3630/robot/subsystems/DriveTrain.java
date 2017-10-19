@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3630.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import org.usfirst.frc.team3630.robot.helpers.XBoxHelper;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -13,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /// need to impliment DRIVETRAin wraper ??
 public class DriveTrain {
 
-	XboxHelper m_Joystick;// 2 for shooting and driving
+	XBoxHelper m_Joystick;// 2 for shooting and driving
 	Wheel fL, rL, fR, rR;
 	boolean directionForward = true;
 
