@@ -1,6 +1,8 @@
 package org.usfirst.frc.team3630.robot.helpers;
 
- /**
+import edu.wpi.first.wpilibj.PIDController;
+
+/**
  * @author robotics
  *
  */
@@ -55,6 +57,10 @@ public interface Wheel {
 		 // can bus double check sensor 
 	 public void resetEncoder ();
 
-	double getEncoderPosition();
+	public double getEncoderPosition();
+	
+	public PIDController getPositionPIDController();
+	public PIDController getVelocityPIDController();
+	
 	 
 }

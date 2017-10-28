@@ -131,4 +131,14 @@ public class TalonSR implements Wheel {
 		// TODO: implement this
 	}
 
+	@Override
+	public PIDController getPositionPIDController() {
+		return pPID;
+	}
+
+	@Override
+	public PIDController getVelocityPIDController() {
+		return vPID;
+	}
+
 }
