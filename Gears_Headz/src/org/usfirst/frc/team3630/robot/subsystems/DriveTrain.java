@@ -19,17 +19,17 @@ public class DriveTrain {
 
 	XBoxHelper m_Joystick;// 2 for shooting and driving
 	TalonSR fL, rL, fR, rR;
-	boolean directionForward = true;
+	boolean directionForward = false;
 	RobotDrive rDrive;
 	
 	public DriveTrain() {
 		
 		m_Joystick = new XBoxHelper(Consts.joystickComPort);
 		/// need to put encoder chanels in  
-		fL= new TalonSR(Consts.driveMotorFrontLeft, 0, 0, directionForward, 0, directionForward)
-		rL= new TalonSR(Consts.driveMotorBottomLeft,0,0,);
-		fR= new  TalonSR(Consts.driveMotorFrontRight,0,0,);
-		rR= new TalonSR(Consts.driveMotorBottomRight,0,0,);
+		fL= new TalonSR(Consts.driveMotorFrontLeft, Consts.driveEncoderFrontLeftA, Consts.driveEncoderFrontLeftB, directionForward, directionForward);
+		rL= new TalonSR(Consts.driveMotorBottomLeft,Consts.driveEncoderRearLeftA, Consts.driveEncoderRearLeftB, directionForward, directionForward );
+		fR= new  TalonSR(Consts.driveMotorFrontRight, Consts.driveEncoderFrontRightA,Consts.driveEncoderFrontRightB, directionForward, directionForward);
+		rR= new TalonSR(Consts.driveMotorBottomRight, Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, directionForward, directionForward);
 		
 
 		 rDrive = new RobotDrive(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);

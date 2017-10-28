@@ -7,6 +7,7 @@ public class Consts {
 public static final double motorDriveAdjustment = 1;
 public static final double mecanumPositionConstant = 90;
 public static final double mecanumWheelRadiusInches = 5.9863/2;
+public static final double pulsesPerRevolution = 250;
 
 //Motor PWM Pin assignments
 public static final int driveMotorFrontLeft = 0;
@@ -107,5 +108,6 @@ public static final double kF_velocity = 1.00;
 
 //Auto mecanum constants
 public static final double mecanumSanitizer = 1000;
+public static final double period = 50; //in milleseconds
 
 }

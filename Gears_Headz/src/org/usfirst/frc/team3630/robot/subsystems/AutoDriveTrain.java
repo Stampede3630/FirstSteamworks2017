@@ -11,12 +11,25 @@ public class AutoDriveTrain {
 	private AutoWheelInput p_fL, p_bL, p_fR, p_bR;
 	private AutoWheelInput v_fL, v_bL, v_fR, v_bR;
 	
-	
+	private long startTime;
+
 	public AutoDriveTrain () {
 		positionCalculator = new RobotDrive (p_fL, p_bL, p_fR, p_bR);
 		velocityCalculator = new RobotDrive (v_fL, v_bL, v_fR, v_bR);	
+
 	}
 	
+	public void autoInit () {
+		startTime = System.currentTimeMillis();
+	}
+	public void autoIterative () {
+		double timeElapsed = System.currentTimeMillis() - startTime;
+		timeElapsed = timeElapsed - (timeElapsed % Consts.period); //Rounded to the nearest 50ms
+		timeElapsed /= 100; //Conversion from seconds to milliseconds
+		
+		
+		
+	}
 	
 	public void setPosition (double x) { //This is the current method that will be used, as motion path is only 1D.
 		x/= Consts.mecanumSanitizer; //This makes sure that the values going through the robotdrive remain between -1 and 1

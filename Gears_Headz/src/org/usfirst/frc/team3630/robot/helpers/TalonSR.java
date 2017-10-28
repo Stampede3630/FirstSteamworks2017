@@ -29,11 +29,18 @@ public class TalonSR implements Wheel {
 	private EncoderPIDSource velocityEncoderValues;
 	private PositionToVelocityPIDConverter _velocityAdjuster;
 
-	public TalonSR(int talonPin, int encoderPinA, int encoderPinB, boolean talonReversed, int distPerPulse,
-			boolean encoderReversed) {
+	/**
+	 * @param talonPin	PWM Pin for talon
+	 * @param encoderPinA	encoder pin A
+	 * @param encoderPinB	encoder pin b
+	 * @param talonReversed	does the talon direction need to be reversed?
+	 * @param distPerPulse	
+	 * @param encoderReversed
+	 */
+	public TalonSR(int talonPin, int encoderPinA, int encoderPinB, boolean talonReversed, boolean encoderReversed) {
 
 		_encoder = new Encoder(encoderPinA, encoderPinB, encoderReversed);
-		_encoder.setDistancePerPulse(distPerPulse);
+		_encoder.setDistancePerPulse(Consts.mecanumWheelRadiusInches*2*Math.PI/Consts.pulsesPerRevolution);
 		_encoder.setPIDSourceType(PIDSourceType.kDisplacement);
 
 		_talon = new Talon(talonPin);
