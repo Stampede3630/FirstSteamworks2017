@@ -5,6 +5,8 @@ package org.usfirst.frc.team3630.robot.helpers;
 
 
 
+import org.usfirst.frc.team3630.robot.Consts;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;

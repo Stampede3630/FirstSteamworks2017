@@ -23,15 +23,10 @@ public class DriveTrain {
 	RobotDrive rDrive;
 	
 	public DriveTrain() {
-
-
-		
-	
-		
 		
 		m_Joystick = new XBoxHelper(Consts.joystickComPort);
 		/// need to put encoder chanels in  
-		 fL= new TalonSR(Consts.driveMotorFrontLeft, 0, 0, directionForward, 0, directionForward)
+		fL= new TalonSR(Consts.driveMotorFrontLeft, 0, 0, directionForward, 0, directionForward)
 		rL= new TalonSR(Consts.driveMotorBottomLeft,0,0,);
 		fR= new  TalonSR(Consts.driveMotorFrontRight,0,0,);
 		rR= new TalonSR(Consts.driveMotorBottomRight,0,0,);

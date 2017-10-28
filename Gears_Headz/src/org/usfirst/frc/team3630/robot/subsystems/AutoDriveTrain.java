@@ -2,7 +2,6 @@ package org.usfirst.frc.team3630.robot.subsystems;
 
 import org.usfirst.frc.team3630.robot.Consts;
 import org.usfirst.frc.team3630.robot.helpers.AutoWheelInput;
-
 import edu.wpi.first.wpilibj.RobotDrive;
 
 public class AutoDriveTrain {
@@ -19,12 +18,13 @@ public class AutoDriveTrain {
 	}
 	
 	
-	public void setPosition (double x) {
-		x/= Consts.mecanumSanitizer;
+	public void setPosition (double x) { //This is the current method that will be used, as motion path is only 1D.
+		x/= Consts.mecanumSanitizer; //This makes sure that the values going through the robotdrive remain between -1 and 1
 		
 		positionCalculator.mecanumDrive_Cartesian(x, 0,0,0);
 	}
-	public void setPosition (double x, double y, double rotation) {
+	
+	public void setPosition (double x, double y, double rotation) { //This may be used in the future for 2D motion.\
 		x/= Consts.mecanumSanitizer;
 		y/= Consts.mecanumSanitizer;
 		rotation /= Consts.mecanumSanitizer;
