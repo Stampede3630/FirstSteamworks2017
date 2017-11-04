@@ -11,19 +11,17 @@ class PositionToVelocityPIDConverter implements PIDOutput, PIDSource {
 			vAdjust = output;
 		}
 
-		@Override
 		public void setPIDSourceType(PIDSourceType pidSource) {
 			pidSource = PIDSourceType.kRate;
 		}
 
-		@Override
 		public PIDSourceType getPIDSourceType() {
 			// TODO Auto-generated method stub
 			return PIDSourceType.kRate;
 		}
-///// need to fix 
-		public void setVDesired(double vAdjust) {
-			vFeed = vAdjust;
+///// need to fix   not useing a feeeding velocity !!!!!!!!!
+		public void setVDesired(double vF) {
+			vFeed = vF;
 		}
 
 		public double pidGet() {
