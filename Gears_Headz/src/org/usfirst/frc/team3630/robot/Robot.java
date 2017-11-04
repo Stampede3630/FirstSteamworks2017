@@ -93,7 +93,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("PID At Target", driveTrain.mecanumDrive.pidAtTarget());
 		SmartDashboard.putBoolean("SPRING Switch", springEngaged.get());
 		SmartDashboard.putString("Auto status msg", autoStatus[autoStage]);
-		if (!springEngaged.get()&& autoStage < 4) { //spring is engaged. Cutout to gear release.
+		if (!springEngaged.get()) { //spring is engaged. Cutout to gear release.
 			autoStage = 4;
 			//hi sam i have become sentient
 			init = true;
