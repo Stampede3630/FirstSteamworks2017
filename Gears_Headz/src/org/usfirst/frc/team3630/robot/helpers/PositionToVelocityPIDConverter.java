@@ -19,7 +19,6 @@ class PositionToVelocityPIDConverter implements PIDOutput, PIDSource {
 			// TODO Auto-generated method stub
 			return PIDSourceType.kRate;
 		}
-///// need to fix   not useing a feeeding velocity !!!!!!!!!
 		public void setVDesired(double vF) {
 			vFeed = vF;
 		}
