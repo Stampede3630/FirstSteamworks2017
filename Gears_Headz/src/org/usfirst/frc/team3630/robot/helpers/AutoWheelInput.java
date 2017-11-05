@@ -4,11 +4,20 @@ import edu.wpi.first.wpilibj.PIDController;
 import org.usfirst.frc.team3630.robot.Consts;
 
 
+/**
+ * @author aronsa
+ * AutoWheelInput is used to convert the robotDrive values for position and velocity to PID setpoints
+ */
+
 public class AutoWheelInput implements SpeedController {
 	private  PIDController _pid ;
 	private double setSpeed; 
 	private int speedK; //used for inversion
  
+	/**
+	 * constructor for converter of the robotDrive values for position and velocity to PID setpoints
+	 * @param pid PID controller for wheel position or velocity
+	 */
 	public AutoWheelInput (PIDController pid) {
 		speedK = 1;
 		_pid = pid;
@@ -17,7 +26,7 @@ public class AutoWheelInput implements SpeedController {
 		//Will not be used.
 	}
 
-	public double get() {
+	public double get()  {
 		if(setSpeed ==_pid.getSetpoint())
 			return setSpeed;
 		else
