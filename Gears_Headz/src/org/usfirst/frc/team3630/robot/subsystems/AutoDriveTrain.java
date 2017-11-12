@@ -4,13 +4,14 @@ import org.usfirst.frc.team3630.robot.Consts;
 import org.usfirst.frc.team3630.robot.helpers.AutoPaths;
 import org.usfirst.frc.team3630.robot.helpers.AutoWheelInput;
 import org.usfirst.frc.team3630.robot.helpers.Wheel;
+import org.usfirst.frc.team3630.robot.helpers.TalonSR;
 import edu.wpi.first.wpilibj.RobotDrive;
 
 public class AutoDriveTrain {
 	private RobotDrive positionCalculator;
 	private RobotDrive velocityCalculator;
 	
-	private AutoWheelInput p_fL, o_rL, p_fR, p_rR;
+	private AutoWheelInput p_fL, p_rL, p_fR, p_rR;
 	private AutoWheelInput v_fL, v_rL, v_fR, v_rR;
 	
 	private long startTime;
@@ -34,8 +35,19 @@ public class AutoDriveTrain {
 	
 	public void autoInit () {
 		startTime = System.currentTimeMillis();
+		p_fL.enable();
+		p_rL.enable();
+		p_fR.enable();
+		p_rR.enable();
+		v_fL.enable();
+		v_rL.enable();
+		v_fR.enable();
+		v_rR.enable();
+		
+		
+		
 	}
-	public void autoIterative () {
+	public  void autoIterative () {
 		double timeElapsed = System.currentTimeMillis() - startTime;
 		timeElapsed = timeElapsed - (timeElapsed % Consts.period); //Rounded to the nearest 50ms
 		timeElapsed /= 100; //Conversion from seconds to milliseconds
@@ -79,6 +91,10 @@ public class AutoDriveTrain {
 		rotation /= Consts.mecanumSanitizer;
 
 		velocityCalculator.mecanumDrive_Cartesian(x, y, rotation, 0);
+	}
+	
+	public void resetDriveTrain() {
+		
 	}
 	
 }

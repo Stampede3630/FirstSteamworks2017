@@ -67,7 +67,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
+			driveTrain.autoInit();
 		
 	}
 
@@ -76,6 +76,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		driveTrain.autoPeriodic();ß
 		
 		}
 		

@@ -21,10 +21,10 @@ public class DriveTrain {
 	TalonSR fL, rL, fR, rR;
 	boolean directionForward = false;
 	RobotDrive rDrive;
-	AutoDriveTrain autoDriveTrain;
+	AutoDriveTrain autoDrive;
 	
 	public DriveTrain() {
-		autoDriveTrain = new AutoDriveTrain();
+		autoDrive = new AutoDriveTrain(fL, fL, fL, fL);
 		
 		m_Joystick = new XBoxHelper(Consts.joystickComPort);
 		/// need to put encoder chanels in  
@@ -74,6 +74,18 @@ public class DriveTrain {
 		
 			rDrive.mecanumDrive_Cartesian(m_Joystick.getX(), m_Joystick.getY(), m_Joystick.getRoundTwist(),0);
 		}
+	
+	public void autoPeriodic(){
+		autoDrive.autoIterative ();
+	}
+	
+	public void autoInit() {
+		autoDrive.autoInit();
+		fL.resetEncoder();
+		rL.resetEncoder();
+		fR.resetEncoder();
+		rR.resetEncoder();
+	}
 	}
 
 
