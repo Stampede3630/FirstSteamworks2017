@@ -18,12 +18,7 @@ public interface Wheel {
 	 */
 	public void setMode (boolean PIDControl);
 	
-	/**
-	 * Sets velocity in wheel power
-	 * @param velocity desired velocity
-	 */
-	 public void setVelocity (int velocity);
-	 
+	
 	 /**
 	  * gets the position of the encoder
 	  * @return position of the encoder in defined units

@@ -5,6 +5,8 @@ import org.usfirst.frc.team3630.robot.helpers.AutoPaths;
 import org.usfirst.frc.team3630.robot.helpers.AutoWheelInput;
 import org.usfirst.frc.team3630.robot.helpers.Wheel;
 import org.usfirst.frc.team3630.robot.helpers.TalonSR;
+import org.usfirst.frc.team3630.robot.helpers.VelocitySetter;
+
 import edu.wpi.first.wpilibj.RobotDrive;
 
 public class AutoDriveTrain {
@@ -12,7 +14,7 @@ public class AutoDriveTrain {
 	private RobotDrive velocityCalculator;
 	
 	private AutoWheelInput p_fL, p_rL, p_fR, p_rR;
-	private AutoWheelInput v_fL, v_rL, v_fR, v_rR;
+	private VelocitySetter v_fL, v_rL, v_fR, v_rR;
 	
 	private long startTime;
 
@@ -23,10 +25,10 @@ public class AutoDriveTrain {
 		AutoWheelInput p_fR = new AutoWheelInput (fR.getPositionPIDController());
 		AutoWheelInput p_bR = new AutoWheelInput (rR.getPositionPIDController());
 		
-		AutoWheelInput v_fL = new AutoWheelInput (fL.getVelocityPIDController());
-		AutoWheelInput v_bL = new AutoWheelInput (rL.getVelocityPIDController());
-		AutoWheelInput v_fR = new AutoWheelInput (fR.getVelocityPIDController());
-		AutoWheelInput v_bR = new AutoWheelInput (rR.getVelocityPIDController());
+		AutoWheelInput v_fL = new VelocitySetter (fL.getVelocityPIDController());
+		AutoWheelInput v_bL = new VelocitySetter (rL.getVelocityPIDController());
+		AutoWheelInput v_fR = new VelocitySetter (fR.getVelocityPIDController());
+		AutoWheelInput v_bR = new VelocitySetter (rR.getVelocityPIDController());
 		
 		positionCalculator = new RobotDrive (p_fL, p_bL, p_fR, p_bR);
 		velocityCalculator = new RobotDrive (v_fL, v_bL, v_fR, v_bR);	

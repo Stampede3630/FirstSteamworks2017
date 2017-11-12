@@ -27,7 +27,7 @@ public class TalonSR implements Wheel {
 	
 	/// need to define Alt Encoder PID and Velocity Adjuster
 	private EncoderPIDSource velocityEncoderValues;
-	private PositionToVelocityPIDConverter _velocityAdjuster;
+	private VelocitySetter _velocitySetter;
 
 	/**
 	 * @param talonPin	PWM Pin for talon
@@ -48,8 +48,23 @@ public class TalonSR implements Wheel {
 
 		velocityEncoderValues = new EncoderPIDSource(_encoder, PIDSourceType.kRate);
 
-		vPID = new PIDController(Consts.kP_velocity, Consts.kI_velocity, Consts.kD_velocity, Consts.kF_velocity,  _velocityAdjuster, _talon);
-		pPID = new PIDController(Consts.kP_position, Consts.kI_position, Consts.kD_position, Consts.kF_position, _encoder, _velocityAdjuster);
+		pPID = new PIDController(Consts.kP_position, Consts.kI_position, Consts.kD_position, Consts.kF_position, _encoder, _velocitySetter);
+		vPID = new PIDController(Consts.kP_velocity, Consts.kI_velocity, Consts.kD_velocity, Consts.kF_velocity,  velocityEncoderValues, _talon);
+		
+		/*The flow of PID goes as follows:
+		 * 
+		 * 	Encoder Position (PIDSource) ->	|Position PID| <- Position AutoPath (setpoint)
+		 * 											|	position adjustment (PIDWrite)
+		 * 											v
+		 * 									|Velocity Setter| <- Velocity AutoPath
+		 * 											|	setpoint
+		 * 											------------
+		 * 														|
+		 * Encoder Velocity (PIDSource) ->	|Velocity PID| <----- (setpoint)
+		 * 											|(PIDWrite)
+		 * 											v
+		 * 											Talon 
+		 */
 
 	}
 
@@ -74,10 +89,6 @@ public class TalonSR implements Wheel {
 	 * 
 	 * @see org.usfirst.frc.team3630.robot.Wheel#setVelocity(int)
 	 */
-	@Override
-	public void setVelocity(int velocity) {
-		_velocityAdjuster.setVDesired(velocity);
-	}
 
 	/*
 	 * (non-Javadoc)

@@ -27,10 +27,7 @@ public class AutoWheelInput implements SpeedController {
 	}
 
 	public double get()  {
-		if(setSpeed ==_pid.getSetpoint())
 			return setSpeed;
-		else
-			return -1; //There is a problem at this point, as the PIDcontroller isn't updating
 	}
 
 	public void set(double speed) {
