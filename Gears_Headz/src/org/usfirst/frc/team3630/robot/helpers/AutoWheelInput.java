@@ -34,8 +34,8 @@ public class AutoWheelInput implements SpeedController {
 	}
 
 	public void set(double speed) {
-		setSpeed = speed;
-		_pid.setSetpoint(setSpeed * Consts.mecanumSanitizer); //Used to make sure that the sanitization isn't activated beforehand
+		setSpeed = speed * Consts.mecanumSanitizer;
+		_pid.setSetpoint(setSpeed); //Used to make sure that the sanitization isn't activated beforehand
 		if(!_pid.isEnabled()) enable();
 	}
 
