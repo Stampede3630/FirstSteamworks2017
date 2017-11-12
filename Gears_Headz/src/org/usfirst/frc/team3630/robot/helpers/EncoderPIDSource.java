@@ -20,19 +20,19 @@ class EncoderPIDSource implements PIDSource {
 			_PIDSourceType = pidSourceType;
 		}
 
-		@Override
+
 		public void setPIDSourceType(PIDSourceType pidSource) {
 
 			_PIDSourceType = pidSource;
 
 		}
 
-		@Override
+
 		public PIDSourceType getPIDSourceType() {
 			return _PIDSourceType;
 		}
 
-		@Override
+
 		public double pidGet() {
 			if (PIDSourceType.kDisplacement.equals(_PIDSourceType)) {
 				return _e.getDistance();

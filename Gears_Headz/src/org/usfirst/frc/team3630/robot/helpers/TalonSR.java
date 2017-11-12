@@ -95,7 +95,7 @@ public class TalonSR implements Wheel {
 	 * 
 	 * @see org.usfirst.frc.team3630.robot.Wheel#getEncoderPosition()
 	 */
-	@Override
+	
 	public double getEncoderPosition() {
 		return _encoder.getDistance();
 	}

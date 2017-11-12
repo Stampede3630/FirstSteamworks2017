@@ -27,7 +27,7 @@ public class DriveTrain {
 		autoDrive = new AutoDriveTrain(fL, fL, fL, fL);
 		
 		m_Joystick = new XBoxHelper(Consts.joystickComPort);
-		/// need to put encoder chanels in  
+ 
 		fL= new TalonSR(Consts.driveMotorFrontLeft, Consts.driveEncoderFrontLeftA, Consts.driveEncoderFrontLeftB, directionForward, directionForward);
 		rL= new TalonSR(Consts.driveMotorBottomLeft,Consts.driveEncoderRearLeftA, Consts.driveEncoderRearLeftB, directionForward, directionForward );
 		fR= new  TalonSR(Consts.driveMotorFrontRight, Consts.driveEncoderFrontRightA,Consts.driveEncoderFrontRightB, directionForward, directionForward);
@@ -39,12 +39,12 @@ public class DriveTrain {
 	
 		
 		
-		//SmartDashboard.putBoolean("Auto Control", false);
+
 	
 
 
 	public void teleopInit() {
-		/// reset encoders 
+		 
 	}
 
 	public void telopPeriodic() {
@@ -69,9 +69,9 @@ public class DriveTrain {
 
 			
 			
-	/// need to figure out NAVX inputs 
 			
-		
+			
+	/// verify TELOP Drive train works WPILB mcanum drive has ben sketcy in past 	
 			rDrive.mecanumDrive_Cartesian(m_Joystick.getX(), m_Joystick.getY(), m_Joystick.getRoundTwist(),0);
 		}
 	
