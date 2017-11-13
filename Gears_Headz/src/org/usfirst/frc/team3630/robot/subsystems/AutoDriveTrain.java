@@ -14,6 +14,8 @@ public class AutoDriveTrain {
 	private RobotDrive velocityCalculator;
 	
 	private AutoWheelInput p_fL, p_rL, p_fR, p_rR;
+	
+	// Neec to define velocity setter
 	private VelocitySetter v_fL, v_rL, v_fR, v_rR;
 	
 	private long startTime;
