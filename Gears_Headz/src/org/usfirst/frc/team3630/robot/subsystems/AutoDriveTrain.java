@@ -7,6 +7,7 @@ import org.usfirst.frc.team3630.robot.helpers.Wheel;
 import org.usfirst.frc.team3630.robot.helpers.TalonSR;
 import org.usfirst.frc.team3630.robot.helpers.VelocitySetter;
 
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotDrive;
 
 public class AutoDriveTrain {
@@ -16,29 +17,41 @@ public class AutoDriveTrain {
 	private AutoWheelInput p_fL, p_rL, p_fR, p_rR;
 	
 	// Neec to define velocity setter
-	private VelocitySetter v_fL, v_rL, v_fR, v_rR;
+	public VelocitySetter v_fL, v_rL, v_fR, v_rR;
 	
 	private long startTime;
 
-	public AutoDriveTrain (Wheel fL, Wheel fR, Wheel rL, Wheel rR) {
+	public AutoDriveTrain () {
 		
-		AutoWheelInput p_fL = new AutoWheelInput (fL.getPositionPIDController());
-		AutoWheelInput p_bL = new AutoWheelInput (rL.getPositionPIDController());
-		AutoWheelInput p_fR = new AutoWheelInput (fR.getPositionPIDController());
-		AutoWheelInput p_bR = new AutoWheelInput (rR.getPositionPIDController());
+		AutoWheelInput p_fL = new AutoWheelInput ();
+		AutoWheelInput p_rL = new AutoWheelInput ();
+		AutoWheelInput p_fR = new AutoWheelInput ();
+		AutoWheelInput p_rR = new AutoWheelInput ();
 		
-		AutoWheelInput v_fL = new VelocitySetter (fL.getVelocityPIDController());
-		AutoWheelInput v_bL = new VelocitySetter (rL.getVelocityPIDController());
-		AutoWheelInput v_fR = new VelocitySetter (fR.getVelocityPIDController());
-		AutoWheelInput v_bR = new VelocitySetter (rR.getVelocityPIDController());
+		AutoWheelInput v_fL = new VelocitySetter ();
+		AutoWheelInput v_rL = new VelocitySetter ();
+		AutoWheelInput v_fR = new VelocitySetter ();
+		AutoWheelInput v_rR = new VelocitySetter ();
 		
-		positionCalculator = new RobotDrive (p_fL, p_bL, p_fR, p_bR);
-		velocityCalculator = new RobotDrive (v_fL, v_bL, v_fR, v_bR);	
+		positionCalculator = new RobotDrive (p_fL, p_rL, p_fR, p_rR);
+		velocityCalculator = new RobotDrive (v_fL, v_rL, v_fR, v_rR);	
 
 	}
 	
-	public void autoInit () {
+	public void autoInit (PIDController  pfL, PIDController prL, PIDController pfR, PIDController prR,PIDController vfL,PIDController  vrL, PIDController vfR, PIDController vrR ) {
 		startTime = System.currentTimeMillis();
+		
+		p_fL.setPIDController(pfL);
+		p_rL.setPIDController(prL);
+		p_fR.setPIDController(pfR);
+		p_rR.setPIDController(prR);
+		
+		v_fL.setPIDController(vfL);
+		v_fR.setPIDController(vfR);
+		v_rL.setPIDController(vrL);
+		v_rR.setPIDController(vrR);
+		
+	
 		p_fL.enable();
 		p_rL.enable();
 		p_fR.enable();
@@ -47,6 +60,7 @@ public class AutoDriveTrain {
 		v_rL.enable();
 		v_fR.enable();
 		v_rR.enable();
+		
 		
 		
 		

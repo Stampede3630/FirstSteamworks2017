@@ -28,6 +28,8 @@ public class TalonSR implements Wheel {
 	/// need to define Alt Encoder PID and Velocity Adjuster
 	private EncoderPIDSource velocityEncoderValues;
 	private VelocitySetter _velocitySetter;
+	
+
 
 	/**
 	 * @param talonPin	PWM Pin for talon
@@ -37,7 +39,7 @@ public class TalonSR implements Wheel {
 	 * @param distPerPulse	
 	 * @param encoderReversed
 	 */
-	public TalonSR(int talonPin, int encoderPinA, int encoderPinB, boolean talonReversed, boolean encoderReversed) {
+	public TalonSR(int talonPin, int encoderPinA, int encoderPinB, boolean talonReversed, boolean encoderReversed, VelocitySetter velocitySetter) {
 
 		_encoder = new Encoder(encoderPinA, encoderPinB, encoderReversed);
 		_encoder.setDistancePerPulse(Consts.mecanumWheelRadiusInches*2*Math.PI/Consts.pulsesPerRevolution);
@@ -45,12 +47,15 @@ public class TalonSR implements Wheel {
 
 		_talon = new Talon(talonPin);
 		_talon.setInverted(talonReversed);
-
+		
+		_velocitySetter = velocitySetter;
+		
 		velocityEncoderValues = new EncoderPIDSource(_encoder, PIDSourceType.kRate);
 
 		pPID = new PIDController(Consts.kP_position, Consts.kI_position, Consts.kD_position, Consts.kF_position, _encoder, _velocitySetter);
+		pPID.disable();
 		vPID = new PIDController(Consts.kP_velocity, Consts.kI_velocity, Consts.kD_velocity, Consts.kF_velocity,  velocityEncoderValues, _talon);
-		
+		vPID.disable();
 		/*The flow of PID goes as follows:
 		 * 
 		 * 	Encoder Position (PIDSource) ->	|Position PID| <- Position AutoPath (setpoint)

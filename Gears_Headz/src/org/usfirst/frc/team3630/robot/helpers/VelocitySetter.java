@@ -15,16 +15,24 @@ public class VelocitySetter extends AutoWheelInput implements PIDOutput {
 		super(pid);
 		_pid = pid;
 	}
-
 	
+	public VelocitySetter () {
+		super ();
+	}
+	
+	public void setPIDController (PIDController pid) {
+		_pid = pid;
+	}
 	public void pidWrite(double output) {
 		positionAdjustment = output;
 	}
 	
 	public void set(double speed) {
-		setSpeed = speed * Consts.mecanumSanitizer; //Used to make sure that the sanitization isn't activated beforehand
-		_pid.setSetpoint(setSpeed + positionAdjustment); //Added position adjustment from position PID controller
-		if(!_pid.isEnabled()) enable();
+		if(_pid != null) {
+		setSpeed = speed * Consts.mecanumSanitizer + positionAdjustment;
+		_pid.setSetpoint(setSpeed); //Used to make sure that the sanitization isn't activated beforehand
+	}
+		else System.out.println("!!!! PID Controller Set ignored due to improper initialization !!!!");
 	}
 
 }

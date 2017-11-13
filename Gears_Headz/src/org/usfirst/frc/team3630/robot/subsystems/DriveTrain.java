@@ -24,15 +24,16 @@ public class DriveTrain {
 	AutoDriveTrain autoDrive;
 	
 	public DriveTrain() {
-		autoDrive = new AutoDriveTrain(fL, fL, fL, fL);
-		
+		/// init velocity setter  and auto wheel input
+		autoDrive = new AutoDriveTrain();
 		m_Joystick = new XBoxHelper(Consts.joystickComPort);
  
-		fL= new TalonSR(Consts.driveMotorFrontLeft, Consts.driveEncoderFrontLeftA, Consts.driveEncoderFrontLeftB, directionForward, directionForward);
-		rL= new TalonSR(Consts.driveMotorBottomLeft,Consts.driveEncoderRearLeftA, Consts.driveEncoderRearLeftB, directionForward, directionForward );
-		fR= new  TalonSR(Consts.driveMotorFrontRight, Consts.driveEncoderFrontRightA,Consts.driveEncoderFrontRightB, directionForward, directionForward);
-		rR= new TalonSR(Consts.driveMotorBottomRight, Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, directionForward, directionForward);
-		
+		fL= new TalonSR(Consts.driveMotorFrontLeft, Consts.driveEncoderFrontLeftA, Consts.driveEncoderFrontLeftB, directionForward, directionForward, autoDrive.v_fL );
+		rL= new TalonSR(Consts.driveMotorBottomLeft,Consts.driveEncoderRearLeftA, Consts.driveEncoderRearLeftB, directionForward, directionForward , autoDrive.v_rL);
+		fR= new  TalonSR(Consts.driveMotorFrontRight, Consts.driveEncoderFrontRightA,Consts.driveEncoderFrontRightB, directionForward, directionForward, autoDrive.v_fR);
+		rR= new TalonSR(Consts.driveMotorBottomRight, Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, directionForward, directionForward, autoDrive.v_rR);
+	
+
 
 		rDrive = new RobotDrive(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
 		}
@@ -80,7 +81,7 @@ public class DriveTrain {
 	}
 	
 	public void autoInit() {
-		autoDrive.autoInit();
+		autoDrive.autoInit(fL.pPID,rL.pPID,fR.pPID,rR.pPID, fL.vPID, rL.vPID, fR.vPID,rR.vPID);
 		fL.resetEncoder();
 		rL.resetEncoder();
 		fR.resetEncoder();

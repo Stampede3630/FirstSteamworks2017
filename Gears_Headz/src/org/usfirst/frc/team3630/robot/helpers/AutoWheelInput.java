@@ -22,6 +22,15 @@ public class AutoWheelInput implements SpeedController {
 		speedK = 1;
 		_pid = pid;
 	}
+	
+	public AutoWheelInput () {
+		speedK = 1;
+	}
+	
+	public void setPIDController (PIDController pid) {
+		_pid = pid;
+	}
+	
 	public void pidWrite(double output) {
 		//Will not be used.
 	}
@@ -31,9 +40,12 @@ public class AutoWheelInput implements SpeedController {
 	}
 
 	public void set(double speed) {
+		if(_pid != null) {
 		setSpeed = speed * Consts.mecanumSanitizer;
 		_pid.setSetpoint(setSpeed); //Used to make sure that the sanitization isn't activated beforehand
 		if(!_pid.isEnabled()) enable();
+	}
+		else System.out.println("!!!! PID Controller Set ignored due to improper initialization !!!!");
 	}
 
 	public void setInverted(boolean isInverted) {
