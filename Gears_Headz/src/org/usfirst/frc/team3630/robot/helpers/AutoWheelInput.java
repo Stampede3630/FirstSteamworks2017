@@ -45,7 +45,7 @@ public class AutoWheelInput implements SpeedController {
 		_pid.setSetpoint(setSpeed); //Used to make sure that the sanitization isn't activated beforehand
 		if(!_pid.isEnabled()) enable();
 	}
-		else System.out.println("!!!! PID Controller Set ignored due to improper initialization !!!!");
+		else System.out.println("!!!! PID Controller Set autoWheel Input ignored due to improper initialization !!!!");
 	}
 
 	public void setInverted(boolean isInverted) {

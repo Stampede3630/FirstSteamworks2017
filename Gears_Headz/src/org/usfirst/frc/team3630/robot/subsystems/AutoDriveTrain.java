@@ -40,7 +40,7 @@ public class AutoDriveTrain {
 	
 	public void autoInit (PIDController  pfL, PIDController prL, PIDController pfR, PIDController prR,PIDController vfL,PIDController  vrL, PIDController vfR, PIDController vrR ) {
 		startTime = System.currentTimeMillis();
-		
+		/// set motors to PID controlors 
 		p_fL.setPIDController(pfL);
 		p_rL.setPIDController(prL);
 		p_fR.setPIDController(pfR);
@@ -51,7 +51,7 @@ public class AutoDriveTrain {
 		v_rL.setPIDController(vrL);
 		v_rR.setPIDController(vrR);
 		
-	
+	// enable pid contrpp;;ers
 		p_fL.enable();
 		p_rL.enable();
 		p_fR.enable();

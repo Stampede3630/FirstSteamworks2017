@@ -11,8 +11,16 @@ public class VelocitySetter extends AutoWheelInput implements PIDOutput {
 	double setSpeed;
 	
 	PIDController _pid;
+	
+	//we are setting a PID controller to a pid controller. Dosn't make scene to me. This PID controlller not 
+	// This could cause us to return null
 	public VelocitySetter(PIDController pid) {
-		super(pid);
+	// we don't fully define a new pid
+	// = new PID controller, and i don't think using super is working given that it isn't null anymore
+	//pid= new super(PIDController());
+		// wouldn't it need more defintion
+		// 
+		pid= new PIDController();
 		_pid = pid;
 	}
 	
