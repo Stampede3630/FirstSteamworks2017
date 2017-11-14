@@ -34,8 +34,8 @@ public class DriveTrain {
 		rR= new TalonSR(Consts.driveMotorBottomRight, Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, directionForward, directionForward, autoDrive.v_rR);
 	
 
-
-		rDrive = new RobotDrive(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
+		// barphing over this I comited it out
+		//rDrive = new RobotDrive(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
 		}
 	
 		
@@ -73,7 +73,7 @@ public class DriveTrain {
 			
 			
 	/// verify TELOP Drive train works WPILB mcanum drive has ben sketcy in past 	
-			rDrive.mecanumDrive_Cartesian(m_Joystick.getX(), m_Joystick.getY(), m_Joystick.getRoundTwist(),0);
+			//rDrive.mecanumDrive_Cartesian(m_Joystick.getX(), m_Joystick.getY(), m_Joystick.getRoundTwist(),0);
 		}
 	
 	public void autoPeriodic(){
