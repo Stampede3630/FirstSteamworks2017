@@ -49,6 +49,9 @@ public class TalonSR implements Wheel {
 		_talon.setInverted(talonReversed);
 		
 		_velocitySetter = velocitySetter;
+		/// neeed to define velocity set object like Enccoder PID source otherwise I think  it will still return null . We never define velocity setter object  fully
+		// I think we should try line 54 
+		// _velocitySetter = new VelocitySetter();
 		
 		velocityEncoderValues = new EncoderPIDSource(_encoder, PIDSourceType.kRate);
 
