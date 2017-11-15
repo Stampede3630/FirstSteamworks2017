@@ -23,12 +23,11 @@ public class AutoWheelInput implements SpeedController {
 		_pid = pid;
 	}
 	
-	public AutoWheelInput () {
-		speedK = 1;
-	}
+	
 	
 	public void setPIDController (PIDController pid) {
 		_pid = pid;
+
 	}
 	
 	public void pidWrite(double output) {
@@ -36,6 +35,7 @@ public class AutoWheelInput implements SpeedController {
 	}
 
 	public double get()  {
+
 			return setSpeed;
 	}
 

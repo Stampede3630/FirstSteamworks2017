@@ -82,8 +82,8 @@ public class Robot extends IterativeRobot {
 		driveTrain.telopPeriodic();
 		// rightFrontEnc.get();
 		// ultraDistance.sensorPeriodic();
-		winch.telopPeriodic();
-		gears.telopPeridic();
+		//winch.telopPeriodic();
+		//gears.telopPeridic();
 
 	}
 

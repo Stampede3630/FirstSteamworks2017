@@ -35,7 +35,7 @@ public class DriveTrain {
 	
 
 		// barphing over this I comited it out
-		//rDrive = new RobotDrive(Consts.driveMotorFrontLeft, Consts.driveMotorBottomLeft,Consts.driveMotorFrontRight, Consts.driveMotorBottomRight);
+	//rDrive = new RobotDrive(0,1,2,3);
 		}
 	
 		
@@ -77,11 +77,15 @@ public class DriveTrain {
 		}
 	
 	public void autoPeriodic(){
+		System.out.println(" auto intit");
 		autoDrive.autoIterative ();
+		
 	}
 	
 	public void autoInit() {
+		
 		autoDrive.autoInit(fL.pPID,rL.pPID,fR.pPID,rR.pPID, fL.vPID, rL.vPID, fR.vPID,rR.vPID);
+		System.out.println("init atuo succesfully !!");
 		fL.resetEncoder();
 		rL.resetEncoder();
 		fR.resetEncoder();
