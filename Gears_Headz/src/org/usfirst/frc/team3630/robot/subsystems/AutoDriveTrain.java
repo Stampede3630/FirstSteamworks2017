@@ -53,15 +53,14 @@ public class AutoDriveTrain {
 		v_rR.setPIDController(vrR);
 		System.out.println("(4) Did follow-up initialization for velocitysetters and autowheelinputs.");
 	// enable pid controllers
-		p_fL.enable();
-		p_rL.enable();
-		p_fR.enable();
-		p_rR.enable();
-
-		v_fL.enable();
-		v_rL.enable();
-		v_fR.enable();
-		v_rR.enable();
+		pfL.enable();
+		prL.enable();
+		pfR.enable();
+		prR.enable();
+		vfL.enable();
+		vfR.enable();
+		vrL.enable();
+		vrR.enable();
 		
 		
 		

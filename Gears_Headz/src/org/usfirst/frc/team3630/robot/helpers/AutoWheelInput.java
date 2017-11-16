@@ -45,7 +45,7 @@ public class AutoWheelInput implements SpeedController {
 		if(_pid != null) {
 		setSpeed = speed * Consts.mecanumSanitizer;
 		_pid.setSetpoint(setSpeed); //Used to make sure that the sanitization isn't activated beforehand
-		if(!_pid.isEnabled()) enable();
+
 	}
 		else System.out.println("!!!! PID Controller Set autoWheel Input ignored due to improper initialization !!!!");
 	}
@@ -67,9 +67,6 @@ public class AutoWheelInput implements SpeedController {
 		
 	}
 	
-	public void enable() {
-		_pid.enable();
-	}
 
 	public void stopMotor() {
 		/// set motors to 0 
