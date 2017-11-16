@@ -25,17 +25,24 @@ public class DriveTrain {
 	
 	public DriveTrain() {
 		/// init velocity setter  and auto wheel input
+		//STEPS 1 and 2
 		autoDrive = new AutoDriveTrain();
 		m_Joystick = new XBoxHelper(Consts.joystickComPort);
  
 		fL= new TalonSR(Consts.driveMotorFrontLeft, Consts.driveEncoderFrontLeftA, Consts.driveEncoderFrontLeftB, directionForward, directionForward, autoDrive.v_fL );
 		rL= new TalonSR(Consts.driveMotorBottomLeft,Consts.driveEncoderRearLeftA, Consts.driveEncoderRearLeftB, directionForward, directionForward , autoDrive.v_rL);
-		fR= new  TalonSR(Consts.driveMotorFrontRight, Consts.driveEncoderFrontRightA,Consts.driveEncoderFrontRightB, directionForward, directionForward, autoDrive.v_fR);
+		fR= new TalonSR(Consts.driveMotorFrontRight, Consts.driveEncoderFrontRightA,Consts.driveEncoderFrontRightB, directionForward, directionForward, autoDrive.v_fR);
 		rR= new TalonSR(Consts.driveMotorBottomRight, Consts.driveEncoderRearRightA, Consts.driveEncoderRearRightB, directionForward, directionForward, autoDrive.v_rR);
-	
+		System.out.println("(3) created PID controllers within Talons."); 
 
-		// barphing over this I comited it out
-	//rDrive = new RobotDrive(0,1,2,3);
+		//This is step 4
+		autoDrive.followUp(fL.pPID,rL.pPID,fR.pPID,rR.pPID, fL.vPID, rL.vPID, fR.vPID,rR.vPID);
+		
+		System.out.println("init atuo succesfully !!");
+		fL.resetEncoder();
+		rL.resetEncoder();
+		fR.resetEncoder();
+		rR.resetEncoder();
 		}
 	
 		
@@ -83,13 +90,6 @@ public class DriveTrain {
 	}
 	
 	public void autoInit() {
-		
-		autoDrive.autoInit(fL.pPID,rL.pPID,fR.pPID,rR.pPID, fL.vPID, rL.vPID, fR.vPID,rR.vPID);
-		System.out.println("init atuo succesfully !!");
-		fL.resetEncoder();
-		rL.resetEncoder();
-		fR.resetEncoder();
-		rR.resetEncoder();
 	}
 	}
 

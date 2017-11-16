@@ -51,7 +51,6 @@ public class TalonSR implements Wheel {
 		_velocitySetter = velocitySetter;
 		/// neeed to define velocity set object like Enccoder PID source otherwise I think  it will still return null . We never define velocity setter object  fully
 		// I think we should try line 54 
-		_velocitySetter = new VelocitySetter(pPID);
 		
 		velocityEncoderValues = new EncoderPIDSource(_encoder, PIDSourceType.kRate);
 
@@ -59,6 +58,7 @@ public class TalonSR implements Wheel {
 		pPID.disable();
 		vPID = new PIDController(Consts.kP_velocity, Consts.kI_velocity, Consts.kD_velocity, Consts.kF_velocity,  velocityEncoderValues, _talon);
 		vPID.disable();
+		
 		/*The flow of PID goes as follows:
 		 * 
 		 * 	Encoder Position (PIDSource) ->	|Position PID| <- Position AutoPath (setpoint)

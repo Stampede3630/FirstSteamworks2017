@@ -3,8 +3,6 @@ package org.usfirst.frc.team3630.robot.subsystems;
 import org.usfirst.frc.team3630.robot.Consts;
 import org.usfirst.frc.team3630.robot.helpers.AutoPaths;
 import org.usfirst.frc.team3630.robot.helpers.AutoWheelInput;
-import org.usfirst.frc.team3630.robot.helpers.Wheel;
-import org.usfirst.frc.team3630.robot.helpers.TalonSR;
 import org.usfirst.frc.team3630.robot.helpers.VelocitySetter;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -14,40 +12,36 @@ public class AutoDriveTrain {
 	private RobotDrive positionCalculator;
 	private RobotDrive velocityCalculator;
 	
-	public AutoWheelInput p_fL;
-	
-	public AutoWheelInput p_rL;
-	public AutoWheelInput  p_rR;
-	public AutoWheelInput	p_fR;
-	// Neec to define velocity setter
+	public AutoWheelInput p_fL, p_rL, p_rR, p_fR;
 	public VelocitySetter v_fL, v_rL, v_fR, v_rR;
-	
 	private long startTime;
-	// fixed this you made thees local varibles when you were init them
-	// neeed to put a pid controller in them 
+	
 	public AutoDriveTrain () {
 		//constr null neer put in  a pid controller
-		 p_fL = new AutoWheelInput (null);
-		p_rL = new AutoWheelInput (null);
-		p_fR = new AutoWheelInput (null);
-		p_rR = new AutoWheelInput (null);
-		System.out.println("init auto wheel input");
+		//THIS IS STEP 1
+		p_fL = new AutoWheelInput ();
+		p_rL = new AutoWheelInput ();
+		p_fR = new AutoWheelInput ();
+		p_rR = new AutoWheelInput ();
+				
+		v_fL = new VelocitySetter ();
+		v_rL = new VelocitySetter ();
+		v_fR = new VelocitySetter ();
+		v_rR = new VelocitySetter ();
 		
+		System.out.println("(1) Initialized autowheelinput and velocityssetter");
 		
-		v_fL = new VelocitySetter (null);
-		 v_rL = new VelocitySetter (null);
-		 v_fR = new VelocitySetter (null);
-		 v_rR = new VelocitySetter (null);
-			System.out.println("init velocity controlers");
+		//THS IS STEP 2
 		positionCalculator = new RobotDrive (p_fL, p_rL, p_fR, p_rR);
-		System.out.println(" positon calculator not null");
 		velocityCalculator = new RobotDrive (v_fL, v_rL, v_fR, v_rR);	
-		System.out.println(" velocity calculator not null");
+		
+		System.out.println("(2) Initialized positioncalculator and velocitycalculator");
 	}
 	
-	public void autoInit (PIDController  pfL, PIDController prL, PIDController pfR, PIDController prR,PIDController vfL,PIDController  vrL, PIDController vfR, PIDController vrR ) {
+	public void followUp (PIDController  pfL, PIDController prL, PIDController pfR, PIDController prR,PIDController vfL,PIDController  vrL, PIDController vfR, PIDController vrR ) {
 		startTime = System.currentTimeMillis();
-		/// set motors to PID controlors 
+		//THIS IS STEP 4
+		/// set motors to PID controllers 
 		p_fL.setPIDController(pfL);
 		p_rL.setPIDController(prL);
 		p_fR.setPIDController(pfR);
@@ -57,8 +51,8 @@ public class AutoDriveTrain {
 		v_fR.setPIDController(vfR);
 		v_rL.setPIDController(vrL);
 		v_rR.setPIDController(vrR);
-		
-	// enable pid contrpp;;ers
+		System.out.println("(4) Did follow-up initialization for velocitysetters and autowheelinputs.");
+	// enable pid controllers
 		p_fL.enable();
 		p_rL.enable();
 		p_fR.enable();

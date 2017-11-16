@@ -20,7 +20,12 @@ public class VelocitySetter extends AutoWheelInput implements PIDOutput {
 	
 
 	
+	public VelocitySetter() {
+		super();
+	}
+
 	public void setPIDController (PIDController pid) {
+		//@liam, this is the follow-up constructor
 		_pid = pid;
 	}
 	public void pidWrite(double output) {
