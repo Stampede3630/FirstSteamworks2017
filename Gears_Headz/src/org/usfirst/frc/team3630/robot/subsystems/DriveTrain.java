@@ -76,7 +76,10 @@ public class DriveTrain {
 				speedy *= -1;
 
 			
-			
+			fL.diagnosticSpitter();
+			rL.diagnosticSpitter();
+			rL.diagnosticSpitter();
+			rR.diagnosticSpitter();
 			
 			
 	/// verify TELOP Drive train works WPILB mcanum drive has ben sketcy in past 	
