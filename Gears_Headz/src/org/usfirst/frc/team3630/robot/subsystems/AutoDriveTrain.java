@@ -7,6 +7,7 @@ import org.usfirst.frc.team3630.robot.helpers.VelocitySetter;
 
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoDriveTrain {
 	private RobotDrive positionCalculator;
@@ -69,11 +70,12 @@ public class AutoDriveTrain {
 
 	public void setPosition (double x) { //This is the current method that will be used, as motion path is only 1D.
 		x/= Consts.mecanumSanitizer; //This makes sure that the values going through the robotdrive remain between -1 and 1
-		
+		SmartDashboard.putNumber("Position Value", x);
 		positionCalculator.mecanumDrive_Cartesian(x, 0,0,0);
 	}
 	public void setVelocity (double x) {
 		x/= Consts.mecanumSanitizer;
+		SmartDashboard.putNumber("Velocity Value", x);
 		velocityCalculator.mecanumDrive_Cartesian(x, 0,0,0);
 	}
 	
@@ -81,7 +83,7 @@ public class AutoDriveTrain {
 		double timeElapsed = System.currentTimeMillis() - startTime;
 		timeElapsed = timeElapsed - (timeElapsed % Consts.period); //Rounded to the nearest 50ms
 		timeElapsed /= 100; //Conversion from seconds to milliseconds
-		
+		SmartDashboard.putNumber("Timestamp", timeElapsed);
 		double desiredPosition = -1;
 		double desiredVelocity = -1;
 		

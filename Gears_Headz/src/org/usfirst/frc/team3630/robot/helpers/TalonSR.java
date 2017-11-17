@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 
@@ -160,4 +161,11 @@ public class TalonSR implements Wheel {
 		return vPID;
 	}
 
+	public void diagnosticSpitter() {
+		SmartDashboard.putNumber("position setpoint "+String.valueOf(_talon.getChannel()), pPID.getSetpoint());
+		SmartDashboard.putNumber("velocity setpoint "+String.valueOf(_talon.getChannel()), vPID.getSetpoint());
+		SmartDashboard.putNumber("position actual "+String.valueOf(_talon.getChannel()), _encoder.getDistance());
+		SmartDashboard.putNumber("velocity actual "+String.valueOf(_talon.getChannel()), _encoder.getRate());
+
+	}
 }

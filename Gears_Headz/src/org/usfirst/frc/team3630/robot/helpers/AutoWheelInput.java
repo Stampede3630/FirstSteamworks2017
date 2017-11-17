@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3630.robot.helpers;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PIDController;
 import org.usfirst.frc.team3630.robot.Consts;
 
