@@ -37,7 +37,7 @@ public static final int buttonSwitchDirection = 2;
 //speed constants
 public static final double gearSpeed = -1;
 
-public static final double slowK = .25;
+public static final double slowK = .40;
 public static final double fastK = 1;
 public static final double joystickToInchesPerSecond = 90;
 
