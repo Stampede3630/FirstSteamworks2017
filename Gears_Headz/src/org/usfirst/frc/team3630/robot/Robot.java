@@ -23,6 +23,7 @@ public class Robot extends IterativeRobot {
 	DriveTrain driveTrain;
 	public static AHRS ahrs;
 	public NavX myNavX;
+	public Whinch climber;
 	Timer autoTimer;
 	DigitalInput springEngaged;
 	// auto
@@ -49,6 +50,7 @@ public class Robot extends IterativeRobot {
 		myNavX = new NavX();
 		autoTimer = new Timer();
 		ahrs = new AHRS(SPI.Port.kMXP);
+		climber = new Whinch();
 	}
 
 	/**
@@ -333,6 +335,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("drivetrain kI", Consts.wheelKI);
 		SmartDashboard.putNumber("drivetrain kD", Consts.wheelKD);
 		driveTrain.teleopInit();
+		climber.whinchPeriodic();
 	}
 
 	@Override
