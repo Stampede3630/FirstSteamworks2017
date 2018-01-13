@@ -21,10 +21,8 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	DriveTrain driveTrain;
-	GearsManip gears;
 	public static AHRS ahrs;
 	public NavX myNavX;
-	WinchSystem winch;
 	Timer autoTimer;
 	DigitalInput springEngaged;
 	// auto
@@ -49,8 +47,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("USE DRIVE STRAIGHT", true);
 		driveTrain = new DriveTrain(myNavX);
 		myNavX = new NavX();
-		winch = new WinchSystem();
-		gears = new GearsManip();
 		autoTimer = new Timer();
 		ahrs = new AHRS(SPI.Port.kMXP);
 	}
@@ -88,7 +84,6 @@ public class Robot extends IterativeRobot {
 		// runs through switch statement that goes through stages.
 		// each stage has an init which usually resets encoders and moves on to
 		// the next stage
-		SmartDashboard.putBoolean("Gears Open?", gears.isOpened());
 		SmartDashboard.putNumber("AutoStage", autoStage);
 		SmartDashboard.putBoolean("PID At Target", driveTrain.mecanumDrive.pidAtTarget());
 		SmartDashboard.putBoolean("SPRING Switch", springEngaged.get());
@@ -269,17 +264,11 @@ public class Robot extends IterativeRobot {
 //				autoTimer.reset();
 	//			autoTimer.start();
 
-				gears.autoOpen();
 
 				init = false;
 		
 			}
 			
-			if (gears.isOpened()){
-				gears.stop();
-				autoStage++;
-				init = true;
-			}
 			
 			break;
 
@@ -353,8 +342,7 @@ public class Robot extends IterativeRobot {
 		myNavX.teleopPeriodic();
 		// rightFrontEnc.get();
 		// ultraDistance.sensorPeriodic();
-		winch.telopPeriodic();
-		gears.telopPeridic();
+		
 
 	}
 
