@@ -9,14 +9,14 @@ public class Whinch {
 		move = new Talon(Consts.winchTalonPWM);
 		xBox = new XboxController(Consts.joystickComPort);
 	}
-	public void climb() {
+	private void climb() {
 		move.set(-1);
 		
 	}
-	public void stop() {
+	private void stop() {
 		move.set(0);
 	}
-	public int onOff() {
+	private int onOff() {
 		if(xBox.getRawButton(Consts.joystickWinchButton)) {
 			return 1;
 		} 
