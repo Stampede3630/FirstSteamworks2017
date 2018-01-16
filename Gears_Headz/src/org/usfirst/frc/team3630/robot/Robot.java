@@ -24,6 +24,7 @@ public class Robot extends IterativeRobot {
 	public static AHRS ahrs;
 	public NavX myNavX;
 	Timer autoTimer;
+	GearsManipulator  _gearsManipulator;
 	DigitalInput springEngaged;
 	// auto
 	int autoStage;
@@ -49,6 +50,7 @@ public class Robot extends IterativeRobot {
 		myNavX = new NavX();
 		autoTimer = new Timer();
 		ahrs = new AHRS(SPI.Port.kMXP);
+		_gearsManipulator = new GearsManipulator();
 	}
 
 	/**
@@ -340,6 +342,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("SPRING Switch", springEngaged.get());
 		driveTrain.telopPeriodic();
 		myNavX.teleopPeriodic();
+		_gearsManipulator.teleopPeriodic();
 		// rightFrontEnc.get();
 		// ultraDistance.sensorPeriodic();
 		
