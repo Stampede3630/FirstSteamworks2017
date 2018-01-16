@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3630.robot;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class GearsManipulator {
 	Talon _talon;
@@ -26,9 +27,13 @@ public class GearsManipulator {
 	public void teleopPeriodic () {
 		boolean commandOpen = _xBoxController.getRawButton(Consts.openButton);
 		boolean commandClose = _xBoxController.getRawButton(Consts.closeButton);
-		boolean limmitOpen = opened.get();
-		boolean limmitClose = closed.get();
+		boolean limmitOpen = !opened.get();
+		boolean limmitClose = !closed.get();
 		
+		SmartDashboard.putBoolean("command open", commandOpen);
+		SmartDashboard.putBoolean("command closed", commandClose);
+		SmartDashboard.putBoolean("limmit open", limmitOpen);
+		SmartDashboard.putBoolean("limmit close", limmitClose);
 		if(commandOpen) { 
 			if(limmitOpen) {
 				stop();

@@ -19,7 +19,7 @@ public static final int gearTalonPWM = 4;
 
 //Winch talon PWM assignment
 public static final int winchTalonPWM = 5;
-
+public static final int winchTalonSpeed = -1;
 //Joystick Assignments
 public static final int joytsickChannel = 0;
 public static final int joystickComPort = 0;
@@ -35,8 +35,8 @@ public static final int gearLimitSwitchClosed = 9;
 public static final int buttonSwitchDirection = 2;
 
 //speed constants
-public static final int gearSpeedClose = -1;
-public static final int gearSpeedOpen = 1;
+public static final double gearSpeedClose = -1;
+public static final double gearSpeedOpen = 1;
 
 public static final double slowK = .35;
 public static final double fastK = 1;
