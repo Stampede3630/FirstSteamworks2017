@@ -19,7 +19,7 @@ public static final int gearTalonPWM = 4;
 
 //Winch talon PWM assignment
 public static final int winchTalonPWM = 5;
-
+public static final int winchTalonSpeed = -1;
 //Joystick Assignments
 public static final int joytsickChannel = 0;
 public static final int joystickComPort = 0;
