@@ -35,7 +35,8 @@ public static final int gearLimitSwitchClosed = 9;
 public static final int buttonSwitchDirection = 2;
 
 //speed constants
-public static final double gearSpeed = -1;
+public static final int gearSpeedClose = -1;
+public static final int gearSpeedOpen = 1;
 
 public static final double slowK = .35;
 public static final double fastK = 1;

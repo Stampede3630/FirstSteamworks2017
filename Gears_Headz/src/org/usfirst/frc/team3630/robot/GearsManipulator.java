@@ -15,10 +15,10 @@ public class GearsManipulator {
 		closed = new DigitalInput(Consts.gearLimitSwitchClosed);	
 	}
 	private void open() {
-		_talon.set(1);
+		_talon.set(Consts.gearSpeedOpen);
 	}
 	private void close() {
-		_talon.set(-1);
+		_talon.set(Consts.gearSpeedClose);
 	}
 	private void stop() {
 		_talon.set(0);
@@ -39,19 +39,14 @@ public class GearsManipulator {
 		}
 		else if (commandClose) {
 			if(limmitClose) {
-				stop();
-				
+				stop();	
 			}
 			else {
-				close();
-				
-			}
-				
+				close();	
+			}	
 		}
-		
-		
-	
-		
-		
+		else {
+			stop();
+		}	
 	}
 }
