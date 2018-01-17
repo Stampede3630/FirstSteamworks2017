@@ -335,7 +335,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("drivetrain kI", Consts.wheelKI);
 		SmartDashboard.putNumber("drivetrain kD", Consts.wheelKD);
 		driveTrain.teleopInit();
-		climber.winchPeriodic();
+		
 	}
 
 	@Override
@@ -346,7 +346,7 @@ public class Robot extends IterativeRobot {
 		// rightFrontEnc.get();
 		// ultraDistance.sensorPeriodic();
 		
-
+		climber.winchPeriodic();
 	}
 
 	/**
